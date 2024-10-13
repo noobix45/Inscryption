@@ -14,8 +14,8 @@ O cerință nu se consideră îndeplinită dacă este realizată doar ca o serie
 
 ### Tema 0
 
-- [ ] Nume proiect (poate fi schimbat ulterior)
-- [ ] Scurtă descriere a temei alese, ce v-ați propus să implementați
+- [ ] Nume proiect: Inscryption (sau platformer(Geometry-dash))
+- [ ] O versiune low-level a primei parti a jocului Inscryption (card game)
 
 ## Tema 1
 
