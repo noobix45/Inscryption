@@ -1,57 +1,77 @@
 #include <iostream>
-#include <array>
+#include <string>
+#include "include/headers/cards.h"
+#include "include/headers/cards_factory.h"
+#include "include/headers/player.h"
+#include <vector>
+#include <time.h> // pentru generare de carti random in pile si in deck-ul jucatorului
 
-#include <Helper.h>
+///to do: get_deck function, ring bell function
+
+class Board{
+private:
+   Card board[2][4]; // original board[3][4]
+public:
+    Board(){}
+    void card_placed(){}
+    void card_dead(){}
+    void move_on(){} //avanseaza cartile la urmatoarea tura ca sa intre in joc
+    //daca sunt 2 jucatori pe acelasi ecran board [4][4] fiecare cu linie de avans
+};
+
+class Pile{ // se vor defini doua pile-uri una cu carti, alta cu veverite
+private:
+    int number_of_cards; // cate carti sunt in pile
+    std::vector <Card> pile; // un fel de stiva se ia mereu ultima carte (varf) si se scade numarul de carti cu 1
+    void remove_card(){}
+};
+
+class Scale{
+private:
+    int floor; // cat damage trebuie sa fie dat ca talerul balantei sa atinga masa
+    int left; // cat damage a dat un player
+    int right; // cat damage a dat celalat player
+public:
+    void check_scale(){
+        if(left == floor) {}//win Player2, AI
+        if(right == floor) {}//win Player1
+    }
+    void moved_by_right(){
+        // modifica balanta dupa damage-ul data de jucatorul care pune in dreapta (adica input player 1; NU AI)
+        // add damage to right // decrease damage from left
+    }
+    void moved_by_left(){
+        // modifica balanta dupa damage-ul data de jucatorul care pune in stanga (adica player 2 sau AI)
+        // add damage to left // decrease damage from right
+    }
+};
+
+    // void game(){
+    //     Board board; // definesc tabla de joc o matrice de 2 pe 4 de tip card
+    //     Player player1{"Player1",1};
+    //     Player player2{"Player2",2};
+    //     Scale scale;
+    //     Pile squirell_pile;
+    //     Pile draw_pile;
+    // };
+
+/////// to do: create the piles of cards and squirrels.
+// modify the draw card function of a player to get the card from a specific pile. argument of the functino will be of class type pile
+
+////to do: operator << pentru toate clasele
+// operator = copy si drestructor pentru o clasa
 
 int main() {
-    std::cout << "Hello, world!\n";
-    std::array<int, 100> v{};
-    int nr;
-    std::cout << "Introduceți nr: ";
-    /////////////////////////////////////////////////////////////////////////
-    /// Observație: dacă aveți nevoie să citiți date de intrare de la tastatură,
-    /// dați exemple de date de intrare folosind fișierul tastatura.txt
-    /// Trebuie să aveți în fișierul tastatura.txt suficiente date de intrare
-    /// (în formatul impus de voi) astfel încât execuția programului să se încheie.
-    /// De asemenea, trebuie să adăugați în acest fișier date de intrare
-    /// pentru cât mai multe ramuri de execuție.
-    /// Dorim să facem acest lucru pentru a automatiza testarea codului, fără să
-    /// mai pierdem timp de fiecare dată să introducem de la zero aceleași date de intrare.
-    ///
-    /// Pe GitHub Actions (bife), fișierul tastatura.txt este folosit
-    /// pentru a simula date introduse de la tastatură.
-    /// Bifele verifică dacă programul are erori de compilare, erori de memorie și memory leaks.
-    ///
-    /// Dacă nu puneți în tastatura.txt suficiente date de intrare, îmi rezerv dreptul să vă
-    /// testez codul cu ce date de intrare am chef și să nu pun notă dacă găsesc vreun bug.
-    /// Impun această cerință ca să învățați să faceți un demo și să arătați părțile din
-    /// program care merg (și să le evitați pe cele care nu merg).
-    ///
-    /////////////////////////////////////////////////////////////////////////
-    std::cin >> nr;
-    /////////////////////////////////////////////////////////////////////////
-    for(int i = 0; i < nr; ++i) {
-        std::cout << "v[" << i << "] = ";
-        std::cin >> v[i];
-    }
-    std::cout << "\n\n";
-    std::cout << "Am citit de la tastatură " << nr << " elemente:\n";
-    for(int i = 0; i < nr; ++i) {
-        std::cout << "- " << v[i] << "\n";
-    }
-    ///////////////////////////////////////////////////////////////////////////
-    /// Pentru date citite din fișier, NU folosiți tastatura.txt. Creați-vă voi
-    /// alt fișier propriu cu ce alt nume doriți.
-    /// Exemplu:
-    /// std::ifstream fis("date.txt");
-    /// for(int i = 0; i < nr2; ++i)
-    ///     fis >> v2[i];
-    ///
-    ///////////////////////////////////////////////////////////////////////////
-    ///                Exemplu de utilizare cod generat                     ///
-    ///////////////////////////////////////////////////////////////////////////
-    Helper helper;
-    helper.help();
-    ///////////////////////////////////////////////////////////////////////////
+    srand(time(0));
+    int r = rand()%4;
+    Card c = card_factory(CardType(r));
+    std::cout<<"Random card test: \n";
+    std::cout<<c;
+    std::cout<<"info about a player: \n";
+    Player player1{"Player1",1};
+    std::cout<<player1;
+    player1.draw_card(card_factory(CardType::Adder));
+    std::cout<<player1;
     return 0;
 }
+
