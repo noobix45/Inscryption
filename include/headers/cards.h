@@ -21,6 +21,10 @@ public:
     //constructor for cards that take bones
     Card(const std::string& name_, int hp_, int damage_, int cost_in_bones_, Effect e_, [[maybe_unused]] bool bone) : name{name_}, hp{hp_}, damage{damage_}, cost_in_blood{0}, cost_in_bones{cost_in_bones_}, e{e_} {}
 
+    ~Card() {std::cout<<"Card burned\n";}
+
+    Card(const Card& other_card) = default; //probabil ca unele carti vor avea posbilitatea de clonare
+
     friend std::ostream& operator << (std::ostream& out, const Card& card) { // pentru afisare
         out << card.name << " hp: " <<card.hp << " damage: "<<card.damage;
         if(card.cost_in_bones !=0)

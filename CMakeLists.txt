@@ -15,9 +15,29 @@ include(cmake/Options.cmake)
 
 ###############################################################################
 
-# External dependencies with FindPackage
-# Find SFML
-find_package(SFML 2.6 COMPONENTS graphics window system REQUIRED)
+# external dependencies with FetchContent
+# include(FetchContent)
+#
+# set(FETCHCONTENT_QUIET OFF)
+# set(FETCHCONTENT_UPDATES_DISCONNECTED ON)
+#
+# NOTE: Also update env vars used for caching in
+#         - .github/actions/configure-cmake/action.yml
+#         - .github/workflows/cmake.yml
+# FetchContent_Declare(
+#         SomeLib
+#         GIT_REPOSITORY https://github.com/<SomeUser>/<SomeLib>.git
+#         GIT_TAG        <some_git_hash> # <which tag/branch @ <some_date>>
+#         GIT_SHALLOW    1  # works only with branches or tags, not with arbitrary commit hashes
+# )
+#
+# FetchContent_MakeAvailable(SomeLib)
+
+###############################################################################
+
+# external dependencies with find_package
+
+# find_package(Threads REQUIRED)
 
 ###############################################################################
 
@@ -26,12 +46,6 @@ add_executable(${PROJECT_NAME}
         main.cpp
         generated/src/Helper.cpp
 )
-
-# Include SFML directories
-target_include_directories(${PROJECT_NAME} PRIVATE ${SFML_INCLUDE_DIRS})
-
-# Link SFML libraries
-target_link_libraries(${PROJECT_NAME} sfml-graphics sfml-window sfml-system)
 
 include(cmake/CompilerFlags.cmake)
 
