@@ -2,20 +2,19 @@
 #define CARDS_FACTORY_H
 #include "cards.h"
 
-Card card_factory(CardType type)
+inline Card card_factory(CardType type)
 {
-    switch(type)
-    {
+    switch(type) {
         case CardType::Squirrel:
-        return Card("Squirell",1,0,0,none);
+            return {"Squirrel",1,0,0,none};
         case CardType::Adder:
-        return Card("Addder",1,1,2,poison);
+            return {"Adder",1,1,2,poison};
         case CardType::Wolf:
-        return Card("Wolf",2,3,2,none);
+            return {"Wolf",2,3,2,none};
         case CardType::Stinkbug:
-        return Card("Stinkbug",2,1,2,stinkbug,true);
+            return {"Stinkbug",2,1,2,stinkbug,true};
         default:
-        return Card();
+            return {};
     }
 }
 

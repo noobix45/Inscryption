@@ -14,20 +14,20 @@ O cerință nu se consideră îndeplinită dacă este realizată doar ca o serie
 
 ### Tema 0
 
-- [ ] Nume proiect: Inscryption (sau platformer(Geometry-dash))
-- [ ] O versiune low-level a primei parti a jocului Inscryption (card game)
+- [x] Nume proiect: Inscryption
+- [x] Copie dupa jocul Inscryption (card game). Jocul, in original este pve, dar eu voi implementa pvp.
 
 ## Tema 1
 
 #### Cerințe
 - [x] definirea a minim **3-4 clase** folosind compunere cu clasele definite de voi
 - [x] constructori de inițializare cu parametri
-- [ ] pentru o aceeași (singură) clasă: constructor de copiere, `operator=` de copiere, destructor
+- [x] pentru o aceeași (singură) clasă: constructor de copiere, `operator=` de copiere, destructor
 <!-- - [ ] pentru o altă clasă: constructor de mutare, `operator=` de mutare, destructor -->
 <!-- - [ ] pentru o altă clasă: toate cele 5 funcții membru speciale -->
-- [ ] `operator<<` pentru toate clasele pentru afișare (std::ostream)
-- [ ] cât mai multe `const` (unde este cazul)
-- [ ] implementarea a minim 3 funcții membru publice pentru funcționalități specifice temei alese, dintre care cel puțin 1-2 funcții mai complexe
+- [x] `operator<<` pentru toate clasele pentru afișare (std::ostream)
+- [x] cât mai multe `const` (unde este cazul)
+- [x] implementarea a minim 3 funcții membru publice pentru funcționalități specifice temei alese, dintre care cel puțin 1-2 funcții mai complexe
   - nu doar citiri/afișări sau adăugat/șters elemente într-un/dintr-un vector
 - [x] scenariu de utilizare a claselor definite:
   - crearea de obiecte și apelarea tuturor funcțiilor membru publice în main

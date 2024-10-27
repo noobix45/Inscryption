@@ -1,8 +1,8 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 #include <iostream>
-#include "cards.h"
 #include "deck.h"
+#include "pile.h"
 
 class Player{
 private:
@@ -12,18 +12,13 @@ private:
     int bones;
     Deck deck;
 public:
-    Player(const std::string& name_, int id_) : name{name_}, id{id_}, blood{0},bones {0}, deck{id_} {}
-    void draw_card(const Card& card){deck.add_card(card);} ///to be modified to get a card from the pile
+    Player(const std::string& name_, int id_);
+    void draw_card(class Pile& pile);
     void play_card(){}
     void sacrifice(){}
     void ring_bell(){} // schimba randul jucatorului
 
-    friend std::ostream& operator<<(std::ostream& out, const Player& player) {
-        out << "Player's name: "<<player.name << " Player's blood count: "<<player.blood << " Player's bones count: "<<player.bones;
-        out << "\nDeck:\n";
-        out<<player.deck;
-        return out;
-    }
+    friend std::ostream& operator<<(std::ostream& out, const Player& player);
 };
 
 #endif
