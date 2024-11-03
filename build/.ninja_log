@@ -1,11 +1,12 @@
 # ninja log v6
 39	311	7523697895173025	CMakeFiles/oop.dir/generated/src/Helper.cpp.obj	a9e7610082fc5c75
-49	2010	7523697895281202	CMakeFiles/oop.dir/include/sources/cards.cpp.obj	c35173b869a0c301
 70	2087	7523697895530120	CMakeFiles/oop.dir/include/sources/player.cpp.obj	bf1dfe82cba0349e
+15	2661	7523697895015241	CMakeFiles/oop.dir/main.cpp.obj	d3a5f5a287bd27bf
+49	2010	7523697895281202	CMakeFiles/oop.dir/include/sources/cards.cpp.obj	c35173b869a0c301
 92	2232	7523697895700828	CMakeFiles/oop.dir/include/sources/pile.cpp.obj	7c6a5e07638be377
 59	2252	7523697895364004	CMakeFiles/oop.dir/include/sources/deck.cpp.obj	36faa7eb8518a58e
 127	2569	7523697896037851	CMakeFiles/oop.dir/include/sources/slot.cpp.obj	35ae7d53371c6bee
 113	2654	7523697895942203	CMakeFiles/oop.dir/include/sources/board.cpp.obj	eb97b2c7f7259e13
-15	2661	7523697895015241	CMakeFiles/oop.dir/main.cpp.obj	d3a5f5a287bd27bf
 104	2761	7523697895795774	CMakeFiles/oop.dir/include/sources/game.cpp.obj	2ad39ffcd6074c2c
 2765	3118	7523697922357778	oop.exe	a54d315788577a76
+15	477	7523705019063237	build.ninja	db2e705939bf1936
