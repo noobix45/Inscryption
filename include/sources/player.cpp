@@ -1,6 +1,6 @@
 #include "../headers/player.h"
 
-Player::Player(const std::string& name_, int id_) : name{name_}, id{id_}, blood{0},bones {0}, deck{id_} {}
+Player::Player(std::string name_, const int id_) : name{std::move(name_)}, id{id_}, blood{0},bones {0}, deck{id_} {}
 
 void Player::draw_card(class Pile& pile)
 {

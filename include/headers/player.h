@@ -12,11 +12,11 @@ private:
     int bones;
     Deck deck;
 public:
-    Player(const std::string& name_, int id_);
+    Player(std::string name_, int id_);
     void draw_card(class Pile& pile);
-    void play_card(){}
-    void sacrifice(){}
-    void ring_bell(){} // schimba randul jucatorului
+    static void play_card(){} //temp static
+    static void sacrifice(){}
+    static void ring_bell(){} // schimba randul jucatorului
 
     friend std::ostream& operator<<(std::ostream& out, const Player& player);
 };

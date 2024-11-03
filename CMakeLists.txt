@@ -36,6 +36,7 @@ include(cmake/Options.cmake)
 ###############################################################################
 
 # external dependencies with find_package
+find_package(SFML 2.5 COMPONENTS graphics window system REQUIRED)
 
 # find_package(Threads REQUIRED)
 
@@ -50,7 +51,15 @@ add_executable(${PROJECT_NAME}
         include/sources/player.cpp
         include/headers/pile.h
         include/sources/pile.cpp
+        include/headers/game.h
+        include/sources/game.cpp
+        include/headers/board.h
+        include/sources/board.cpp
+        include/headers/slot.h
+        include/sources/slot.cpp
 )
+
+target_link_libraries(${PROJECT_NAME} sfml-graphics sfml-window sfml-system)
 
 include(cmake/CompilerFlags.cmake)
 

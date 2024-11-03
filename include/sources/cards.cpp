@@ -4,12 +4,12 @@
 Card::Card() = default; // pentru caz default in card_factoy
 
 // Constructor for cards that take blood
-Card::Card(const std::string& name_, int hp_, int damage_, int cost_in_blood_, Effect e_)
-    : name{name_}, hp{hp_}, damage{damage_}, cost_in_blood{cost_in_blood_}, cost_in_bones{0}, e{e_} {}
+Card::Card(std::string name_, const int hp_, int const damage_, const int cost_in_blood_, const Effect e_)
+    : name{std::move(name_)}, hp{hp_}, damage{damage_}, cost_in_blood{cost_in_blood_}, cost_in_bones{0}, e{e_} {}
 
 // Constructor for cards that take bones
-Card::Card(const std::string& name_, int hp_, int damage_, int cost_in_bones_, Effect e_, [[maybe_unused]] bool bone)
-    : name{name_}, hp{hp_}, damage{damage_}, cost_in_blood{0}, cost_in_bones{cost_in_bones_}, e{e_} {}
+Card::Card(std::string name_, const int hp_, const int damage_, const int cost_in_bones_, const Effect e_, [[maybe_unused]] bool bone)
+    : name{std::move(name_)}, hp{hp_}, damage{damage_}, cost_in_blood{0}, cost_in_bones{cost_in_bones_}, e{e_} {}
 
 Card::~Card() = default;
 

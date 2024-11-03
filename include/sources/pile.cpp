@@ -10,7 +10,7 @@ void Pile::get_pile() {
     }
     else {
         for(int i=0;i<number_of_cards;i++) {
-            int r = rand()%3+1; // 1 2 3 possible outcomes
+            int r = rand()%num_of_types+1; // 1 2 3 possible outcomes
             pile.push(card_factory(static_cast<CardType>(r)));
         }
     }

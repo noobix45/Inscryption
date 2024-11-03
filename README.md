@@ -15,7 +15,17 @@ O cerință nu se consideră îndeplinită dacă este realizată doar ca o serie
 ### Tema 0
 
 - [x] Nume proiect: Inscryption
-- [x] Copie dupa jocul Inscryption (card game). Jocul, in original este pve, dar eu voi implementa pvp.
+- [x] Inscryption este un joc de tip "card game", in original este pve, dar eu voi implementa pvp.
+  Cei doi jucatori se vor duela pe o tabla de joc folosind carti care reprezinta animale. Aceste carti au numere ce
+  reprezinta hp si damage.
+  Tot pe carti vor fi vizibile un efect si niste picaturi de sange. Acestea din urma reprezinta pretul pe care un
+  jucator trebuie sa-l plateasca pentru a juca cartea respectiva.
+  Asadar, pentru a juca unele carti altele trebuie sacrificate. Majoritatea cartilor (depinde de efect) pot lovi doar
+  inainte. Daca nu au nicio carte inaintea lor lovesc playerul.
+  Cand un jucator este lovit balanta se inclina in favoarea celui care loveste. Castiga cel ce inclina balanta complet.
+  La inceputul fiecarei ture un jucator e obligat sa traga o carte din gramada cartilor cu efecte sau din gramada cu
+  veverite. (Veveritele au un singur scop: sacrificarea)
+  https://youtu.be/dFQaM6Hu4xs?si=VZirtPF7D_q4jNZX
 
 ## Tema 1
 
