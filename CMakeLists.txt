@@ -36,6 +36,8 @@ include(cmake/Options.cmake)
 ###############################################################################
 
 # external dependencies with find_package
+set(SFML_DIR "C:/SFML")
+set(CMAKE_PREFIX_PATH "C:/SFML")
 find_package(SFML 2.5 COMPONENTS graphics window system REQUIRED)
 
 # find_package(Threads REQUIRED)
