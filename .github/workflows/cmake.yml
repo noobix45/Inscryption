@@ -28,6 +28,8 @@ env:
   BUILD_DIR: "build"
   EXT_DIR: "ext"
   GEN_DIR: "generated"
+  SFML_DIR: "C:/SFML/lib/cmake/SFML"
+  CMAKE_PREFIX_PATH: "C:/SFML"
 
 defaults:
   run:
