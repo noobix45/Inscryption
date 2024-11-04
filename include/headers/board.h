@@ -7,10 +7,6 @@
 class Board
 {
     std::vector<std::vector<Slot> > board;
-    unsigned int one_slot_width = 0;
-    unsigned int one_slot_height = 0;
-    unsigned int frame_width = 0;
-    unsigned int frame_height = 0;
     unsigned int board_width = 0;
     unsigned int board_height = 0;
     float offset_x = 0;

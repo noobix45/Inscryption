@@ -2,7 +2,7 @@
 #include <ctime>
 #include "../headers/cards_factory.h"
 
-Deck::Deck(int player_id_) : player_id{player_id_}, number_of_cards{3} { get_deck(); }
+Deck::Deck(const int player_id_) : player_id{player_id_} { get_deck(); }
 
 void Deck::get_deck()
 {
@@ -10,7 +10,7 @@ void Deck::get_deck()
 
     deck.push_back(card_factory(CardType::Squirrel));
     //srand(time(nullptr));
-    for (int i = 0; i < num_of_types - 1; i++)
+    for (int i = 0; i < 3; i++) //deckul are 3 carti plus veverita initial
     {
         int r = rand() % (num_of_types - 1) + 1;
         deck.push_back(card_factory(static_cast<CardType>(r)));

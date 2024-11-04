@@ -6,9 +6,7 @@
 
 class Deck
 {
-private:
     int player_id;
-    int number_of_cards;
     std::vector<Card> deck; // cartile din deck-ul jucatorului
 
 public:
