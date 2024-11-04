@@ -1,35 +1,36 @@
 #include "../headers/game.h"
-Game::Game() :
-squirrel_pile(10,1),
-normal_pile(6,2),
-player1{"Player1",1},
-player2 {"Player2",2},
-window(sf::VideoMode::getDesktopMode(),"Inscryption",sf::Style::Fullscreen)
-{play_game();}
 
-void Game::play_game() {
+Game::Game() : squirrel_pile(10, 1),
+               normal_pile(6, 2),
+               player1{"Player1", 1},
+               player2{"Player2", 2},
+               window(sf::VideoMode::getDesktopMode(), "Inscryption", sf::Style::Fullscreen) { play_game(); }
+
+void Game::play_game()
+{
     //la inceputul turei unui jucator, acesta trebuie sa traga o carte, apoi poate sa joace oricate carti din deck.
     //Cand considera ca si-a terminat tura apasa pe clopotel.
-    while(window.isOpen()) {
+    while (window.isOpen())
+    {
         sf::Event event{};
-        while(window.pollEvent(event)) {
-            if(event.type == sf::Event::KeyPressed)
-                if(event.key.code == sf::Keyboard::Escape) {
-                    window.close();
-                }
+        while (window.pollEvent(event))
+        {
+            if (event.type == sf::Event::KeyPressed)
+                if (event.key.code == sf::Keyboard::Escape) { window.close(); }
         }
         window.clear();
         init_background();
         Slot *slot = new Slot;
         slot->textures_init();
-        board.get_offset(window,slot->get_slot_width(),slot->get_slot_height());
+        board.get_offset(window, slot->get_slot_width(), slot->get_slot_height());
         delete slot;
         board.draw(window);
         window.display();
     }
 }
 
-void Game::init_background() {
+void Game::init_background()
+{
     sf::Texture background;
     background.loadFromFile("../include/pictures/woodPlanks_albedo.png");
     sf::Sprite background_sprite;

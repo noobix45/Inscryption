@@ -4,7 +4,8 @@
 #include <vector>
 #include "cards.h"
 
-class Deck{
+class Deck
+{
 private:
     int player_id;
     int number_of_cards;
@@ -17,8 +18,9 @@ public:
 
     [[nodiscard]] int get_num_of_cards() const; //how many cards are in the deck
     [[nodiscard]] Card get_card(int i) const; // gets info about a card
-    void add_card(const Card& card); //when a card is drawn from the draw pile it is added to the deck
+    void add_card(const Card &card); //when a card is drawn from the draw pile it is added to the deck
     void remove_card(int i);
-    friend std::ostream& operator<<(std::ostream& out, const Deck& deck);
+
+    friend std::ostream &operator<<(std::ostream &out, const Deck &deck);
 };
 #endif

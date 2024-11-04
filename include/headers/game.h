@@ -5,7 +5,8 @@
 #include "board.h"
 #include <SFML/Graphics.hpp>
 
-class Game {
+class Game
+{
 private:
     Pile squirrel_pile;
     Pile normal_pile;
@@ -14,9 +15,12 @@ private:
     //Scale scale
     Board board;
     sf::RenderWindow window;
+
 public:
     Game();
+
     void play_game();
+
     void init_background();
 };
 

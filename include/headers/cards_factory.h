@@ -4,19 +4,20 @@
 
 inline Card card_factory(const CardType type)
 {
-    switch(type) {
+    switch (type)
+    {
         case CardType::Squirrel:
-            return {"Squirrel",1,0,0,none};
+            return {"Squirrel", 1, 0, 0, none};
         case CardType::Adder:
-            return {"Adder",1,1,2,poison};
+            return {"Adder", 1, 1, 2, poison};
         case CardType::Wolf:
-            return {"Wolf",2,3,2,none};
+            return {"Wolf", 2, 3, 2, none};
         case CardType::Stinkbug:
-            return {"Stinkbug",2,1,2,stinkbug,true};
+            return {"Stinkbug", 2, 1, 2, stinkbug, true};
         case CardType::RiverSnapper:
-            return {"River Snapper",6,1,2,none};
+            return {"River Snapper", 6, 1, 2, none};
         case CardType::Bullfrog:
-            return {"Bullfrog",2,1,1,air_defence};
+            return {"Bullfrog", 2, 1, 1, air_defence};
         default:
             return {};
     }
