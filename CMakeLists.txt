@@ -54,6 +54,13 @@ add_executable(${PROJECT_NAME}
         main.cpp
         generated/src/Helper.cpp
         env_fixes.h
+        include/sources/game.cpp
+        include/sources/board.cpp
+        include/sources/cards.cpp
+        include/sources/deck.cpp
+        include/sources/pile.cpp
+        include/sources/player.cpp
+        include/sources/slot.cpp
 )
 
 include(cmake/CompilerFlags.cmake)
