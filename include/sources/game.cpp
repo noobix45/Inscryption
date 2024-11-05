@@ -1,5 +1,7 @@
 #include "../headers/game.h"
 
+#include "../headers/cards_factory.h"
+
 Game::Game() : squirrel_pile(10, 1),
                normal_pile(6, 2),
                player1{"Player1", 1},
@@ -25,6 +27,8 @@ void Game::play_game()
         board.get_offset(window, slot->get_slot_width(), slot->get_slot_height());
         delete slot;
         board.draw(window);
+        Card card = card_factory(CardType::Squirrel); //carte de test
+        board.get_slot(0,0).place_card(window,&card); // iau slotul incare vreau sa pun si pun o carte
         window.display();
     }
 }

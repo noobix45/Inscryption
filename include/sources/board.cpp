@@ -1,8 +1,6 @@
 #include "../headers/board.h"
-
-Board::Board() : board(2, std::vector<Slot>(4))
-{
-}
+#include <iostream>
+Board::Board() : board(2, std::vector<Slot>(4)) {}
 
 void Board::draw(sf::RenderWindow &window)
 {
@@ -18,14 +16,14 @@ void Board::draw(sf::RenderWindow &window)
     }
 }
 
-void Board::place_card(Card *card, const int l, const int c)
+void Board::place_card(sf::RenderWindow &window, Card *card, const int l, const int c)
 {
     if (l < 0 || l > 2 || c < 0 || c > 4)
     {
         std::cout << "Slot is out of bounds\n";
         return;
     }
-    if (board[l][c].is_empty() == true) { board[l][c].place_card(card); } else
+    if (board[l][c].is_empty() == true) { board[l][c].place_card(window,card); } else
     {
         std::cout << "Slot is already occupied\n";
     }
@@ -48,3 +46,6 @@ void Board::get_offset(const sf::RenderWindow &window, const unsigned int &slot_
     offset_x = (window_x - static_cast<float>(board_width)) / 2;
     offset_y = (window_y - static_cast<float>(board_height)) / 2;
 }
+
+Slot Board::get_slot(const unsigned int &i, const unsigned int &j) { return board[i][j]; } //trebuie facut error handling
+

@@ -1,4 +1,5 @@
 #include "include/headers/game.h"
+#include <SFML/Graphics.hpp>
 /*
 class Scale{
 private:
@@ -20,9 +21,14 @@ public:
     }
 };
 */
-// to do: move main in game class; create one game class object in main; call the game function inside constructor of game;
+// to do: add textues for each card inside the card class, implement remove card function in slot.cpp
 int main() {
     Game game;
+    //test
+
+
+    //wolf emission.png has 155 width, 237 height
+    // slot.png has 154 width, 226 height
     return 0;
 }
 

@@ -16,11 +16,13 @@ public:
     Board();
 
     void draw(sf::RenderWindow &window); // to elimiate from board
-    void place_card(Card *, int, int);
+    void place_card(sf::RenderWindow &window, Card *, int, int);
 
     void remove_card(int, int);
 
     void get_offset(const sf::RenderWindow &window, const unsigned int &, const unsigned int &);
+
+    Slot get_slot(const unsigned int &, const unsigned int &);
 };
 
 #endif //BOARD_H
