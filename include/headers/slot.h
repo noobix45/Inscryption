@@ -16,7 +16,7 @@ public:
 
     [[nodiscard]] bool is_empty() const;
 
-    void place_card(sf::RenderWindow &window,Card *);
+    void place_card(sf::RenderWindow &window, Card *);
 
     void remove_card();
 
@@ -28,8 +28,7 @@ public:
 
     unsigned int get_slot_height() const;
 
-    sf::Sprite* get_sprite();
-
+    sf::Sprite *get_sprite();
 };
 
 #endif //SLOT_H

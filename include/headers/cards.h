@@ -19,6 +19,7 @@ private:
     Effect e = none;
     sf::Texture card_texture;
     sf::Sprite card_sprite;
+
 public:
     Card(); // pentru caz default in card_factoy
     //constructor for cards that take blood
@@ -40,6 +41,7 @@ public:
     friend std::ostream &operator <<(std::ostream &out, const Card &card);
 
     void init_texture();
+
     //cartea nu are draw card pentru ca se acutalizaeaza in slot.
     sf::Texture get_texture();
 

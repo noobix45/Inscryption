@@ -23,7 +23,7 @@ void Board::place_card(sf::RenderWindow &window, Card *card, const int l, const 
         std::cout << "Slot is out of bounds\n";
         return;
     }
-    if (board[l][c].is_empty() == true) { board[l][c].place_card(window,card); } else
+    if (board[l][c].is_empty() == true) { board[l][c].place_card(window, card); } else
     {
         std::cout << "Slot is already occupied\n";
     }
@@ -47,5 +47,6 @@ void Board::get_offset(const sf::RenderWindow &window, const unsigned int &slot_
     offset_y = (window_y - static_cast<float>(board_height)) / 2;
 }
 
-Slot Board::get_slot(const unsigned int &i, const unsigned int &j) { return board[i][j]; } //trebuie facut error handling
+Slot Board::get_slot(const unsigned int &i, const unsigned int &j) { return board[i][j]; }
+//trebuie facut error handling
 

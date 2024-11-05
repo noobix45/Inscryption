@@ -3,12 +3,14 @@
 Card::Card() = default; // pentru caz default in card_factoy
 
 // Constructor for cards that take blood
-Card::Card(std::string name_, const int hp_, int const damage_, const int cost_in_blood_, const Effect e_) :
-    name{std::move(name_)}, hp{hp_}, damage{damage_}, cost_in_blood{cost_in_blood_}, cost_in_bones{0}, e{e_} {init_texture();}
+Card::Card(std::string name_, const int hp_, int const damage_, const int cost_in_blood_, const Effect e_) : name{
+        std::move(name_)
+    }, hp{hp_}, damage{damage_}, cost_in_blood{cost_in_blood_}, cost_in_bones{0}, e{e_} { init_texture(); }
 
 // Constructor for cards that take bones
-Card::Card(std::string name_, const int hp_, const int damage_, const int cost_in_bones_, const Effect e_, [[maybe_unused]] bool bone) :
-    name{std::move(name_)}, hp{hp_}, damage{damage_}, cost_in_blood{0}, cost_in_bones{cost_in_bones_}, e{e_} {init_texture();}
+Card::Card(std::string name_, const int hp_, const int damage_, const int cost_in_bones_, const Effect e_, [[maybe_unused]] bool bone) : name
+    {std::move(name_)}, hp{hp_}, damage{damage_}, cost_in_blood{0}, cost_in_bones{cost_in_bones_},
+    e{e_} { init_texture();}
 
 Card::~Card() = default;
 
@@ -44,12 +46,13 @@ std::ostream &operator<<(std::ostream &out, const Card &card)
 
 void Card::init_texture()
 {
-    if(!card_texture.loadFromFile("../include/pictures/card_empty.png")) //test texture
+    if (!card_texture.loadFromFile("../include/pictures/card_empty.png")) //test texture
     {
         //some error handling;
     }
     card_sprite.setTexture(card_texture);
-    card_sprite.setOrigin(static_cast<float>(card_texture.getSize().x ) / 2, static_cast<float>(card_texture.getSize().y) / 2);
+    card_sprite.setOrigin(static_cast<float>(card_texture.getSize().x) / 2,
+                          static_cast<float>(card_texture.getSize().y) / 2);
 }
 
 void Card::draw(sf::RenderWindow &window, const float &x, const float &y)

@@ -28,7 +28,7 @@ void Game::play_game()
         delete slot;
         board.draw(window);
         Card card = card_factory(CardType::Squirrel); //carte de test
-        board.get_slot(0,0).place_card(window,&card); // iau slotul incare vreau sa pun si pun o carte
+        board.get_slot(0, 0).place_card(window, &card); // iau slotul incare vreau sa pun si pun o carte
         window.display();
     }
 }
