@@ -1,18 +1,23 @@
 #include "../headers/cards.h"
+#include <iostream>
+
+#include "../headers/slot.h"
 
 Card::Card() = default; // pentru caz default in card_factoy
 
 // Constructor for cards that take blood
-Card::Card(std::string name_, const int hp_, int const damage_, const int cost_in_blood_, const Effect e_) : name{
-        std::move(name_)
-    }, hp{hp_}, damage{damage_}, cost_in_blood{cost_in_blood_}, cost_in_bones{0}, e{e_} { init_texture(); }
+Card::Card(const std::string &file_name, std::string name_, const int hp_, int const damage_, const int cost_in_blood_,
+           const Effect e_) : name
+                              {
+                                  std::move(name_)
+                              }, hp{hp_}, damage{damage_}, cost_in_blood{cost_in_blood_}, cost_in_bones{0},
+                              e{e_} { init_texture(file_name); }
 
 // Constructor for cards that take bones
-Card::Card(std::string name_, const int hp_, const int damage_, const int cost_in_bones_, const Effect e_,
-           [[maybe_unused]] bool bone) : name
+Card::Card(const std::string &file_name, std::string name_, const int hp_, const int damage_, const int cost_in_bones_, const Effect e_,[[maybe_unused]] bool bone) : name
                                          {std::move(name_)}, hp{hp_}, damage{damage_}, cost_in_blood{0},
                                          cost_in_bones{cost_in_bones_},
-                                         e{e_} { init_texture(); }
+                                         e{e_} { init_texture(file_name); }
 
 Card::~Card() = default;
 
@@ -46,15 +51,22 @@ std::ostream &operator<<(std::ostream &out, const Card &card)
     return out;
 }
 
-void Card::init_texture()
+void Card::init_texture(const std::string& file_name)
 {
-    if (!card_texture.loadFromFile("../include/pictures/card_empty.png")) //test texture
+
+    if (!card_texture.loadFromFile(file_name)) //test texture
     {
-        //some error handling;
+        //trebuie facut error handling;
     }
     card_sprite.setTexture(card_texture);
     card_sprite.setOrigin(static_cast<float>(card_texture.getSize().x) / 2,
                           static_cast<float>(card_texture.getSize().y) / 2);
+
+    const sf::Vector2u textureSize = card_texture.getSize();
+    const float scaleX = one_slot_width / static_cast<float>(textureSize.x);
+    const float scaleY = one_slot_height / static_cast<float>(textureSize.y);
+
+    card_sprite.setScale(scaleX, scaleY);
 }
 
 void Card::draw(sf::RenderWindow &window, const float &x, const float &y)
@@ -62,7 +74,3 @@ void Card::draw(sf::RenderWindow &window, const float &x, const float &y)
     card_sprite.setPosition(x, y);
     window.draw(card_sprite);
 }
-
-
-
-

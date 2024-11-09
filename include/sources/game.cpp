@@ -1,5 +1,4 @@
 #include "../headers/game.h"
-
 #include "../headers/cards_factory.h"
 
 Game::Game() : squirrel_pile(10, 1),
@@ -12,6 +11,7 @@ void Game::play_game()
 {
     //la inceputul turei unui jucator, acesta trebuie sa traga o carte, apoi poate sa joace oricate carti din deck.
     //Cand considera ca si-a terminat tura apasa pe clopotel.
+
     while (window.isOpen())
     {
         sf::Event event{};
@@ -21,14 +21,22 @@ void Game::play_game()
                 if (event.key.code == sf::Keyboard::Escape) { window.close(); }
         }
         window.clear();
+
         init_background();
-        Slot *slot = new Slot;
-        slot->textures_init();
-        board.get_offset(window, slot->get_slot_width(), slot->get_slot_height());
-        delete slot;
+        board.get_offset(window, one_slot_width, one_slot_height);
         board.draw(window);
-        Card card = card_factory(CardType::Squirrel); //carte de test
-        board.get_slot(0, 0).place_card(window, &card); // iau slotul incare vreau sa pun si pun o carte
+
+        Card c1 = card_factory(CardType::Adder);
+        Card c2 = card_factory(CardType::Squirrel);
+        Card c3 = card_factory(CardType::Stinkbug);
+        board.place_card(&c1,1,2);
+        board.place_card(&c2,0,2);
+        board.place_card(&c3,0,0);
+        for(int i=0;i<2;i++)
+            for(int j=0;j<4;j++)
+            if(!board.get_slot(i, j).is_empty())
+                board.get_slot(i, j).update(window);
+        //board.remove_card(1,2);
         window.display();
     }
 }
@@ -40,11 +48,11 @@ void Game::init_background()
     sf::Sprite background_sprite;
     background_sprite.setTexture(background);
 
-    sf::Vector2u window_size = window.getSize();
-    sf::Vector2u background_size = background.getSize();
+    const sf::Vector2u window_size = window.getSize();
+    const sf::Vector2u background_size = background.getSize();
 
-    auto scale_x = static_cast<float>(window_size.x) / static_cast<float>(background_size.x);
-    auto scale_y = static_cast<float>(window_size.y) / static_cast<float>(background_size.y);
+    const auto scale_x = static_cast<float>(window_size.x) / static_cast<float>(background_size.x);
+    const auto scale_y = static_cast<float>(window_size.y) / static_cast<float>(background_size.y);
 
     background_sprite.setScale(scale_x, scale_y);
     window.draw(background_sprite);

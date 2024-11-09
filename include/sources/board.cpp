@@ -9,21 +9,21 @@ void Board::draw(sf::RenderWindow &window)
         for (int j = 0; j < 4; j++)
         {
             board[i][j].textures_init();
-            auto x = offset_x + static_cast<float>(j * board[0][0].get_slot_width());
-            auto y = offset_y + static_cast<float>(i * board[0][0].get_slot_height());
+            auto x = offset_x + static_cast<float>(j * one_slot_width);
+            auto y = offset_y + static_cast<float>(i * one_slot_height);
             board[i][j].draw(window, x, y);
         }
     }
 }
 
-void Board::place_card(sf::RenderWindow &window, Card *card, const int l, const int c)
+void Board::place_card(Card *card, const int l, const int c)
 {
     if (l < 0 || l > 2 || c < 0 || c > 4)
     {
         std::cout << "Slot is out of bounds\n";
         return;
     }
-    if (board[l][c].is_empty() == true) { board[l][c].place_card(window, card); } else
+    if (board[l][c].is_empty() == true) { board[l][c].place_card(card); } else
     {
         std::cout << "Slot is already occupied\n";
     }

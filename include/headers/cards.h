@@ -19,14 +19,14 @@ private:
     Effect e = none;
     sf::Texture card_texture;
     sf::Sprite card_sprite;
-
+    // to do: add propery filename; use in constructor to get the texture and set the sprite in texture init;
 public:
     Card(); // pentru caz default in card_factoy
     //constructor for cards that take blood
-    Card(std::string name_, int hp_, int damage_, int cost_in_blood_, Effect e_);
+    Card(const std::string& file_name, std::string name_, int hp_, int damage_, int cost_in_blood_, Effect e_);
 
     //constructor for cards that take bones
-    Card(std::string name_, int hp_, int damage_, int cost_in_bones_, Effect e_, [[maybe_unused]] bool bone);
+    Card(const std::string& file_name, std::string name_, int hp_, int damage_, int cost_in_bones_, Effect e_, [[maybe_unused]] bool bone);
 
     //destructor
     ~Card();
@@ -40,10 +40,7 @@ public:
 
     friend std::ostream &operator <<(std::ostream &out, const Card &card);
 
-    void init_texture();
-
-    //cartea nu are draw card pentru ca se acutalizaeaza in slot.
-    sf::Texture get_texture();
+    void init_texture(const std::string& file_name);
 
     void draw(sf::RenderWindow &window, const float &, const float &);
 };

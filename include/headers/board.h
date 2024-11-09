@@ -16,7 +16,7 @@ public:
     Board();
 
     void draw(sf::RenderWindow &window); // to elimiate from board
-    void place_card(sf::RenderWindow &window, Card *, int, int);
+    void place_card(Card *, int, int);
 
     void remove_card(int, int);
 

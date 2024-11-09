@@ -1,5 +1,4 @@
 #include "include/headers/game.h"
-#include <SFML/Graphics.hpp>
 /*
 class Scale{
 private:
@@ -24,11 +23,11 @@ public:
 // to do: add textues for each card inside the card class, implement remove card function in slot.cpp
 int main() {
     Game game;
-    //test
-
-
-    //wolf emission.png has 155 width, 237 height
     // slot.png has 154 width, 226 height
+    // de scalat toate pozele cartilor la dimenisunile astea
+
+
+
     return 0;
 }
 
