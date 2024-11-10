@@ -25,7 +25,7 @@ void Board::place_card(Card *card, const int l, const int c)
     }
     if (board[l][c].is_empty() == true) { board[l][c].place_card(card); } else
     {
-        std::cout << "Slot is already occupied\n";
+        //std::cout << "Slot is already occupied\n";
     }
 }
 

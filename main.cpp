@@ -20,15 +20,15 @@ public:
     }
 };
 */
-// to do: add textues for each card inside the card class, implement remove card function in slot.cpp
+
+
+// to do: get rid of dprecated ctime srand
+// clickable cards
+
 int main() {
+    srand(time(nullptr));
     Game game;
-    // slot.png has 154 width, 226 height
-    // de scalat toate pozele cartilor la dimenisunile astea
-
-
-
     return 0;
 }
 
-
+// slot.png has 154 width, 226 height

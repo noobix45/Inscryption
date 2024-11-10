@@ -29,14 +29,20 @@ void Game::play_game()
         Card c1 = card_factory(CardType::Adder);
         Card c2 = card_factory(CardType::Squirrel);
         Card c3 = card_factory(CardType::Stinkbug);
-        board.place_card(&c1,1,2);
-        board.place_card(&c2,0,2);
-        board.place_card(&c3,0,0);
-        for(int i=0;i<2;i++)
-            for(int j=0;j<4;j++)
-            if(!board.get_slot(i, j).is_empty())
-                board.get_slot(i, j).update(window);
+        board.place_card(&c1, 1, 2);
+        board.place_card(&c2, 0, 2);
+        board.place_card(&c3, 0, 0);
+        for (int i = 0; i < 2; i++)
+            for (int j = 0; j < 4; j++)
+                if (!board.get_slot(i, j).is_empty())
+                    board.get_slot(i, j).update(window);
         //board.remove_card(1,2);
+        player1.deck_draw(window);
+
+        //do not uncomment this //player1.draw_card(squirrel_pile);
+        // draws from pile until null then it breaks ;)
+
+        player2.deck_draw(window);
         window.display();
     }
 }

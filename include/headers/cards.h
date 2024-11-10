@@ -43,6 +43,8 @@ public:
     void init_texture(const std::string& file_name);
 
     void draw(sf::RenderWindow &window, const float &, const float &);
+
+    sf::Sprite& get_sprite();
 };
 
 #endif
