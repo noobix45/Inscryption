@@ -1,5 +1,8 @@
 #!/usr/bin/bash
 
+report_file="cppcheck_report.txt"
+output_file="cppcheck_output.txt"
+
 cppcheck --enable=all \
     --inline-suppr \
     --check-level=exhaustive \
@@ -10,4 +13,8 @@ cppcheck --enable=all \
     --suppress=missingIncludeSystem \
     --suppress=unmatchedSuppression \
     --suppress=useStlAlgorithm \
-    --error-exitcode=1
+    --checkers-report="$report_file" \
+    --error-exitcode=1 > "$output_file" 2>&1
+
+echo "Cppcheck checker report saved to $report_file"
+echo "Cppcheck output saved to $output_file"
