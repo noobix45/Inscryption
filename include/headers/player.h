@@ -15,11 +15,10 @@ private:
 public:
     Player(std::string name_, int id_);
 
-    void draw_card(Pile &pile);
+    //void draw_card(Pile &pile); vor fi implementate
 
-    static void play_card() {} //temp static
-    static void sacrifice() {}
-    static void ring_bell() {} // schimba randul jucatorului
+    //static void sacrifice() {} // vor fi implementate
+    //static void ring_bell() {} // schimba randul jucatorului // vor fi implementate
     void deck_draw(sf::RenderWindow &window) const;
 
     friend std::ostream &operator<<(std::ostream &out, const Player &player);
@@ -27,7 +26,6 @@ public:
     void get_deck();
 
     std::vector<Card*>& whose_deck();
-    [[nodiscard]] int get_id() const;
 };
 
 #endif

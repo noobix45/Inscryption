@@ -67,6 +67,5 @@ void Board::get_offset(const sf::RenderWindow &window, const unsigned int &slot_
 Slot* Board::get_slot(const unsigned int &i, const unsigned int &j) const{ return board[i][j]; } // imi ia un singur slot
 //trebuie facut error handling
 
-std::vector<Slot*>& Board::get_row(const int row) { return board[row]; } // imi ia un rand de sloturi
 
 

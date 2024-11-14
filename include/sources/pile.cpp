@@ -37,8 +37,6 @@ Card *Pile::get_top()
     return card;
 }
 
-int Pile::get_size() const { return static_cast<int>(pile.size()); }
-
 std::ostream &operator<<(std::ostream &out, Pile &pile)
 {
     if (pile.pile_id == 1)

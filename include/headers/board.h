@@ -24,7 +24,6 @@ public:
 
     [[nodiscard]] Slot* get_slot(const unsigned int &, const unsigned int &) const;
 
-    std::vector<Slot*>& get_row(int row);
 };
 
 #endif //BOARD_H

@@ -16,8 +16,6 @@ public:
 
     Card *get_card();
 
-    [[nodiscard]] int get_size() const;
-
     void get_pile();
 
     friend std::ostream &operator<<(std::ostream &out, Pile &pile);
