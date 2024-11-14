@@ -25,6 +25,9 @@ public:
     friend std::ostream &operator<<(std::ostream &out, const Player &player);
 
     void get_deck();
+
+    std::vector<Card*>& whose_deck();
+    [[nodiscard]] int get_id() const;
 };
 
 #endif

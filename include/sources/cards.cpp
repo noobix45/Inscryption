@@ -21,7 +21,15 @@ Card::Card(const std::string &file_name, std::string name_, const int hp_, const
 
 Card::~Card() = default;
 
-Card::Card(const Card &other_card) = default;
+Card::Card(const Card &other_card) // constructor de copiere
+{
+    name = other_card.name;
+    hp = other_card.hp;
+    damage = other_card.damage;
+    cost_in_blood = other_card.cost_in_blood;
+    cost_in_bones = other_card.cost_in_bones;
+    e = other_card.e;
+}
 
 std::string Card::get_name() const { return name; }
 
@@ -61,11 +69,7 @@ void Card::init_texture(const std::string &file_name)
     card_sprite.setOrigin(static_cast<float>(card_texture.getSize().x) / 2,
                           static_cast<float>(card_texture.getSize().y) / 2);
 
-    const sf::Vector2u textureSize = card_texture.getSize();
-    const float scaleX = one_slot_width / static_cast<float>(textureSize.x);
-    const float scaleY = one_slot_height / static_cast<float>(textureSize.y);
-
-    card_sprite.setScale(scaleX, scaleY);
+    scale_small();
 }
 
 void Card::draw(sf::RenderWindow &window, const float &x, const float &y)
@@ -78,3 +82,35 @@ sf::Sprite& Card::get_sprite()
 {
     return card_sprite;
 }
+
+void Card::on_click_select()
+{
+    scale_big();
+    clicked = true;
+}
+ /// move the scale procces in a separate function
+void Card::on_click_unselect()
+{
+    scale_small();
+    clicked = false;
+}
+
+bool Card::is_clicked() const{ return clicked; }
+
+void Card::scale_small()
+{
+    const sf::Vector2u textureSize = card_texture.getSize();
+    const float scaleX = one_slot_width / static_cast<float>(textureSize.x);
+    const float scaleY = one_slot_height / static_cast<float>(textureSize.y);
+    card_sprite.setScale(scaleX, scaleY);
+}
+
+void Card::scale_big()
+{
+    const sf::Vector2u textureSize = card_texture.getSize();
+    const float scaleX =( one_slot_width / static_cast<float>(textureSize.x))*1.1f;
+    const float scaleY =( one_slot_height / static_cast<float>(textureSize.y)) *1.1f;
+    card_sprite.setScale(scaleX, scaleY);
+}
+
+

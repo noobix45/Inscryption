@@ -1,5 +1,5 @@
 #include "../headers/deck.h"
-#include <ctime>
+#include <random>
 #include <iostream>
 #include "../headers/cards_factory.h"
 #include "../headers/slot.h"
@@ -10,11 +10,14 @@ void Deck::get_deck()
 {
     // ii da jucatorului carti random la inceput de joc
 
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<int> dis(1, num_of_types);
+
     deck.push_back(new Card(card_factory(CardType::Squirrel)));
-    //srand(time(nullptr));
     for (int i = 0; i < 3; i++) //deckul are 3 carti plus veverita initial
     {
-        int r = rand() % (num_of_types - 1) + 1;
+        int r = dis(gen);
         deck.push_back(new Card(card_factory(static_cast<CardType>(r))));
     }
 }
@@ -40,24 +43,33 @@ std::ostream &operator<<(std::ostream &out, const Deck &deck)
 
 void Deck::deck_draw(sf::RenderWindow &window) const
 {
-
     const sf::Vector2u window_size = window.getSize();
     const auto start_x1 = static_cast<float>(window_size.x) *0.2f;
     const auto start_y1 = static_cast<float>(window_size.y) *0.85f;
     const auto start_x2 = static_cast<float>(window_size.x) *0.8f;
     const auto start_y2 = static_cast<float>(window_size.y) *0.15f;
 
-    if(player_id == 1)
-        for (int i = 0; i < static_cast<int>(deck.size()); i++)
-        {
-                deck[i]->draw(window,start_x1 + static_cast<float>(i*one_slot_width),start_y1);
-        }
-    else
+    for (int i = 0; i < static_cast<int>(deck.size()); i++) // deseneazza cartile din dekc care sunt unselected
     {
-        for(int i=0;i<static_cast<int>(deck.size());i++)
+        if(player_id==1 && !deck[i]->is_clicked())
+            deck[i]->draw(window,start_x1 + static_cast<float>(i*one_slot_width),start_y1);
+        else if (player_id==2 && !deck[i]->is_clicked())
+            deck[i]->draw(window,start_x2 - static_cast<float>(i*one_slot_width),start_y2); // pentru player 2 desenez de la dr la st
+    }
+    // deseneaza cartile din deck care sunt selecte
+    //ca atunci cand o carte e selctat sa fie peste toate celelalte
+    for (int i = 0; i < static_cast<int>(deck.size()); i++)
+    {
+        constexpr float lift_offset = 20;
+        if(player_id==1 && deck[i]->is_clicked())
         {
-            deck[i]->draw(window,start_x2 - static_cast<float>(i*one_slot_width),start_y2);
+            deck[i]->draw(window,start_x1 + static_cast<float>(i*one_slot_width),start_y1-lift_offset); //ridic pnetru player 1
+        }
+        else if(player_id==2 && deck[i]->is_clicked())
+        {
+            deck[i]->draw(window,start_x2 - static_cast<float>(i*one_slot_width),start_y2+lift_offset);
         }
     }
-
 }
+
+std::vector<Card*>& Deck::get_all() {return deck;}

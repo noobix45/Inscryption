@@ -27,6 +27,10 @@ O cerință nu se consideră îndeplinită dacă este realizată doar ca o serie
   veverite. (Veveritele au un singur scop: sacrificarea)
   https://youtu.be/dFQaM6Hu4xs?si=VZirtPF7D_q4jNZX
 
+  Texturile au fost luate de pe site-urile urmatoare si sunt aceleasi texturi ca in jocul original:
+- https://cards.vladde.me/
+- https://www.ingoh.net/inscryption/textures/
+
 ## Tema 1
 
 #### Cerințe
@@ -42,8 +46,8 @@ O cerință nu se consideră îndeplinită dacă este realizată doar ca o serie
 - [x] scenariu de utilizare a claselor definite:
   - crearea de obiecte și apelarea tuturor funcțiilor membru publice în main
   - vor fi adăugate în fișierul `tastatura.txt` DOAR exemple de date de intrare de la tastatură (dacă există); dacă aveți nevoie de date din fișiere, creați alte fișiere separat
-- [ ] tag de `git`: de exemplu `v0.1`
-- [ ] serviciu de integrare continuă (CI); exemplu: GitHub Actions
+- [x] tag de `git`: de exemplu `v0.1`
+- [x] serviciu de integrare continuă (CI); exemplu: GitHub Actions
 
 ## Tema 2
 

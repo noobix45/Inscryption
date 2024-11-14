@@ -1,17 +1,22 @@
 #include "../headers/pile.h"
 #include "../headers/cards_factory.h"
+#include <random>
+#define pile_size 20
 
-Pile::Pile(int n, int id) : number_of_cards{n}, pile_id{id} { get_pile(); }
+Pile::Pile(const int n, const int id) : number_of_cards{n}, pile_id{id} { get_pile(); }
 
 void Pile::get_pile()
 {
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<int> dis(1, num_of_types);
     if (this->pile_id == 1)
-        for (int i = 0; i < number_of_cards; i++) { pile.push(new Card(card_factory(CardType::Squirrel))); }
+        for (int i = 0; i < pile_size; i++) { pile.push(new Card(card_factory(CardType::Squirrel))); }
     else
     {
-        for (int i = 0; i < number_of_cards; i++)
+        for (int i = 0; i < pile_size; i++)
         {
-            int r = rand() % num_of_types + 1; // 1 2 3 possible outcomes
+            int r = dis(gen); // 1 2 3... possible outcomes
             pile.push(new Card(card_factory(static_cast<CardType>(r))));
         }
     }
@@ -19,15 +24,16 @@ void Pile::get_pile()
 
 Card *Pile::get_card()
 {
-    Card* card = pile.top();
+    Card *card = pile.top();
     pile.pop();
     number_of_cards--;
     return card;
 }
+
 //get top card, remove top
-Card* Pile::get_top()
+Card *Pile::get_top()
 {
-    Card* card = pile.top();
+    Card *card = pile.top();
     return card;
 }
 

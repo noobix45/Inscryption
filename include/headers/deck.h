@@ -22,5 +22,7 @@ public:
 
     void deck_draw(sf::RenderWindow &window) const;
 
+    std::vector<Card*>& get_all();
+
 };
 #endif

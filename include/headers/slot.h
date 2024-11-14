@@ -26,6 +26,8 @@ public:
     void draw(sf::RenderWindow &window, const float &, const float &);
 
     void update(sf::RenderWindow &window) const;
+
+    sf::Sprite& get_sprite();
 };
 
 #endif //SLOT_H

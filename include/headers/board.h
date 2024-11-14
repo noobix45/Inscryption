@@ -6,7 +6,7 @@
 
 class Board
 {
-    std::vector<std::vector<Slot> > board;
+    std::vector<std::vector<Slot*>> board;
     unsigned int board_width = 0;
     unsigned int board_height = 0;
     float offset_x = 0;
@@ -14,15 +14,17 @@ class Board
 
 public:
     Board();
+    ~Board();
+    void draw(sf::RenderWindow &window) const; // to elimiate from board
+    void place_card(Card *, int, int) const;
 
-    void draw(sf::RenderWindow &window); // to elimiate from board
-    void place_card(Card *, int, int);
-
-    void remove_card(int, int);
+    void remove_card(int, int) const;
 
     void get_offset(const sf::RenderWindow &window, const unsigned int &, const unsigned int &);
 
-    Slot get_slot(const unsigned int &, const unsigned int &);
+    [[nodiscard]] Slot* get_slot(const unsigned int &, const unsigned int &) const;
+
+    std::vector<Slot*>& get_row(int row);
 };
 
 #endif //BOARD_H

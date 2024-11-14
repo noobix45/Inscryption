@@ -2,6 +2,10 @@
 #define CARDS_FACTORY_H
 #include "cards.h"
 
+#ifndef num_of_types
+#define num_of_types 5   // cate carti pot exista - squirrel
+#endif
+
 inline Card card_factory(const CardType type)
 {
     switch (type)

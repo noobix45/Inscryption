@@ -7,7 +7,7 @@ private:
     int right; // cat damage a dat celalat player
 public:
     void check_scale(){
-        if(left == floor) {}//win Player2, AI
+        if(left == floor) {}//win Player2,
         if(right == floor) {}//win Player1
     }
     void moved_by_right(){
@@ -22,11 +22,9 @@ public:
 */
 
 
-// to do: get rid of dprecated ctime srand
-// clickable cards
+// to do: piles, drawing from piles and player turns
 
 int main() {
-    srand(time(nullptr));
     Game game;
     return 0;
 }

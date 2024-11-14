@@ -2,9 +2,7 @@
 #define CARDS_H
 #include "effects.h"
 #include <SFML/Graphics.hpp>
-#ifndef num_of_types
-#define num_of_types 6
-#endif
+
 
 enum class CardType { Squirrel, Adder, Wolf, Stinkbug, RiverSnapper, Bullfrog };
 
@@ -19,7 +17,7 @@ private:
     Effect e = none;
     sf::Texture card_texture;
     sf::Sprite card_sprite;
-    // to do: add propery filename; use in constructor to get the texture and set the sprite in texture init;
+    bool clicked = false;
 public:
     Card(); // pentru caz default in card_factoy
     //constructor for cards that take blood
@@ -45,6 +43,16 @@ public:
     void draw(sf::RenderWindow &window, const float &, const float &);
 
     sf::Sprite& get_sprite();
+
+    void on_click_select();
+
+    void on_click_unselect();
+
+    bool is_clicked() const;
+
+    void scale_small();
+
+    void scale_big();
 };
 
 #endif

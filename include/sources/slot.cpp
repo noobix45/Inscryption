@@ -9,9 +9,10 @@ bool Slot::is_empty() const
 
 void Slot::place_card(Card *new_card)
 {
-    if (card == nullptr) // daca slotul e gol
+    if (card == nullptr) // daca slotul e gol // card e cartea interna, privata a slotului
     {
         card = new_card;
+        // debugg std::cout<<"New card is "<<*new_card<<"\n";
     } else { std::cout << "Slot is already in use" << std::endl; }
 }
 
@@ -42,4 +43,8 @@ void Slot::update(sf::RenderWindow &window) const
     card->draw(window, slot_sprite.getPosition().x, slot_sprite.getPosition().y);
 }
 
+sf::Sprite& Slot::get_sprite()
+{
+    return slot_sprite;
+}
 
