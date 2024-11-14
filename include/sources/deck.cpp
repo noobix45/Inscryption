@@ -26,7 +26,7 @@ int Deck::get_num_of_cards() const { return static_cast<int>(deck.size()); } //h
 
 Card* Deck::get_card(const int i) const { return deck[i]; } // gets info about a card
 
-void Deck::add_card(Card* card) { deck.push_back(card); }
+//void Deck::add_card(Card* card) { deck.push_back(card); } // este folosita la draw from pile
 //when a card is drawn from the draw pile it is added to the deck
 
 void Deck::remove_card(const int i) //when card gets played, it is removed from the deck
