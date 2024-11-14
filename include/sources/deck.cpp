@@ -1,8 +1,8 @@
-#include "../headers/deck.h"
+#include "headers/deck.h"
 #include <random>
 #include <iostream>
-#include "../headers/cards_factory.h"
-#include "../headers/slot.h"
+#include "headers/cards_factory.h"
+#include "headers/slot.h"
 
 Deck::Deck(const int player_id_) : player_id{player_id_} {get_deck();}
 

@@ -1,5 +1,5 @@
-#include "../headers/game.h"
-#include "../headers/cards_factory.h"
+#include "headers/game.h"
+#include "headers/cards_factory.h"
 #include <iostream>
 
 Game::Game() : squirrel_pile(10, 1),
@@ -157,7 +157,7 @@ void Game::delete_from_deck(std::vector<Card *>& deck,const Card *selected_card)
 void Game::init_background()
 {
     sf::Texture background;
-    background.loadFromFile("../include/pictures/woodPlanks_albedo.png");
+    background.loadFromFile("include/pictures/woodPlanks_albedo.png");
     sf::Sprite background_sprite;
     background_sprite.setTexture(background);
 

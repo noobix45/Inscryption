@@ -1,5 +1,5 @@
-#include "../headers/pile.h"
-#include "../headers/cards_factory.h"
+#include "headers/pile.h"
+#include "headers/cards_factory.h"
 #include <random>
 #define pile_size 20
 

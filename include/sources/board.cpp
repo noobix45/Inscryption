@@ -1,4 +1,4 @@
-#include "../headers/board.h"
+#include "headers/board.h"
 #include <iostream>
 Board::Board() : board(2, std::vector<Slot*>(4))
 {

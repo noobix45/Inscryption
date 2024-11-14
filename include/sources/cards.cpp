@@ -1,7 +1,7 @@
-#include "../headers/cards.h"
+#include "headers/cards.h"
 #include <iostream>
 
-#include "../headers/slot.h"
+#include "headers/slot.h"
 
 Card::Card() = default; // pentru caz default in card_factoy
 
