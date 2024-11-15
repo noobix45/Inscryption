@@ -20,7 +20,7 @@ void Slot::remove_card() { card = nullptr; }
 
 void Slot::textures_init()
 {
-    if (!slot_texture.loadFromFile("include/pictures/slot.png"))
+    if (!slot_texture.loadFromFile("pictures/slot.png"))
     {
         // incarca textura
         std::cout << "Error in loading picture slots\n";

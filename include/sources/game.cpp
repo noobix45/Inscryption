@@ -157,7 +157,7 @@ void Game::delete_from_deck(std::vector<Card *>& deck,const Card *selected_card)
 void Game::init_background()
 {
     sf::Texture background;
-    background.loadFromFile("include/pictures/woodPlanks_albedo.png");
+    background.loadFromFile("pictures/woodPlanks_albedo.png");
     sf::Sprite background_sprite;
     background_sprite.setTexture(background);
 
