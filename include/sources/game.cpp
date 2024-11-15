@@ -1,6 +1,6 @@
 #include "headers/game.h"
 #include "headers/cards_factory.h"
-#include <iostream>
+//#include <iostream>
 
 Game::Game() : squirrel_pile(10, 1),
                normal_pile(6, 2),

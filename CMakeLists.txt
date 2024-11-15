@@ -102,6 +102,6 @@ endif ()
 
 
 include(cmake/CopyHelper.cmake)
-copy_files(FILES tastatura.txt DIRECTORY include/pictures)
+copy_files(FILES tastatura.txt DIRECTORY pictures)
 # copy_files(FILES tastatura.txt config.json DIRECTORY images sounds)
 # copy_files(DIRECTORY images sounds)
