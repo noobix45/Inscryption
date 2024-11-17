@@ -13,6 +13,8 @@ private:
     Player player1;
     Player player2;
     //Scale scale
+    sf::Texture bell_texture;
+    sf::Sprite bell_sprite;
     Board board;
     sf::RenderWindow window;
 
@@ -30,6 +32,12 @@ public:
     bool place_in_board(sf::Vector2i mousePos,int, Card* ) const;
 
     static void delete_from_deck(std::vector<Card*>&, const Card* );
+
+    void init_bell();
+
+    int pile_clicked(sf::Vector2i mousePos);
+
+    bool ring_bell(sf::Vector2i mousePos) const;
 };
 
 /*

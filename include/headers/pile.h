@@ -6,11 +6,12 @@
 class Pile
 {
     // 2 piles will be defined, one with squirrels, one with normal cards
-    int number_of_cards; // how many cards are in the pile
     int pile_id;
     std::stack<Card *> pile; // always draw from top, decrease number of cards by one when drawn.
+    sf::Texture pile_texture;
+    sf::Sprite pile_sprite;
 public:
-    Pile(int n, int id); // pile 1  = squirrels // pile 2 = normal cards
+    explicit Pile(int id); // pile 1  = squirrels // pile 2 = normal cards
 
     [[nodiscard]] Card *get_top();
 
@@ -19,6 +20,16 @@ public:
     void get_pile();
 
     friend std::ostream &operator<<(std::ostream &out, Pile &pile);
+
+    void init_texture();
+
+    void draw(sf::RenderWindow &window) const; //hardcoded position on drawing
+
+    void scale();
+
+    bool is_clicked(sf::Vector2i) const;
+
+    sf::Sprite& get_sprite();
 };
 
 #endif

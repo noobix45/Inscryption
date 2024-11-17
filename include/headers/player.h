@@ -15,7 +15,7 @@ private:
 public:
     Player(std::string name_, int id_);
 
-    //void draw_card(Pile &pile); vor fi implementate
+    void draw_card(Pile &pile);
 
     //static void sacrifice() {} // vor fi implementate
     //static void ring_bell() {} // schimba randul jucatorului // vor fi implementate
