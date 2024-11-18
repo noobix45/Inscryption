@@ -111,8 +111,12 @@ void Game::play_game()
 
         init_background();
         init_bell();
-        squirrel_pile.draw(window);
-        normal_pile.draw(window);
+        float pos_x = board.get_slot(0,3)->get_sprite().getPosition().x;
+        float pos_y = board.get_slot(0,3)->get_sprite().getPosition().y;
+        squirrel_pile.draw(window,pos_x +2*one_slot_width,pos_y-10);
+        pos_x = board.get_slot(1,3)->get_sprite().getPosition().x;
+        pos_y = board.get_slot(1,3)->get_sprite().getPosition().y;
+        normal_pile.draw(window,pos_x + 2*one_slot_width,pos_y+5);
         board.get_offset(window, one_slot_width, one_slot_height);
         board.draw(window);
         //std::cout << "Center of last slot: "<< board.get_slot(1,3)->get_sprite().getPosition().x << std::endl;
@@ -120,7 +124,7 @@ void Game::play_game()
 
         Card c1 = card_factory(CardType::Adder);
         Card c2 = card_factory(CardType::Squirrel);
-        Card c3 = card_factory(CardType::Stinkbug);
+        Card c3 = card_factory(CardType::Mantis);
         board.place_card(&c1, 1, 2);
         board.place_card(&c2, 0, 2);
         board.place_card(&c3, 0, 0);
@@ -228,23 +232,28 @@ void Game::init_bell()
     if(!bell_texture.loadFromFile("pictures/bell.png")) { std::cout<< " Unable to load bell\n"; }
     bell_sprite.setTexture(bell_texture);
     bell_sprite.setScale(5.5f, 5.5f);
-    bell_sprite.setOrigin(static_cast<float>(bell_texture.getSize().x) / 2, static_cast<float>(bell_texture.getSize().y) / 2);
-    bell_sprite.setPosition(729 - 1.5*one_slot_width,427+one_slot_height/2);
+    bell_sprite.setOrigin(static_cast<float>(bell_texture.getSize().x) / 2,
+                          static_cast<float>(bell_texture.getSize().y) / 2);
+    const float pos_x = board.get_slot(0,0)->get_sprite().getPosition().x;
+    const float pos_y = board.get_slot(0,0)->get_sprite().getPosition().y;
+    bell_sprite.setPosition(pos_x - 1.5f * one_slot_width, pos_y + one_slot_height / 2); // 729,427
     window.draw(bell_sprite);
 }
 
 int Game::pile_clicked(const sf::Vector2i mousePos)
 {
-    if(squirrel_pile.get_sprite().getGlobalBounds().contains(static_cast<float>(mousePos.x),static_cast<float>(mousePos.y)))
-    { return 1; }
-    if(normal_pile.get_sprite().getGlobalBounds().contains(static_cast<float>(mousePos.x),static_cast<float>(mousePos.y)))
-    { return 2; }
+    if (squirrel_pile.get_sprite().getGlobalBounds().contains(static_cast<float>(mousePos.x),
+                                                              static_cast<float>(mousePos.y))) { return 1; }
+    if (normal_pile.get_sprite().getGlobalBounds().contains(static_cast<float>(mousePos.x),
+                                                            static_cast<float>(mousePos.y))) { return 2; }
     return 0; // nu s a dat click pe niciun pile
 }
 
 bool Game::ring_bell(const sf::Vector2i mousePos) const
 {
-    if(bell_sprite.getGlobalBounds().contains(static_cast<float>(mousePos.x),static_cast<float>(mousePos.y)))
-        { return true; }
+    if (bell_sprite.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)))
+    {
+        return true;
+    }
     return false;
 }

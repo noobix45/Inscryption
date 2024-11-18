@@ -41,6 +41,7 @@ void Slot::draw(sf::RenderWindow &window, const float &x, const float &y)
 void Slot::update(sf::RenderWindow &window) const
 {
     card->draw(window, slot_sprite.getPosition().x, slot_sprite.getPosition().y);
+    card->update_number(window);
 }
 
 sf::Sprite& Slot::get_sprite()

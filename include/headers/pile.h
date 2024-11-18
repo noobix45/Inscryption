@@ -23,7 +23,7 @@ public:
 
     void init_texture();
 
-    void draw(sf::RenderWindow &window) const; //hardcoded position on drawing
+    void draw(sf::RenderWindow &window,const float&x,const float&y); //hardcoded position on drawing
 
     void scale();
 

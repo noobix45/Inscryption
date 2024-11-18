@@ -86,8 +86,9 @@ void Pile::scale()
     pile_sprite.setScale(scaleX, scaleY);
 }
 
-void Pile::draw(sf::RenderWindow &window) const
+void Pile::draw(sf::RenderWindow &window,const float &x, const float &y)
 {
+    pile_sprite.setPosition(x, y);
     window.draw(pile_sprite);
 }
 

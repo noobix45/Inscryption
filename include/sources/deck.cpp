@@ -52,9 +52,15 @@ void Deck::deck_draw(sf::RenderWindow &window) const
     for (int i = 0; i < static_cast<int>(deck.size()); i++) // deseneazza cartile din dekc care sunt unselected
     {
         if(player_id==1 && !deck[i]->is_clicked())
+        {
             deck[i]->draw(window,start_x1 + static_cast<float>(i*one_slot_width),start_y1);
+            deck[i]->update_number(window);
+        }
         else if (player_id==2 && !deck[i]->is_clicked())
+        {
             deck[i]->draw(window,start_x2 - static_cast<float>(i*one_slot_width),start_y2); // pentru player 2 desenez de la dr la st
+            deck[i]->update_number(window);
+        }
     }
     // deseneaza cartile din deck care sunt selecte
     //ca atunci cand o carte e selctat sa fie peste toate celelalte

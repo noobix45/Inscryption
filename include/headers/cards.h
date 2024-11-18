@@ -4,7 +4,7 @@
 #include <SFML/Graphics.hpp>
 
 
-enum class CardType { Squirrel, Adder, Wolf, Stinkbug, RiverSnapper, Bullfrog };
+enum class CardType { Squirrel, Adder, Wolf, Beaver, Mantis, Bullfrog };
 
 class Card
 {
@@ -17,7 +17,11 @@ private:
     Effect e = none;
     sf::Texture card_texture;
     sf::Sprite card_sprite;
+    sf::Font font;
+    sf::Text hp_text;
+    sf::Text damage_text;
     bool clicked = false;
+
 public:
     Card(); // pentru caz default in card_factoy
     //constructor for cards that take blood
@@ -53,6 +57,8 @@ public:
     void scale_small();
 
     void scale_big();
+
+    void update_number(sf::RenderWindow &window);
 };
 
 #endif

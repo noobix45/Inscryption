@@ -22,7 +22,9 @@ public:
 */
 
 
-// to do: piles, drawing from piles and player turns
+// to do: clean up the logic, see if you can get rid of repetitions.
+// to do: find a way to change cards hp texture or draw it separately.
+// to do: start working on the logic of taking and dealing damage.
 
 int main() {
     Game game;

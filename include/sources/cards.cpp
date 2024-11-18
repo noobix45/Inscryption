@@ -62,8 +62,14 @@ void Card::init_texture(const std::string &file_name)
     card_sprite.setTexture(card_texture);
     card_sprite.setOrigin(static_cast<float>(card_texture.getSize().x) / 2,
                           static_cast<float>(card_texture.getSize().y) / 2);
-
     scale_small();
+
+    if(!font.loadFromFile("../HEAVYWEI.TTF"))
+    {
+        std::cout<<"Unable to load font\n";
+    }
+    hp_text.setFont(font);
+    damage_text.setFont(font);
 }
 
 void Card::draw(sf::RenderWindow &window, const float &x, const float &y)
@@ -107,4 +113,26 @@ void Card::scale_big()
     card_sprite.setScale(scaleX, scaleY);
 }
 
+void Card::update_number(sf::RenderWindow &window)
+{
+    hp_text.setString(std::to_string(hp));
+    damage_text.setString(std::to_string(damage));
+    hp_text.setFillColor(sf::Color::Black);
+    damage_text.setFillColor(sf::Color::Black);
+    hp_text.setCharacterSize(50.0f);
+    damage_text.setCharacterSize(50.0f);
+    hp_text.setOrigin(hp_text.getGlobalBounds().width / 2, hp_text.getGlobalBounds().height / 2); // originea in centru
 
+    const sf::FloatRect bounds = card_sprite.getGlobalBounds(); // top left = y x
+    const auto hp_x = (bounds.left + bounds.width) - bounds.width * 0.15f;
+    const auto hp_y = (bounds.top + bounds.height) - bounds.height * 0.185f;
+
+    const auto damage_x = bounds.left + bounds.width * 0.090f;
+    const auto damage_y = bounds.top+bounds.height - bounds.height * 0.33f;
+
+    // debugg std :: cout<<"x: "<<hp_x<<" y: "<<hp_y<<"\n";
+    hp_text.setPosition(hp_x,hp_y);
+    damage_text.setPosition(damage_x,damage_y);
+    window.draw(hp_text);
+    window.draw(damage_text);
+}
