@@ -64,7 +64,7 @@ void Card::init_texture(const std::string &file_name)
                           static_cast<float>(card_texture.getSize().y) / 2);
     scale_small();
 
-    if (!font.loadFromFile("../heaviwei.ttf"))
+    if (!font.loadFromFile("heaviwei.ttf"))
     {
         std::cout<<"Unable to load font\n";
     }
