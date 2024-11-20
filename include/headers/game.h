@@ -21,6 +21,8 @@ private:
 public:
     Game();
 
+    ~Game();
+
     void play_game();
 
     void init_background();

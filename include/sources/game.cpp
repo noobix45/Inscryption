@@ -8,6 +8,24 @@ Game::Game() : squirrel_pile(1),
                player2{"Player2", 2},
                window(sf::VideoMode::getDesktopMode(), "My Window", sf::Style::Fullscreen) { play_game(); }
 
+Game::~Game()
+{
+    // Delete cards in the deck (if deck is a vector of Card pointers)
+    for (const auto& card : player1.whose_deck())
+    {
+        delete card;  // Delete each card in the deck
+    }
+    std::cout << "Deck1 destroyed!\n";
+
+    for (const auto& card : player2.whose_deck())
+    {
+        delete card;  // Delete each card in the deck
+    }
+    std::cout << "Deck1 destroyed!\n";
+}
+
+
+
 void Game::play_game()
 {
     //la inceputul turei unui jucator, acesta trebuie sa traga o carte, apoi poate sa joace oricate carti din deck.
@@ -122,12 +140,6 @@ void Game::play_game()
         //std::cout << "Center of last slot: "<< board.get_slot(1,3)->get_sprite().getPosition().x << std::endl;
         //std::cout << "Center of last slot: "<< board.get_slot(1,3)->get_sprite().getPosition().y << std::endl;
 
-        Card c1 = card_factory(CardType::Adder);
-        Card c2 = card_factory(CardType::Squirrel);
-        Card c3 = card_factory(CardType::Mantis);
-        board.place_card(&c1, 1, 2);
-        board.place_card(&c2, 0, 2);
-        board.place_card(&c3, 0, 0);
         for (int i = 0; i < 2; i++)
             for (int j = 0; j < 4; j++)
                 if (!board.get_slot(i, j)->is_empty())

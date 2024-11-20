@@ -11,12 +11,11 @@ Pile::~Pile()
 {
     while (!pile.empty())
     {
-        delete pile.top();
-        pile.pop();
+        delete pile.top();  // Delete the top card
+        pile.pop();         // Remove the top card
     }
-    std::cout << pile_id <<" Destroyed"<< std::endl;
+    std::cout << "Squirrel pile destroyed!\n";
 }
-
 
 void Pile::get_pile()
 {

@@ -7,14 +7,6 @@
 
 Deck::Deck(const int player_id_) : player_id{player_id_} {get_deck();}
 
-Deck::~Deck()
-{
-    std::cout << "Deck destroyed" << std::endl;
-    for(const auto &i : deck)
-    {
-        delete i;
-    }
-}
 
 void Deck::get_deck()
 {

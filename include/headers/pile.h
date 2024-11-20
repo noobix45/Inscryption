@@ -12,9 +12,7 @@ class Pile
     sf::Sprite pile_sprite;
 public:
     explicit Pile(int id); // pile 1  = squirrels // pile 2 = normal cards
-
     ~Pile();
-
     [[nodiscard]] Card *get_top();
 
     Card *get_card();
