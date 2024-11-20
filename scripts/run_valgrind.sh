@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 
 # Set the executable name correctly without spaces around '='
-EXECUTABLE_NAME="oop.exe"
+EXECUTABLE_NAME="oop"
 
 # Run the executable with Valgrind, saving the output to a file
 valgrind --leak-check=full --track-origins=yes --error-exitcode=0 ./"${EXECUTABLE_NAME}" &> valgrind_output.txt
