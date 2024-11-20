@@ -7,6 +7,17 @@
 
 Pile::Pile(const int id) : pile_id{id} { get_pile(); init_texture();}
 
+Pile::~Pile()
+{
+    while (!pile.empty())
+    {
+        delete pile.top();
+        pile.pop();
+    }
+    std::cout << pile_id <<" Destroyed"<< std::endl;
+}
+
+
 void Pile::get_pile()
 {
     std::random_device rd;

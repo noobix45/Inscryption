@@ -23,4 +23,3 @@ std::ostream &operator<<(std::ostream &out, const Player &player)
 }
 
 std::vector<Card*>& Player::whose_deck() { return deck.get_all(); }
-

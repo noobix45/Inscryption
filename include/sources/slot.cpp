@@ -48,4 +48,3 @@ sf::Sprite& Slot::get_sprite()
 {
     return slot_sprite;
 }
-

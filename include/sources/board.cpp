@@ -16,6 +16,7 @@ Board::~Board() {
             delete board[i][j];
         }
     }
+    std::cout << std::endl << "Board destroyed" << std::endl;
 }
 
 
@@ -66,6 +67,3 @@ void Board::get_offset(const sf::RenderWindow &window, const unsigned int &slot_
 
 Slot* Board::get_slot(const unsigned int &i, const unsigned int &j) const{ return board[i][j]; } // imi ia un singur slot
 //trebuie facut error handling
-
-
-
