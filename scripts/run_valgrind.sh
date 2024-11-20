@@ -1,7 +1,11 @@
 #!/usr/bin/bash
 
 # Set the executable name correctly without spaces around '='
-EXECUTABLE_NAME="oop"
+EXECUTABLE_NAME="../build/oop.exe"
+
+
+echo "Checking for executable at: $(pwd)/${EXECUTABLE_NAME}"
+ls -l ./"${EXECUTABLE_NAME}"
 
 # Run the executable with Valgrind, saving the output to a file
 valgrind --leak-check=full --track-origins=yes --error-exitcode=0 ./"${EXECUTABLE_NAME}" &> valgrind_output.txt
