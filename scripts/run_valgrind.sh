@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 
 # Set the executable name correctly without spaces around '='
-EXECUTABLE_NAME="../build/oop.exe"
+EXECUTABLE_NAME="../build/oop"
 
 
 echo "Checking for executable at: $(pwd)/${EXECUTABLE_NAME}"
