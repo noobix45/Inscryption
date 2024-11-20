@@ -1,7 +1,10 @@
 #!/usr/bin/bash
 
-# remove --show-leak-kinds=all (and --track-origins=yes) if there are many leaks in external libs
-cat "${INPUT_FILENAME}" | tr -d '\r' | valgrind --leak-check=full --track-origins=yes --error-exitcode=0 ./"${ZIP_NAME}"/"${EXECUTABLE_NAME}" &> valgrind_output.txt
+# Set the executable name correctly without spaces around '='
+EXECUTABLE_NAME="oop.exe"
+
+# Run the executable with Valgrind, saving the output to a file
+valgrind --leak-check=full --track-origins=yes --error-exitcode=0 ./"${EXECUTABLE_NAME}" &> valgrind_output.txt
 
 # Check for memory leaks in the Valgrind output
 if grep -q "definitely lost: 0 bytes" valgrind_output.txt && grep -q "indirectly lost: 0 bytes" valgrind_output.txt; then
