@@ -11,8 +11,8 @@ Pile::~Pile()
 {
     while (!pile.empty())
     {
-        delete pile.top();  // Delete the top card
-        pile.pop();         // Remove the top card
+        delete pile.top(); // Delete the top card
+        pile.pop(); // Remove the top card
     }
     std::cout << "Squirrel pile destroyed!\n";
 }

@@ -11,19 +11,18 @@ Game::Game() : squirrel_pile(1),
 Game::~Game()
 {
     // Delete cards in the deck (if deck is a vector of Card pointers)
-    for (const auto& card : player1.whose_deck())
+    for (const auto &card: player1.whose_deck())
     {
-        delete card;  // Delete each card in the deck
+        delete card; // Delete each card in the deck
     }
     std::cout << "Deck1 destroyed!\n";
 
-    for (const auto& card : player2.whose_deck())
+    for (const auto &card: player2.whose_deck())
     {
-        delete card;  // Delete each card in the deck
+        delete card; // Delete each card in the deck
     }
     std::cout << "Deck1 destroyed!\n";
 }
-
 
 
 void Game::play_game()
@@ -43,7 +42,7 @@ void Game::play_game()
                 if (event.type == sf::Event::KeyPressed)
                     if (event.key.code == sf::Keyboard::Escape) { window.close(); }
                 // daca se da un click tratez cazurile
-                if(event.type ==  sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
+                /*if(event.type ==  sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
                 {
                     sf::Vector2i mousePos = sf::Mouse::getPosition(window);
                     if (current_phase == 0) // draw phase
@@ -82,7 +81,7 @@ void Game::play_game()
                         {
                             /*
                             std::cout<<"from event cu card non null: "<<*selected_card;  // debugg
-                            std::cout << "Mouse pos before placing: " << mousePos.x << ", " << mousePos.y << "\n";*/
+                            std::cout << "Mouse pos before placing: " << mousePos.x << ", " << mousePos.y << "\n";
                             // functia returneaza daca am plasat sau nu o carte, ca sa stiu daca o sterg din deck sau nu
                             if (current_player == 1)
                             {
@@ -123,7 +122,7 @@ void Game::play_game()
                             current_player = (current_player == 1) ? 2 : 1;
                         }
                     }
-                }
+                }*/
         }
         window.clear();
 
