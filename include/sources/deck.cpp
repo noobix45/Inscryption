@@ -1,4 +1,3 @@
-
 #include "headers/deck.h"
 #include <random>
 #include <iostream>
@@ -6,7 +5,6 @@
 #include "headers/slot.h"
 
 Deck::Deck(const int player_id_) : player_id{player_id_} {get_deck();}
-
 
 void Deck::get_deck()
 {

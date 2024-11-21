@@ -7,16 +7,6 @@
 
 Pile::Pile(const int id) : pile_id{id} { get_pile(); init_texture();}
 
-Pile::~Pile()
-{
-    while (!pile.empty())
-    {
-        delete pile.top(); // Delete the top card
-        pile.pop(); // Remove the top card
-    }
-    std::cout << "Squirrel pile destroyed!\n";
-}
-
 void Pile::get_pile()
 {
     std::random_device rd;

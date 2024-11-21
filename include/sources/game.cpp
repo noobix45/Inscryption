@@ -6,24 +6,7 @@ Game::Game() : squirrel_pile(1),
                normal_pile(2),
                player1{"Player1", 1},
                player2{"Player2", 2},
-               window(sf::VideoMode::getDesktopMode(), "My Window", sf::Style::Fullscreen) { play_game(); }
-
-Game::~Game()
-{
-    // Delete cards in the deck (if deck is a vector of Card pointers)
-    for (const auto &card: player1.whose_deck())
-    {
-        delete card; // Delete each card in the deck
-    }
-    std::cout << "Deck1 destroyed!\n";
-
-    for (const auto &card: player2.whose_deck())
-    {
-        delete card; // Delete each card in the deck
-    }
-    std::cout << "Deck1 destroyed!\n";
-}
-
+               window(sf::VideoMode::getDesktopMode(), "Inscryption", sf::Style::Fullscreen) { play_game(); }
 
 void Game::play_game()
 {
@@ -42,7 +25,7 @@ void Game::play_game()
                 if (event.type == sf::Event::KeyPressed)
                     if (event.key.code == sf::Keyboard::Escape) { window.close(); }
                 // daca se da un click tratez cazurile
-                /*if(event.type ==  sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
+                if(event.type ==  sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
                 {
                     sf::Vector2i mousePos = sf::Mouse::getPosition(window);
                     if (current_phase == 0) // draw phase
@@ -81,7 +64,7 @@ void Game::play_game()
                         {
                             /*
                             std::cout<<"from event cu card non null: "<<*selected_card;  // debugg
-                            std::cout << "Mouse pos before placing: " << mousePos.x << ", " << mousePos.y << "\n";
+                            std::cout << "Mouse pos before placing: " << mousePos.x << ", " << mousePos.y << "\n";*/
                             // functia returneaza daca am plasat sau nu o carte, ca sa stiu daca o sterg din deck sau nu
                             if (current_player == 1)
                             {
@@ -122,27 +105,33 @@ void Game::play_game()
                             current_player = (current_player == 1) ? 2 : 1;
                         }
                     }
-                }*/
+                }
         }
         window.clear();
 
         init_background();
         init_bell();
-        float pos_x = board.get_slot(0,3)->get_sprite().getPosition().x;
-        float pos_y = board.get_slot(0,3)->get_sprite().getPosition().y;
+        float pos_x = board.get_slot(0,3).get_sprite().getPosition().x;
+        float pos_y = board.get_slot(0,3).get_sprite().getPosition().y;
         squirrel_pile.draw(window,pos_x +2*one_slot_width,pos_y-10);
-        pos_x = board.get_slot(1,3)->get_sprite().getPosition().x;
-        pos_y = board.get_slot(1,3)->get_sprite().getPosition().y;
+        pos_x = board.get_slot(1,3).get_sprite().getPosition().x;
+        pos_y = board.get_slot(1,3).get_sprite().getPosition().y;
         normal_pile.draw(window,pos_x + 2*one_slot_width,pos_y+5);
         board.get_offset(window, one_slot_width, one_slot_height);
         board.draw(window);
         //std::cout << "Center of last slot: "<< board.get_slot(1,3)->get_sprite().getPosition().x << std::endl;
         //std::cout << "Center of last slot: "<< board.get_slot(1,3)->get_sprite().getPosition().y << std::endl;
 
+        /*Card c1 = card_factory(CardType::Adder);
+        Card c2 = card_factory(CardType::Squirrel);
+        Card c3 = card_factory(CardType::Mantis);
+        board.place_card(&c1, 1, 2);
+        board.place_card(&c2, 0, 2);
+        board.place_card(&c3, 0, 0);*/
         for (int i = 0; i < 2; i++)
             for (int j = 0; j < 4; j++)
-                if (!board.get_slot(i, j)->is_empty())
-                    board.get_slot(i, j)->update(window);
+                if (!board.get_slot(i, j).is_empty())
+                    board.get_slot(i, j).update(window);
         //board.remove_card(1,2); // this might not work after the changes
         player1.deck_draw(window);
 
@@ -184,17 +173,17 @@ Card *Game::go_through_deck(const sf::Vector2i mousePos, std::vector<Card *> &de
     return nullptr; //or if none was selected I am returning nullptr
 }
 
-bool Game::place_in_board(const sf::Vector2i mousePos, const int row, Card *selected_card) const
+bool Game::place_in_board(const sf::Vector2i mousePos, const int row, Card *selected_card)
 {
     /*
     std::cout <<"top place_in_board function\n";   // debugg
     std::cout<< "Mouse pos: "<<mousePos.x<< " "<<mousePos.y<< " \n";*/
     for(int j = 0; j < 4; j++)
     {
-        if(board.get_slot(row,j)->get_sprite().getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)))
+        if(board.get_slot(row,j).get_sprite().getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)))
         {
             // debugg std::cout<<"in bounds\n";
-            if(board.get_slot(row, j)->is_empty())
+            if(board.get_slot(row, j).is_empty())
             {
                 // debugg std::cout<<"empty\n";
                 selected_card->on_click_unselect(); // trece la animatia de unclicked
@@ -245,8 +234,8 @@ void Game::init_bell()
     bell_sprite.setScale(5.5f, 5.5f);
     bell_sprite.setOrigin(static_cast<float>(bell_texture.getSize().x) / 2,
                           static_cast<float>(bell_texture.getSize().y) / 2);
-    const float pos_x = board.get_slot(0,0)->get_sprite().getPosition().x;
-    const float pos_y = board.get_slot(0,0)->get_sprite().getPosition().y;
+    const float pos_x = board.get_slot(0,0).get_sprite().getPosition().x;
+    const float pos_y = board.get_slot(0,0).get_sprite().getPosition().y;
     bell_sprite.setPosition(pos_x - 1.5f * one_slot_width, pos_y + one_slot_height / 2); // 729,427
     window.draw(bell_sprite);
 }

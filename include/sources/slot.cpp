@@ -1,3 +1,4 @@
+
 #include "headers/slot.h"
 #include <iostream>
 Slot::Slot() : card(nullptr) {}
