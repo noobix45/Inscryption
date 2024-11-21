@@ -2,7 +2,15 @@
 #include "headers/slot.h"
 #include <iostream>
 
-Player::Player(std::string name_, const int id_) : name{std::move(name_)}, id{id_}, blood{0}, bones{0}, deck{id_} {}
+Player::Player(std::string name_, const int id_) : name{std::move(name_)}, id{id_}, blood{0}, bones{0}, deck{id_}
+{
+    std::cout << "Player "<<id<<" created" << std::endl;
+}
+
+Player::~Player()
+{
+    std::cout << "Player "<<id<<" destroyed" << std::endl;
+}
 
 
 void Player::draw_card(Pile &pile)

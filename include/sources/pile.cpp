@@ -3,9 +3,19 @@
 #include "headers/slot.h"
 #include <random>
 #include <iostream>
-#define pile_size 20
+#define pile_size 5
 
-Pile::Pile(const int id) : pile_id{id} { get_pile(); init_texture();}
+Pile::Pile(const int id) : pile_id{id} { get_pile(); init_texture(); std::cout<<"Pile "<<pile_id<<" created"<<std::endl;}
+
+Pile::~Pile()
+{
+    while(!pile.empty())
+    {
+        delete pile.top();
+        pile.pop();
+    }
+    std::cout << "Pile "<<pile_id<<" deleted"<<std::endl;
+}
 
 void Pile::get_pile()
 {

@@ -1,7 +1,11 @@
 
 #include "headers/slot.h"
 #include <iostream>
-Slot::Slot() : card(nullptr) {}
+Slot::Slot() : card(nullptr) {std::cout<<"Slot created"<<std::endl;}
+Slot::~Slot()
+{
+    std::cout<<"Slot destroyed"<<std::endl;
+}
 
 bool Slot::is_empty() const
 {

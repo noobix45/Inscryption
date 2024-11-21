@@ -15,6 +15,8 @@ class Slot
 public:
     Slot();
 
+    ~Slot();
+
     [[nodiscard]] bool is_empty() const;
 
     void place_card(Card *);

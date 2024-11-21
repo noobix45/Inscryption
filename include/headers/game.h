@@ -29,7 +29,7 @@ public:
 
     static Card* go_through_deck(sf::Vector2i mousePos,std::vector<Card*>&);
 
-    bool place_in_board(sf::Vector2i mousePos,int, Card* );
+    bool place_in_board(sf::Vector2i mousePos, int, Card *) const;
 
     static void delete_from_deck(std::vector<Card*>&, const Card* );
 

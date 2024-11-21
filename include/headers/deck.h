@@ -11,6 +11,8 @@ class Deck
 public:
     explicit Deck(int player_id_);
 
+    ~Deck();
+
     void get_deck();
 
     [[nodiscard]] int get_num_of_cards() const; //how many cards are in the deck

@@ -4,7 +4,18 @@
 #include "headers/cards_factory.h"
 #include "headers/slot.h"
 
-Deck::Deck(const int player_id_) : player_id{player_id_} {get_deck();}
+Deck::Deck(const int player_id_) : player_id{player_id_} {get_deck(); std::cout<<"Deck "<<player_id<<" created\n";}
+
+Deck::~Deck()
+{
+    for(const Card* card : deck)
+    {
+        delete card;
+    }
+    deck.clear();
+    std::cout<<"Deck " << player_id <<" destroyed\n";
+}
+
 
 void Deck::get_deck()
 {

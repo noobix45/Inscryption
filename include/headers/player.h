@@ -15,6 +15,8 @@ private:
 public:
     Player(std::string name_, int id_);
 
+    ~Player();
+
     void draw_card(Pile &pile);
 
     //static void sacrifice() {} // vor fi implementate
