@@ -1,6 +1,6 @@
 #include "headers/board.h"
 #include <iostream>
-Board::Board() // : board(2, std::vector<Slot*>(4))
+Board::Board()  : board()
 {
     for(int i=0;i<2;i++)
     {
@@ -65,6 +65,6 @@ void Board::get_offset(const sf::RenderWindow &window, const unsigned int &slot_
     offset_y = (window_y - static_cast<float>(board_height)) / 2;
 }
 
-Slot* Board::get_slot(const unsigned int &i, const unsigned int &j) const { return board[i][j]; }
+Slot *Board::get_slot(const unsigned int &i, const unsigned int &j) const { return board[i][j]; }
 // imi ia un singur slot
 //trebuie facut error handling

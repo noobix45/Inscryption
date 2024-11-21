@@ -34,6 +34,11 @@ void Pile::get_pile()
     }
 }
 
+int Pile::get_size() const
+{
+    return pile.size();
+}
+
 Card *Pile::get_card()
 {
     Card *card = pile.top();
@@ -47,6 +52,8 @@ Card *Pile::get_top()
     Card *card = pile.top();
     return card;
 }
+
+
 
 std::ostream &operator<<(std::ostream &out, Pile &pile)
 {

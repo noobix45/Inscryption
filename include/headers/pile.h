@@ -21,6 +21,8 @@ public:
 
     void get_pile();
 
+    int get_size() const;
+
     friend std::ostream &operator<<(std::ostream &out, Pile &pile);
 
     void init_texture();

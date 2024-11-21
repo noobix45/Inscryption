@@ -113,10 +113,12 @@ void Game::play_game()
         init_bell();
         float pos_x = board.get_slot(0, 3)->get_sprite().getPosition().x;
         float pos_y = board.get_slot(0, 3)->get_sprite().getPosition().y;
-        squirrel_pile.draw(window,pos_x +2*one_slot_width,pos_y-10);
+        if (squirrel_pile.get_size() > 0)
+            squirrel_pile.draw(window, pos_x + 2 * one_slot_width, pos_y - 10);
         pos_x = board.get_slot(1, 3)->get_sprite().getPosition().x;
         pos_y = board.get_slot(1, 3)->get_sprite().getPosition().y;
-        normal_pile.draw(window,pos_x + 2*one_slot_width,pos_y+5);
+        if (normal_pile.get_size() > 0)
+            normal_pile.draw(window, pos_x + 2 * one_slot_width, pos_y + 5);
         board.get_offset(window, one_slot_width, one_slot_height);
         board.draw(window);
         //std::cout << "Center of last slot: "<< board.get_slot(1,3)->get_sprite().getPosition().x << std::endl;
@@ -205,6 +207,7 @@ void Game::delete_from_deck(std::vector<Card *>& deck,const Card *selected_card)
         temp_card = deck[i];
         if(temp_card == selected_card)
         {
+            delete deck[i];
             deck.erase(deck.begin() + i);
             deck.shrink_to_fit();
         }

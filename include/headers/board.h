@@ -6,7 +6,7 @@
 
 class Board
 {
-    std::array<std::array<Slot*, 4>, 2> board;
+    std::array<std::array<Slot *, 4>, 2> board;
     unsigned int board_width = 0;
     unsigned int board_height = 0;
     float offset_x = 0;
@@ -24,8 +24,7 @@ public:
 
     void get_offset(const sf::RenderWindow &window, const unsigned int &, const unsigned int &);
 
-    [[nodiscard]] Slot* get_slot(const unsigned int &, const unsigned int &) const;
-
+    [[nodiscard]] Slot *get_slot(const unsigned int &, const unsigned int &) const;
 };
 
 #endif //BOARD_H
