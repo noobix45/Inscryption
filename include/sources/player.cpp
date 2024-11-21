@@ -15,7 +15,10 @@ Player::~Player()
 
 void Player::draw_card(Pile &pile)
 {
+    if(pile.get_size()>0)
     deck.add_card(pile.get_card()); // get card from pile, add card in deck
+    else
+        std::cout << "Pile is empty" << std::endl;
 }
 
 

@@ -19,6 +19,8 @@ public:
 
     [[nodiscard]] bool is_empty() const;
 
+    Card *get_card() const;
+
     void place_card(Card *);
 
     void remove_card();

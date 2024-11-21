@@ -15,6 +15,7 @@ Deck::~Deck()
     for (const Card *card: deck) { delete card; }
     deck.clear();
     std::cout << "Deck " << player_id << " destroyed\n";
+    std::cout.flush();
 }
 
 

@@ -24,10 +24,12 @@ void Game::play_game()
         {
                 if (event.type == sf::Event::KeyPressed)
                     if (event.key.code == sf::Keyboard::Escape) { window.close(); }
+                if (squirrel_pile.get_size() == 0 && normal_pile.get_size() == 0)
+                    current_phase = 1;
                 // daca se da un click tratez cazurile
                 if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
                 {
-                    sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+                    const sf::Vector2i mousePos = sf::Mouse::getPosition(window);
                     if (current_phase == 0) // draw phase
                     {
                         if (pile_clicked(mousePos) == 1) // returneaza pile_id
@@ -115,6 +117,7 @@ void Game::play_game()
         float pos_y = board.get_slot(0, 3)->get_sprite().getPosition().y;
         if (squirrel_pile.get_size() > 0)
             squirrel_pile.draw(window, pos_x + 2 * one_slot_width, pos_y - 10);
+        else {}
         pos_x = board.get_slot(1, 3)->get_sprite().getPosition().x;
         pos_y = board.get_slot(1, 3)->get_sprite().getPosition().y;
         if (normal_pile.get_size() > 0)
@@ -207,7 +210,6 @@ void Game::delete_from_deck(std::vector<Card *>& deck,const Card *selected_card)
         temp_card = deck[i];
         if(temp_card == selected_card)
         {
-            delete deck[i];
             deck.erase(deck.begin() + i);
             deck.shrink_to_fit();
         }

@@ -13,10 +13,12 @@ Board::Board()  : board()
 Board::~Board() {
     for (int i = 0; i < 2; ++i) {
         for (int j = 0; j < 4; ++j) {
+            if (board[i][j]->get_card() != nullptr) { delete board[i][j]->get_card(); }
             delete board[i][j];
         }
     }
     std::cout << "Board Destroyed" << std::endl;
+    std::cout.flush();
 }
 
 
@@ -66,5 +68,3 @@ void Board::get_offset(const sf::RenderWindow &window, const unsigned int &slot_
 }
 
 Slot *Board::get_slot(const unsigned int &i, const unsigned int &j) const { return board[i][j]; }
-// imi ia un singur slot
-//trebuie facut error handling

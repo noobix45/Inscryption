@@ -9,12 +9,16 @@ Pile::Pile(const int id) : pile_id{id} { get_pile(); init_texture(); std::cout<<
 
 Pile::~Pile()
 {
-    while(!pile.empty())
+    if (pile.empty())
+        std::cout << "Pile " << pile_id << " empty" << std::endl;
+    else
+        while(!pile.empty())
     {
         delete pile.top();
         pile.pop();
     }
-    std::cout << "Pile "<<pile_id<<" deleted"<<std::endl;
+    std::cout << "Pile "<<pile_id<<" deleted" << std::endl;
+    std::cout.flush();
 }
 
 void Pile::get_pile()
@@ -36,7 +40,7 @@ void Pile::get_pile()
 
 int Pile::get_size() const
 {
-    return pile.size();
+    return static_cast<int>(pile.size());
 }
 
 Card *Pile::get_card()
