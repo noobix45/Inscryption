@@ -21,15 +21,9 @@ Card::~Card()// = default;
 {
     std::cout << name<< " destroyed" << std::endl;
 }
-Card::Card(const Card &other_card) // constructor de copiere
-{
-    name = other_card.name;
-    hp = other_card.hp;
-    damage = other_card.damage;
-    cost_in_blood = other_card.cost_in_blood;
-    cost_in_bones = other_card.cost_in_bones;
-    e = other_card.e;
-}
+
+Card::Card(const Card &other_card) : name(other_card.name), hp(other_card.hp),damage(other_card.damage),
+cost_in_blood(other_card.cost_in_blood),cost_in_bones(other_card.cost_in_bones), e(other_card.e) {std::cout<<"carte copiata\n";}
 
 std::string Card::get_name() const { return name; }
 

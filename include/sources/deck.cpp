@@ -12,7 +12,9 @@ Deck::Deck(const int player_id_) : player_id{player_id_}
 
 Deck::~Deck()
 {
-    for (const Card *card: deck) { delete card; }
+    for (const auto& card : deck) {
+        delete card;  // Delete the dynamically allocated card
+    }
     deck.clear();
     std::cout << "Deck " << player_id << " destroyed\n";
     std::cout.flush();
