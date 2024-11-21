@@ -13,7 +13,11 @@ Board::Board()  : board()
 Board::~Board() {
     for (int i = 0; i < 2; ++i) {
         for (int j = 0; j < 4; ++j) {
-            if (board[i][j]->get_card() != nullptr) { delete board[i][j]->get_card(); }
+            if (board[i][j]->get_card() != nullptr)
+            {
+                std::cout << "deleting " << board[i][j]->get_card()->get_name() << "from slot\n";
+                delete board[i][j]->get_card();
+            }
             delete board[i][j];
         }
     }
