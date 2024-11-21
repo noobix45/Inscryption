@@ -25,7 +25,9 @@ void Game::play_game()
                 if (event.type == sf::Event::KeyPressed)
                     if (event.key.code == sf::Keyboard::Escape) { window.close(); }
                 if (squirrel_pile.get_size() == 0 && normal_pile.get_size() == 0)
+                {
                     current_phase = 1;
+                }
                 // daca se da un click tratez cazurile
                 if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
                 {

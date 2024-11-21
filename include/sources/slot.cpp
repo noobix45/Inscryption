@@ -1,11 +1,9 @@
-
 #include "headers/slot.h"
 #include <iostream>
 Slot::Slot() : card(nullptr) { std::cout << "Slot created" << std::endl; }
+
 Slot::~Slot()
 {
-    if (card != nullptr)
-        delete card; // nu stiu daca are vreun rost dar incerc orice
     std::cout << "Slot destroyed" << std::endl;
 }
 
@@ -14,10 +12,7 @@ bool Slot::is_empty() const
     return card == nullptr; // daca card e nullptr return true else return false,
 }
 
-Card * Slot::get_card() const
-{
-    return card;
-}
+Card *Slot::get_card() const { return card; }
 
 void Slot::place_card(Card *new_card)
 {
@@ -56,9 +51,4 @@ void Slot::update(sf::RenderWindow &window) const
     card->update_number(window);
 }
 
-sf::Sprite& Slot::get_sprite()
-{
-    return slot_sprite;
-}
-
-
+sf::Sprite &Slot::get_sprite() { return slot_sprite; }
