@@ -8,8 +8,8 @@ Game::Game() : squirrel_pile(1),
                player2{"Player2", 2},
                window(sf::VideoMode::getDesktopMode(), "Inscryption", sf::Style::Fullscreen)
 {
-    player1.make_deck();
-    player2.make_deck();
+    //player1.make_deck();
+    //player2.make_deck();
     play_game();
 }
 

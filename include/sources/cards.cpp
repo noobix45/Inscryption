@@ -68,10 +68,10 @@ void Card::init_texture(const std::string &file_name)
     scale_small();
 
     static bool font_loaded = false;
-    if (!font_loaded) {
-        if (!font.loadFromFile("heaviwei.ttf")) {
-            std::cout << "Unable to load font\n";
-        } else {
+    if (!font_loaded)
+    {
+        if (!font.loadFromFile("heaviwei.ttf")) { std::cout << "Unable to load font\n"; } else
+        {
             font_loaded = true; // Mark font as loaded
         }
     }

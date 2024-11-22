@@ -17,7 +17,7 @@ public:
 
     ~Player();
 
-    void make_deck();
+    //void make_deck();
 
     void draw_card(Pile &pile);
 

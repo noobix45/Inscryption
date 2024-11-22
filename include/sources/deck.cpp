@@ -6,7 +6,7 @@
 
 Deck::Deck(const int player_id_) : player_id{player_id_}
 {
-    //get_deck();
+    get_deck();
     std::cout << "Deck " << player_id << " created\n";
 }
 
@@ -18,7 +18,7 @@ Deck::~Deck()
     //     delete card; // Delete the dynamically allocated card
     // }
     deck.clear();
-    std::cout << "Finished destruction of Deck " << player_id << "\n";
+    std::cout << " called deck.clear Finished destruction of Deck " << player_id << "\n";
     std::cout.flush();
 }
 
