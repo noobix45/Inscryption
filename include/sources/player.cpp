@@ -9,9 +9,14 @@ Player::Player(std::string name_, const int id_) : name{std::move(name_)}, id{id
 
 Player::~Player()
 {
-    std::cout << "Player "<<id<<" destroyed" << std::endl;
+    std::cout << "Starting destruction of Player " << id << "\n";
+    for (const auto &card: deck.get_all())
+    {
+        delete card; // Delete the dynamically allocated card
+    }
+    //deck.get_all().clear;
+    std::cout << "Finished destruction of Player " << id << "\n";
 }
-
 
 void Player::draw_card(Pile &pile)
 {

@@ -17,6 +17,7 @@ public:
 
     ~Player();
 
+
     void draw_card(Pile &pile);
 
     //static void sacrifice() {} // vor fi implementate
