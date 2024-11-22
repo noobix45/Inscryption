@@ -13,7 +13,7 @@ private:
     Deck deck;
 
 public:
-    Player(std::string name_, int id_);
+    Player(std::string name_, int id_,const sf::Font&);
 
     ~Player();
 

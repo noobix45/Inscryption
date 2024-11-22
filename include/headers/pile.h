@@ -7,11 +7,12 @@ class Pile
 {
     // 2 piles will be defined, one with squirrels, one with normal cards
     int pile_id;
+    sf::Font font_;
     std::stack<Card *> pile; // always draw from top, decrease number of cards by one when drawn.
     sf::Texture pile_texture;
     sf::Sprite pile_sprite;
 public:
-    explicit Pile(int id); // pile 1  = squirrels // pile 2 = normal cards
+    explicit Pile(int id,const sf::Font&); // pile 1  = squirrels // pile 2 = normal cards
 
     ~Pile();
 

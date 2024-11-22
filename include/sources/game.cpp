@@ -1,11 +1,14 @@
 #include "headers/game.h"
 #include "headers/cards_factory.h"
+#include "headers/font_manager.h"
 #include <iostream>
 
-Game::Game() : squirrel_pile(1),
-               normal_pile(2),
-               player1{"Player1", 1},
-               player2{"Player2", 2},
+Game::Game() :
+                font_manager_("heaviwei.ttf"),
+                squirrel_pile(1,font_manager_.getFont()),
+               normal_pile(2,font_manager_.getFont()),
+               player1{"Player1", 1,font_manager_.getFont()},
+               player2{"Player2", 2,font_manager_.getFont()},
                window(sf::VideoMode::getDesktopMode(), "Inscryption", sf::Style::Fullscreen)
 {
     play_game();

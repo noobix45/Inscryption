@@ -3,21 +3,21 @@
 
 #include "headers/slot.h"
 
-sf::Font Card::font;
-
 Card::Card() = default; // pentru caz default in card_factoy
 
 // Constructor for cards that take blood
-Card::Card(const std::string &file_name, std::string name_, const int hp_, int const damage_, const int cost_in_blood_,const Effect e_):
+Card::Card(const std::string &file_name, std::string name_, const int hp_, int const damage_, const int cost_in_blood_,const Effect e_,
+    const sf::Font& font):
 name{std::move(name_)}, hp{hp_}, damage{damage_}, cost_in_blood{cost_in_blood_}, cost_in_bones{0},e{e_}
 {
-    init_texture(file_name);
+    init_texture(file_name,font);
     std::cout<<name<<" created"<<std::endl;
 }
 
 // Constructor for cards that take bones
-Card::Card(const std::string &file_name, std::string name_, const int hp_, const int damage_, const int cost_in_bones_, const Effect e_,[[maybe_unused]] bool bone):
-name{std::move(name_)}, hp{hp_}, damage{damage_}, cost_in_blood{0},cost_in_bones{cost_in_bones_},e{e_} { init_texture(file_name); }
+Card::Card(const std::string &file_name, std::string name_, const int hp_, const int damage_, const int cost_in_bones_,
+    const Effect e_,[[maybe_unused]] bool bone, const sf::Font& font):
+name{std::move(name_)}, hp{hp_}, damage{damage_}, cost_in_blood{0},cost_in_bones{cost_in_bones_},e{e_} { init_texture(file_name,font); }
 
 Card::~Card()// = default;
 {
@@ -56,7 +56,7 @@ std::ostream &operator<<(std::ostream &out, const Card &card)
     return out;
 }
 
-void Card::init_texture(const std::string &file_name)
+void Card::init_texture(const std::string &file_name,const sf::Font& font)
 {
     if (!card_texture.loadFromFile(file_name)) //test texture
     {
@@ -67,14 +67,6 @@ void Card::init_texture(const std::string &file_name)
                           static_cast<float>(card_texture.getSize().y) / 2);
     scale_small();
 
-    static bool font_loaded = false;
-    if (!font_loaded)
-    {
-        if (!font.loadFromFile("heaviwei.ttf")) { std::cout << "Unable to load font\n"; } else
-        {
-            font_loaded = true; // Mark font as loaded
-        }
-    }
     hp_text.setFont(font);
     damage_text.setFont(font);
 }

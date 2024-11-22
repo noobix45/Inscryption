@@ -17,7 +17,6 @@ private:
     Effect e = none;
     sf::Texture card_texture;
     sf::Sprite card_sprite;
-    static sf::Font font;
     sf::Text hp_text;
     sf::Text damage_text;
     bool clicked = false;
@@ -25,10 +24,11 @@ private:
 public:
     Card(); // pentru caz default in card_factoy
     //constructor for cards that take blood
-    Card(const std::string& file_name, std::string name_, int hp_, int damage_, int cost_in_blood_, Effect e_);
+    Card(const std::string& file_name, std::string name_, int hp_, int damage_, int cost_in_blood_, Effect e_,const sf::Font& font);
 
     //constructor for cards that take bones
-    Card(const std::string& file_name, std::string name_, int hp_, int damage_, int cost_in_bones_, Effect e_, [[maybe_unused]] bool bone);
+    Card(const std::string& file_name, std::string name_, int hp_, int damage_, int cost_in_bones_, Effect e_,
+        [[maybe_unused]] bool bone,const sf::Font& font);
 
     //destructor
     ~Card();
@@ -42,7 +42,7 @@ public:
 
     friend std::ostream &operator <<(std::ostream &out, const Card &card);
 
-    void init_texture(const std::string& file_name);
+    void init_texture(const std::string& file_name,const sf::Font& font);
 
     void draw(sf::RenderWindow &window, const float &, const float &);
 

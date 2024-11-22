@@ -5,7 +5,7 @@
 #include <iostream>
 #define pile_size 5
 
-Pile::Pile(const int id) : pile_id{id} { get_pile(); init_texture(); std::cout<<"Pile "<<pile_id<<" created"<<std::endl;}
+Pile::Pile(const int id,const sf::Font &font) : pile_id{id}, font_(font) { get_pile(); init_texture(); std::cout<<"Pile "<<pile_id<<" created"<<std::endl;}
 
 Pile::~Pile()
 {
@@ -27,13 +27,13 @@ void Pile::get_pile()
     std::mt19937 gen(rd());
     std::uniform_int_distribution<int> dis(1, num_of_types);
     if (this->pile_id == 1)
-        for (int i = 0; i < pile_size; i++) { pile.push(new Card(card_factory(CardType::Squirrel))); }
+        for (int i = 0; i < pile_size; i++) { pile.push(new Card(card_factory(CardType::Squirrel,font_))); }
     else
     {
         for (int i = 0; i < pile_size; i++)
         {
             int r = dis(gen); // 1 2 3... possible outcomes
-            pile.push(new Card(card_factory(static_cast<CardType>(r))));
+            pile.push(new Card(card_factory(static_cast<CardType>(r),font_)));
         }
     }
 }

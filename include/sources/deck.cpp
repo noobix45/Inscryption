@@ -4,7 +4,7 @@
 #include "headers/cards_factory.h"
 #include "headers/slot.h"
 
-Deck::Deck(const int player_id_) : player_id{player_id_}
+Deck::Deck(const int player_id_, const sf::Font &font) : player_id{player_id_}, font_(font)
 {
     std::cout << "Deck " << player_id << " created\n";
 }
@@ -30,11 +30,11 @@ void Deck::get_deck()
     std::mt19937 gen(rd());
     std::uniform_int_distribution<int> dis(1, num_of_types);
 
-    deck.push_back(new Card(card_factory(CardType::Squirrel)));
+    deck.push_back(new Card(card_factory(CardType::Squirrel, font_)));
     for (int i = 0; i < 3; i++) //deckul are 3 carti plus veverita initial
     {
         int r = dis(gen);
-        deck.push_back(new Card(card_factory(static_cast<CardType>(r))));
+        deck.push_back(new Card(card_factory(static_cast<CardType>(r), font_)));
     }
 }
 

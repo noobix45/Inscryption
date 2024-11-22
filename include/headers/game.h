@@ -5,9 +5,13 @@
 #include "board.h"
 #include <SFML/Graphics.hpp>
 
+#include "cards_factory.h"
+#include "font_manager.h"
+
 class Game
 {
 private:
+    FontManager font_manager_;
     Pile squirrel_pile;
     Pile normal_pile;
     Player player1;

@@ -61,6 +61,8 @@ add_executable(${PROJECT_NAME}
         include/sources/pile.cpp
         include/sources/player.cpp
         include/sources/slot.cpp
+        include/headers/font_manager.h
+        include/sources/font_manager.cpp
 )
 
 include(cmake/CompilerFlags.cmake)

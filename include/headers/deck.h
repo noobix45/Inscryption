@@ -6,10 +6,11 @@
 class Deck
 {
     int player_id;
+    sf::Font font_;
     std::vector<Card*> deck; // cartile din deck-ul jucatorului
 
 public:
-    explicit Deck(int player_id_);
+    explicit Deck(int player_id_, const sf::Font &);
 
     ~Deck();
 
