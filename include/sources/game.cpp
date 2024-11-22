@@ -8,13 +8,13 @@ Game::Game() : squirrel_pile(1),
                player2{"Player2", 2},
                window(sf::VideoMode::getDesktopMode(), "Inscryption", sf::Style::Fullscreen)
 {
-    //player1.make_deck();
-    //player2.make_deck();
     play_game();
 }
 
 void Game::play_game()
 {
+    player1.make_deck();
+    player2.make_deck();
     //la inceputul turei unui jucator, acesta trebuie sa traga o carte, apoi poate sa joace oricate carti din deck.
     //Cand considera ca si-a terminat tura apasa pe clopotel.
     // sus, nu e inca implementat

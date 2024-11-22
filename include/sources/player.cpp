@@ -17,8 +17,7 @@ Player::~Player()
     //deck.get_all().clear;
     std::cout << "Finished destruction of Player " << id << "\n";
 }
-
-//void Player::make_deck() { deck.get_deck(); }
+void Player::make_deck() { deck.get_deck(); }
 
 void Player::draw_card(Pile &pile)
 {
