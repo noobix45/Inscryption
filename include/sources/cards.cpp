@@ -3,6 +3,8 @@
 
 #include "headers/slot.h"
 
+sf::Font Card::font;
+
 Card::Card() = default; // pentru caz default in card_factoy
 
 // Constructor for cards that take blood
@@ -65,9 +67,13 @@ void Card::init_texture(const std::string &file_name)
                           static_cast<float>(card_texture.getSize().y) / 2);
     scale_small();
 
-    if (!font.loadFromFile("heaviwei.ttf"))
-    {
-        std::cout<<"Unable to load font\n";
+    static bool font_loaded = false;
+    if (!font_loaded) {
+        if (!font.loadFromFile("heaviwei.ttf")) {
+            std::cout << "Unable to load font\n";
+        } else {
+            font_loaded = true; // Mark font as loaded
+        }
     }
     hp_text.setFont(font);
     damage_text.setFont(font);

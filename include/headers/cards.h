@@ -17,7 +17,7 @@ private:
     Effect e = none;
     sf::Texture card_texture;
     sf::Sprite card_sprite;
-    sf::Font font;
+    static sf::Font font;
     sf::Text hp_text;
     sf::Text damage_text;
     bool clicked = false;
