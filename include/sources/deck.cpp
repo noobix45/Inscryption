@@ -6,7 +6,7 @@
 
 Deck::Deck(const int player_id_) : player_id{player_id_}
 {
-    get_deck();
+    //get_deck();
     std::cout << "Deck " << player_id << " created\n";
 }
 
