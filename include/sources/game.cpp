@@ -15,6 +15,8 @@ void Game::play_game()
 {
     player1.make_deck();
     player2.make_deck();
+    init_background();
+    init_bell();
     //la inceputul turei unui jucator, acesta trebuie sa traga o carte, apoi poate sa joace oricate carti din deck.
     //Cand considera ca si-a terminat tura apasa pe clopotel.
     // sus, nu e inca implementat
@@ -118,8 +120,8 @@ void Game::play_game()
         }
         window.clear();
 
-        init_background();
-        init_bell();
+        window.draw(background_sprite);
+        window.draw(bell_sprite);
         float pos_x = board.get_slot(0, 3)->get_sprite().getPosition().x;
         float pos_y = board.get_slot(0, 3)->get_sprite().getPosition().y;
         if (squirrel_pile.get_size() > 0)
@@ -225,19 +227,16 @@ void Game::delete_from_deck(std::vector<Card *>& deck,const Card *selected_card)
 
 void Game::init_background()
 {
-    sf::Texture background;
-    background.loadFromFile("pictures/woodPlanks_albedo.png");
-    sf::Sprite background_sprite;
-    background_sprite.setTexture(background);
+    background_texture.loadFromFile("pictures/woodPlanks_albedo.png");
+    background_sprite.setTexture(background_texture);
 
     const sf::Vector2u window_size = window.getSize();
-    const sf::Vector2u background_size = background.getSize();
+    const sf::Vector2u background_size = background_texture.getSize();
 
     const auto scale_x = static_cast<float>(window_size.x) / static_cast<float>(background_size.x);
     const auto scale_y = static_cast<float>(window_size.y) / static_cast<float>(background_size.y);
 
     background_sprite.setScale(scale_x, scale_y);
-    window.draw(background_sprite);
 }
 
 void Game::init_bell()
@@ -250,7 +249,6 @@ void Game::init_bell()
     const float pos_x = board.get_slot(0, 0)->get_sprite().getPosition().x;
     const float pos_y = board.get_slot(0, 0)->get_sprite().getPosition().y;
     bell_sprite.setPosition(pos_x - 1.5f * one_slot_width, pos_y + one_slot_height / 2); // 729,427
-    window.draw(bell_sprite);
 }
 
 int Game::pile_clicked(const sf::Vector2i mousePos)

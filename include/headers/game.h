@@ -13,6 +13,8 @@ private:
     Player player1;
     Player player2;
     //Scale scale
+    sf::Texture background_texture;
+    sf::Sprite background_sprite;
     sf::Texture bell_texture;
     sf::Sprite bell_sprite;
     Board board;
