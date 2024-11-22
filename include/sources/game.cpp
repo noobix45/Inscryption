@@ -130,11 +130,11 @@ void Game::play_game()
         window.draw(bell_sprite);
         float pos_x = board.get_slot(0, 3)->get_sprite().getPosition().x;
         float pos_y = board.get_slot(0, 3)->get_sprite().getPosition().y;
-        //if (squirrel_pile.get_size() > 0)
+        if (squirrel_pile.get_size() > 0)
             squirrel_pile.draw(window, pos_x + 2 * one_slot_width, pos_y - 10);
         pos_x = board.get_slot(1, 3)->get_sprite().getPosition().x;
         pos_y = board.get_slot(1, 3)->get_sprite().getPosition().y;
-        //if (normal_pile.get_size() > 0)
+        if (normal_pile.get_size() > 0)
             normal_pile.draw(window, pos_x + 2 * one_slot_width, pos_y + 5);
         board.get_offset(window, one_slot_width, one_slot_height);
         board.draw(window);
