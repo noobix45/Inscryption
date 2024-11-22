@@ -121,15 +121,20 @@ void Game::play_game()
         window.clear();
 
         window.draw(background_sprite);
+        bell_sprite.setScale(5.5f, 5.5f);
+        bell_sprite.setOrigin(static_cast<float>(bell_texture.getSize().x) / 2,
+                              static_cast<float>(bell_texture.getSize().y) / 2);
+        const float pos_xb = board.get_slot(0, 0)->get_sprite().getPosition().x;
+        const float pos_yb = board.get_slot(0, 0)->get_sprite().getPosition().y;
+        bell_sprite.setPosition(pos_xb - 1.5f * one_slot_width, pos_yb + one_slot_height / 2); // 729,427
         window.draw(bell_sprite);
         float pos_x = board.get_slot(0, 3)->get_sprite().getPosition().x;
         float pos_y = board.get_slot(0, 3)->get_sprite().getPosition().y;
-        if (squirrel_pile.get_size() > 0)
+        //if (squirrel_pile.get_size() > 0)
             squirrel_pile.draw(window, pos_x + 2 * one_slot_width, pos_y - 10);
-        else {}
         pos_x = board.get_slot(1, 3)->get_sprite().getPosition().x;
         pos_y = board.get_slot(1, 3)->get_sprite().getPosition().y;
-        if (normal_pile.get_size() > 0)
+        //if (normal_pile.get_size() > 0)
             normal_pile.draw(window, pos_x + 2 * one_slot_width, pos_y + 5);
         board.get_offset(window, one_slot_width, one_slot_height);
         board.draw(window);
@@ -243,12 +248,12 @@ void Game::init_bell()
 {
     if(!bell_texture.loadFromFile("pictures/bell.png")) { std::cout<< " Unable to load bell\n"; }
     bell_sprite.setTexture(bell_texture);
-    bell_sprite.setScale(5.5f, 5.5f);
-    bell_sprite.setOrigin(static_cast<float>(bell_texture.getSize().x) / 2,
-                          static_cast<float>(bell_texture.getSize().y) / 2);
-    const float pos_x = board.get_slot(0, 0)->get_sprite().getPosition().x;
-    const float pos_y = board.get_slot(0, 0)->get_sprite().getPosition().y;
-    bell_sprite.setPosition(pos_x - 1.5f * one_slot_width, pos_y + one_slot_height / 2); // 729,427
+    // bell_sprite.setScale(5.5f, 5.5f);
+    // bell_sprite.setOrigin(static_cast<float>(bell_texture.getSize().x) / 2,
+    //                       static_cast<float>(bell_texture.getSize().y) / 2);
+    // const float pos_x = board.get_slot(0, 0)->get_sprite().getPosition().x;
+    // const float pos_y = board.get_slot(0, 0)->get_sprite().getPosition().y;
+    // bell_sprite.setPosition(pos_x - 1.5f * one_slot_width, pos_y + one_slot_height / 2); // 729,427
 }
 
 int Game::pile_clicked(const sf::Vector2i mousePos)
