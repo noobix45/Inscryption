@@ -12,11 +12,7 @@ Deck::Deck(const int player_id_, const sf::Font &font) : player_id{player_id_}, 
 Deck::~Deck()
 {
     std::cout << "Starting destruction of Deck " << player_id << "\n";
-    // for (const auto &card: deck)
-    // {
-    //     delete card; // Delete the dynamically allocated card
-    // }
-    deck.clear();
+    //deck.clear();
     std::cout << " called deck.clear Finished destruction of Deck " << player_id << "\n";
     std::cout.flush();
 }

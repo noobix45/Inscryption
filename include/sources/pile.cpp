@@ -5,7 +5,12 @@
 #include <iostream>
 #define pile_size 5
 
-Pile::Pile(const int id,const sf::Font &font) : pile_id{id}, font_(font) { get_pile(); init_texture(); std::cout<<"Pile "<<pile_id<<" created"<<std::endl;}
+Pile::Pile(const int id, const sf::Font &font) : pile_id{id}, font_(font)
+{
+    get_pile();
+    init_texture();
+    std::cout << "Pile " << pile_id << " created" << std::endl;
+}
 
 Pile::~Pile()
 {

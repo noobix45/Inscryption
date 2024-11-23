@@ -21,6 +21,12 @@ name{std::move(name_)}, hp{hp_}, damage{damage_}, cost_in_blood{0},cost_in_bones
 
 Card::~Card()// = default;
 {
+    card_sprite.setTexture(sf::Texture());
+    hp_text.setFont(sf::Font());
+    damage_text.setFont(sf::Font());
+    card_texture = sf::Texture();
+    clicked = false;
+    std::cout << "Resources cleared for Card: " << name << "\n";
     std::cout << name<< " destroyed" << std::endl;
 }
 
@@ -135,3 +141,4 @@ void Card::update_number(sf::RenderWindow &window)
     window.draw(hp_text);
     window.draw(damage_text);
 }
+

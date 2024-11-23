@@ -12,7 +12,7 @@ class Pile
     sf::Texture pile_texture;
     sf::Sprite pile_sprite;
 public:
-    explicit Pile(int id,const sf::Font&); // pile 1  = squirrels // pile 2 = normal cards
+    explicit Pile(int id, const sf::Font &); // pile 1  = squirrels // pile 2 = normal cards
 
     ~Pile();
 

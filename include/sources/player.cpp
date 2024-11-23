@@ -14,7 +14,7 @@ Player::~Player()
     {
         delete card; // Delete the dynamically allocated card
     }
-    //deck.get_all().clear;
+    deck.get_all().clear();
     std::cout << "Finished destruction of Player " << id << "\n";
 }
 void Player::make_deck() { deck.get_deck(); }
@@ -22,7 +22,7 @@ void Player::make_deck() { deck.get_deck(); }
 void Player::draw_card(Pile &pile)
 {
     if(pile.get_size()>0)
-    deck.add_card(pile.get_card()); // get card from pile, add card in deck
+        deck.add_card(pile.get_card()); // get card from pile, add card in deck
     else
         std::cout << "Pile is empty" << std::endl;
 }
