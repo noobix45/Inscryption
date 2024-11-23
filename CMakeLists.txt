@@ -59,10 +59,10 @@ add_executable(${PROJECT_NAME}
         include/sources/cards.cpp
         include/sources/deck.cpp
         include/sources/pile.cpp
-        include/sources/player.cpp
+        #include/sources/player.cpp
         include/sources/slot.cpp
-        include/headers/font_manager.h
-        include/sources/font_manager.cpp
+        #include/sources/font_manager.cpp
+        include/sources/cards_factory.cpp
 )
 
 include(cmake/CompilerFlags.cmake)

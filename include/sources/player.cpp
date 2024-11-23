@@ -2,33 +2,24 @@
 #include "headers/slot.h"
 #include <iostream>
 
-Player::Player(std::string name_, const int id_,const sf::Font& font) : name{std::move(name_)}, id{id_}, blood{0}, bones{0}, deck{id_,font}
+Player::Player(std::string name_, const int id_,const sf::Font& font_) : name{std::move(name_)}, id{id_}, blood{0}, bones{0}, deck{id_,font_}
 {
-    std::cout << "Player "<<id<<" created" << std::endl;
+    std::cout<<"Player " <<id <<" constructed"<<std::endl;
 }
 
 Player::~Player()
 {
-    std::cout << "Starting destruction of Player " << id << "\n";
-    for (const auto &card: deck.get_all())
-    {
-        delete card; // Delete the dynamically allocated card
-    }
-    deck.get_all().clear();
-    std::cout << "Finished destruction of Player " << id << "\n";
+    std::cout << "Player "<<id << " destroyed" << std::endl;
 }
-void Player::make_deck() { deck.get_deck(); }
 
 void Player::draw_card(Pile &pile)
 {
-    if(pile.get_size()>0)
-        deck.add_card(pile.get_card()); // get card from pile, add card in deck
-    else
-        std::cout << "Pile is empty" << std::endl;
+    deck.add_card(pile.get_card()); // get card from pile, add card in deck
 }
 
 
-void Player::deck_draw(sf::RenderWindow &window) const { deck.deck_draw(window); }
+
+void Player::deck_draw(sf::RenderWindow &window) { deck.deck_draw(window, x, y); } // deprecated
 
 std::ostream &operator<<(std::ostream &out, const Player &player)
 {
@@ -39,4 +30,10 @@ std::ostream &operator<<(std::ostream &out, const Player &player)
     return out;
 }
 
-std::vector<Card*>& Player::whose_deck() { return deck.get_all(); }
+void Player::make_deck()
+{
+    deck.make_deck();
+}
+
+
+std::vector<Card>& Player::whose_deck() { return deck.get_all(); }

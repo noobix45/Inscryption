@@ -13,7 +13,16 @@ class Slot
     sf::Sprite slot_sprite;
 
 public:
-    Slot();
+
+    Slot()=default;
+
+    Slot(const Slot& other_slot);
+
+    Slot &operator=(const Slot &other_slot);
+
+    explicit Slot(const sf::Texture&);
+
+    void setUp();
 
     ~Slot();
 
@@ -24,8 +33,6 @@ public:
     void place_card(Card *);
 
     void remove_card();
-
-    void textures_init();
 
     void draw(sf::RenderWindow &window, const float &, const float &);
 

@@ -5,71 +5,60 @@
 #include <iostream>
 #define pile_size 5
 
-Pile::Pile(const int id, const sf::Font &font) : pile_id{id}, font_(font)
+Pile::Pile(const int id, const std::vector<Card>& predefined) : pile_id{id}
 {
-    get_pile();
+    std::cout << "Creating new pile. Calling Make pile function..." << std::endl;
+    make_pile(predefined);
+    std::cout << "Calling pile init textures...\n";
     init_texture();
-    std::cout << "Pile " << pile_id << " created" << std::endl;
+    std::cout<<"Pile "<< pile_id <<" pile created\n";
 }
 
 Pile::~Pile()
 {
-    if (pile.empty())
-        std::cout << "Pile " << pile_id << " empty" << std::endl;
-    else
-        while(!pile.empty())
-    {
-        delete pile.top();
-        pile.pop();
-    }
-    std::cout << "Pile "<<pile_id<<" deleted" << std::endl;
-    std::cout.flush();
+    std::cout << "Pile "<<pile_id <<" destroyed"<< std::endl;
 }
 
-void Pile::get_pile()
+
+void Pile::make_pile(const std::vector<Card>& predefined)
 {
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_int_distribution<int> dis(1, num_of_types);
-    if (this->pile_id == 1)
-        for (int i = 0; i < pile_size; i++) { pile.push(new Card(card_factory(CardType::Squirrel,font_))); }
+    if (pile_id == 1)
+        for (int i = 0; i < pile_size; i++)
+        {
+            pile.push(predefined[0]);
+        }
     else
     {
         for (int i = 0; i < pile_size; i++)
         {
-            int r = dis(gen); // 1 2 3... possible outcomes
-            pile.push(new Card(card_factory(static_cast<CardType>(r),font_)));
+            const int r = dis(gen); // 1 2 3... possible outcomes
+            pile.push(predefined[r]);
         }
     }
 }
 
-int Pile::get_size() const
+Card Pile::get_card() // get top card, remove top
 {
-    return static_cast<int>(pile.size());
-}
-
-Card *Pile::get_card()
-{
-    Card *card = pile.top();
+    Card card = pile.top();
     pile.pop();
     return card;
 }
 
-//get top card, remove top
-Card *Pile::get_top()
+const Card& Pile::get_top() // asta doar ia info despre o carte fara sa o scoata din pile
 {
-    Card *card = pile.top();
+    Card& card = pile.top();
     return card;
 }
-
-
 
 std::ostream &operator<<(std::ostream &out, Pile &pile)
 {
     if (pile.pile_id == 1)
     {
         // squirell
-        out << "There are " << pile.pile.size() << " cards of type " << pile.get_top()->get_name() << "\n";
+        out << "There are " << pile.pile.size() << " cards of type " << pile.get_top().get_name() << "\n";
         return out;
     } else // other cards
     {
@@ -125,4 +114,9 @@ bool Pile::is_clicked(const sf::Vector2i mousePos) const {
 sf::Sprite& Pile::get_sprite()
 {
     return pile_sprite;
+}
+
+int Pile::get_size() const
+{
+    return static_cast<int>(pile.size());
 }
