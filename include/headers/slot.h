@@ -13,14 +13,13 @@ class Slot
     sf::Sprite slot_sprite;
 
 public:
+    Slot() = default;
 
-    Slot()=default;
-
-    Slot(const Slot& other_slot);
+    Slot(const Slot &other_slot);
 
     Slot &operator=(const Slot &other_slot);
 
-    explicit Slot(const sf::Texture&);
+    explicit Slot(const sf::Texture &);
 
     void setUp();
 

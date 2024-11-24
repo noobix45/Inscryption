@@ -75,7 +75,7 @@ void Board::get_offset(const sf::RenderWindow &window, const unsigned int &slot_
     offset_y = (window_y - static_cast<float>(board_height)) / 2;
 }
 
-Slot& Board::get_slot(const unsigned int &i, const unsigned int &j) { return board[i][j]; } // imi ia un singur slot
+Slot &Board::get_slot(const unsigned int &i, const unsigned int &j) { return board[i][j]; } // imi ia un singur slot
 //trebuie facut error handling
 
 void Board::texture_init()

@@ -29,8 +29,8 @@ public:
     //constructor for cards that take blood
 
     //constructor for cards that take bones
-    Card(const std::string& file_name, std::string name_, int hp_, int damage_, int cost_in_bones_, Effect e_,
-        const sf::Texture& texture_,const sf::Font& font_,[[maybe_unused]] bool bone);
+    Card(std::string name_, int hp_, int damage_, int cost_in_bones_, Effect e_,
+         const sf::Texture& texture_,const sf::Font& font_,[[maybe_unused]] bool bone);
 
     //destructor
     ~Card();

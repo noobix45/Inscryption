@@ -5,31 +5,28 @@
 #include <iostream>
 #define pile_size 5
 
-Pile::Pile(const int id, const std::vector<Card>& predefined) : pile_id{id}
+Pile::Pile(const int id, const std::vector<Card> &predefined) : pile_id{id}
 {
     std::cout << "Creating new pile. Calling Make pile function..." << std::endl;
     make_pile(predefined);
     std::cout << "Calling pile init textures...\n";
     init_texture();
-    std::cout<<"Pile "<< pile_id <<" pile created\n";
+    std::cout << "Pile " << pile_id << " pile created\n";
 }
 
 Pile::~Pile()
 {
-    std::cout << "Pile "<<pile_id <<" destroyed"<< std::endl;
+    std::cout << "Pile " << pile_id << " destroyed" << std::endl;
 }
 
 
-void Pile::make_pile(const std::vector<Card>& predefined)
+void Pile::make_pile(const std::vector<Card> &predefined)
 {
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_int_distribution<int> dis(1, num_of_types);
     if (pile_id == 1)
-        for (int i = 0; i < pile_size; i++)
-        {
-            pile.push(predefined[0]);
-        }
+        for (int i = 0; i < pile_size; i++) { pile.push(predefined[0]); }
     else
     {
         for (int i = 0; i < pile_size; i++)
@@ -49,7 +46,7 @@ Card Pile::get_card() // get top card, remove top
 
 const Card& Pile::get_top() // asta doar ia info despre o carte fara sa o scoata din pile
 {
-    Card& card = pile.top();
+    Card &card = pile.top();
     return card;
 }
 
@@ -116,7 +113,4 @@ sf::Sprite& Pile::get_sprite()
     return pile_sprite;
 }
 
-int Pile::get_size() const
-{
-    return static_cast<int>(pile.size());
-}
+int Pile::get_size() const { return static_cast<int>(pile.size()); }

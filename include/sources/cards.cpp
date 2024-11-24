@@ -18,14 +18,16 @@ name{std::move(name_)}, hp{hp_}, damage{damage_}, cost_in_blood{cost_in_blood_},
 }
 
 // Constructor for cards that take bones
-Card::Card(const std::string &file_name, std::string name_, const int hp_, const int damage_, const int cost_in_bones_,
-    const Effect e_, const sf::Texture& texture_,const sf::Font& font_, [[maybe_unused]] bool bone):
+Card::Card(std::string name_, const int hp_, const int damage_, const int cost_in_bones_,
+           const Effect e_, const sf::Texture& texture_,const sf::Font& font_, [[maybe_unused]] bool bone):
 
 name{std::move(name_)}, hp{hp_}, damage{damage_}, cost_in_blood{0},cost_in_bones{cost_in_bones_},e{e_},
     card_texture(texture_), font(font_)
 {
+    initStyle();
     std::cout<<name<<" created"<<std::endl;
 }
+
 Card::~Card()
 {
     std::cout<<this->name<< " Destroyed"<<std::endl;

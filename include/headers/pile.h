@@ -12,15 +12,15 @@ class Pile
     sf::Texture pile_texture;
     sf::Sprite pile_sprite;
 public:
-    Pile(int id, const std::vector<Card>&); // pile 1  = squirrels // pile 2 = normal cards
+    Pile(int id, const std::vector<Card> &); // pile 1  = squirrels // pile 2 = normal cards
 
     ~Pile();
 
     Card get_card();
 
-    const Card& get_top();
+    const Card &get_top();
 
-    void make_pile(const std::vector<Card>&);
+    void make_pile(const std::vector<Card> &);
 
     friend std::ostream &operator<<(std::ostream &out, Pile &pile);
 

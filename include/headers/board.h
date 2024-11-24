@@ -8,7 +8,7 @@
 class Board
 {
     static Slot predefined_slot;
-    std::array<std::array<Slot,4>,2> board;
+    std::array<std::array<Slot, 4>, 2> board;
     unsigned int board_width = 0;
     unsigned int board_height = 0;
     float offset_x = 0;
@@ -20,6 +20,7 @@ public:
 
     Board();
     ~Board();
+
     void draw(sf::RenderWindow &window); // to elimiate from board
     void place_card(Card *, int, int);
 
@@ -27,7 +28,7 @@ public:
 
     void get_offset(const sf::RenderWindow &window, const unsigned int &, const unsigned int &);
 
-    Slot& get_slot(const unsigned int &, const unsigned int &);
+    Slot &get_slot(const unsigned int &, const unsigned int &);
 
     void texture_init();
 };

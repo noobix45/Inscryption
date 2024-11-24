@@ -38,9 +38,9 @@ public:
 
     //static Card* go_through_deck(sf::Vector2i mousePos,std::vector<Card*>&);
 
-    bool place_in_board(sf::Vector2i mousePos,int, Card& );
+    bool place_in_board(sf::Vector2i mousePos, int, Card &);
 
-    static void delete_from_deck(std::vector<Card>&, const Card& );
+    static void delete_from_deck(std::vector<Card> &, const Card &);
 
     void init_bell();
 

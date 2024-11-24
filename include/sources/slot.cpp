@@ -1,9 +1,6 @@
 #include "headers/slot.h"
 #include <iostream>
-Slot::Slot(const sf::Texture& texture_) : card(nullptr), slot_texture(texture_)
-{
-    std::cout<<"Slot created\n";
-}
+Slot::Slot(const sf::Texture &texture_) : card(nullptr), slot_texture(texture_) { std::cout << "Slot created\n"; }
 
 void Slot::setUp()
 {
@@ -13,20 +10,22 @@ void Slot::setUp()
 
 Slot::Slot(const Slot &other_slot)
 {
-    if(this != &other_slot)
+    if (this != &other_slot)
     {
-        std::cout<<"Copying Slot\n";
+        std::cout << "Copying Slot\n";
         card = other_slot.card;
         slot_texture = other_slot.slot_texture;
     }
 }
 
-Slot& Slot::operator=(const Slot& other_slot) {
-    if (this != &other_slot) {
+Slot &Slot::operator=(const Slot &other_slot)
+{
+    if (this != &other_slot)
+    {
         card = other_slot.card;
         slot_texture = other_slot.slot_texture;
     }
-    std::cout<<"Slot operator\n";
+    std::cout << "Slot operator\n";
     return *this;
 }
 
@@ -34,7 +33,7 @@ Slot& Slot::operator=(const Slot& other_slot) {
 Slot::~Slot()
 {
     delete card;
-    std::cout<<"Slot destroyed\n";
+    std::cout << "Slot destroyed\n";
 }
 
 
@@ -52,7 +51,10 @@ void Slot::place_card(Card *new_card)
     } else { std::cout << "Slot is already in use" << std::endl; }
 }
 
-void Slot::remove_card() { delete card; card = nullptr; }
+void Slot::remove_card()
+{
+    delete card;
+    card = nullptr; }
 
 
 void Slot::draw(sf::RenderWindow &window, const float &x, const float &y)
@@ -68,7 +70,7 @@ void Slot::update(sf::RenderWindow &window) const
     card->update_number(window);
 }
 
-sf::Sprite& Slot::get_sprite()
+sf::Sprite &Slot::get_sprite()
 {
     return slot_sprite;
 }
