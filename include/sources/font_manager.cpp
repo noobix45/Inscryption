@@ -7,3 +7,9 @@ FontManager::FontManager(const std::string &filePath)
 }
 
 sf::Font &FontManager::getFont() { return font; }
+
+std::ostream & operator<<(std::ostream &os, const FontManager &fontManager)
+{
+    os<<"Font Name: "<<fontManager.font.getInfo().family<<std::endl;
+    return os;
+}

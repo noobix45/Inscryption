@@ -23,13 +23,11 @@ public:
 
     //static void sacrifice() {} // vor fi implementate
     //static void ring_bell() {} // schimba randul jucatorului // vor fi implementate
-    void deck_draw(sf::RenderWindow &window) const;
+    void deck_draw(sf::RenderWindow &window,const float&,const float&) const;
 
     friend std::ostream &operator<<(std::ostream &out, const Player &player);
 
-    void get_deck();
-
-    std::vector<Card*>& whose_deck();
+    std::vector<Card*>& get_deck();
 };
 
 #endif

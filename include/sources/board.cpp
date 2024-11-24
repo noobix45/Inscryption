@@ -1,18 +1,25 @@
 #include "headers/board.h"
 #include <iostream>
+
+
 Board::Board()  : board()
 {
-    for(int i=0;i<2;i++)
+    for (int i = 0; i < lin; i++)
     {
-        for(int j=0;j<4;j++)
+        for (int j = 0; j < col; j++)
+        {
             board[i][j] = new Slot();
+        }
     }
     std::cout << "board created" << std::endl;
 }
 
-Board::~Board() {
-    for (int i = 0; i < 2; ++i) {
-        for (int j = 0; j < 4; ++j) {
+Board::~Board()
+{
+    for (int i = 0; i < lin; ++i)
+    {
+        for (int j = 0; j < col; ++j)
+        {
             if (board[i][j]->get_card() != nullptr)
             {
                 std::cout << "deleting " << board[i][j]->get_card()->get_name() << "from slot\n";
@@ -25,24 +32,36 @@ Board::~Board() {
     std::cout.flush();
 }
 
+/*
+void Board::setUp() const
+{
+    for (int i = 0; i < lin; ++i)
+    {
+        for (int j = 0; j < col; ++j)
+        {
+
+            board[i][j]->setPos(x, y);
+        }
+    }
+}*/
 
 void Board::draw(sf::RenderWindow &window) const
 {
-    for (int i = 0; i < 2; i++)
+    for (int i = 0; i < lin; i++)
     {
-        for (int j = 0; j < 4; j++)
+        for (int j = 0; j < col; j++)
         {
             board[i][j]->textures_init();
             auto x = offset_x + static_cast<float>(j * one_slot_width);
             auto y = offset_y + static_cast<float>(i * one_slot_height);
-            board[i][j]->draw(window, x, y);
+            board[i][j]->draw(window,x,y);
         }
     }
 }
 
 void Board::place_card(Card *card, const int l, const int c) const
 {
-    if (l < 0 || l > 2 || c < 0 || c > 4)
+    if (l < 0 || l > lin || c < 0 || c > col)
     {
         std::cout << "Slot is out of bounds\n";
         return;
@@ -60,8 +79,8 @@ void Board::remove_card(const int l, const int c) const
 
 void Board::get_offset(const sf::RenderWindow &window, const unsigned int &slot_width, const unsigned int &slot_height)
 {
-    board_width = slot_width * 4;
-    board_height = slot_height * 2;
+    board_width = slot_width * col;
+    board_height = slot_height * lin;
 
     const sf::Vector2u size = window.getSize();
     const auto window_x = static_cast<float>(size.x);
@@ -72,3 +91,10 @@ void Board::get_offset(const sf::RenderWindow &window, const unsigned int &slot_
 }
 
 Slot *Board::get_slot(const unsigned int &i, const unsigned int &j) const { return board[i][j]; }
+
+std::ostream &operator<<(std::ostream &os, const Board &board)
+{
+    for (int i = 0; i < lin; ++i)
+        for (int j = 0; j < col; ++j) { os << board.get_slot(i, j); }
+    return os;
+}

@@ -73,7 +73,14 @@ std::ostream &operator<<(std::ostream &out, Pile &pile)
         return out;
     } else // other cards
     {
-        out << "You shouldn't peek ;) \n";
+        out << "There are "<<pile.pile.size() << " cards inside this pile\n";
+        std::stack <Card*>temp = pile.pile;
+        while (!temp.empty())
+        {
+            out << temp.top() << "\n";
+            temp.pop();
+        }
+        out << "\nYou shouldn't peek ;) \n";
         return out;
     }
 }

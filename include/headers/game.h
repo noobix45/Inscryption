@@ -10,6 +10,11 @@
 
 class Game
 {
+public:
+    Game();
+
+    void play_game();
+
 private:
     FontManager font_manager_;
     Pile squirrel_pile;
@@ -24,11 +29,6 @@ private:
     Board board;
     sf::RenderWindow window;
 
-public:
-    Game();
-
-    void play_game();
-
     void init_background();
 
     void select_card(sf::Vector2i, int, Card *&selected_card);
@@ -41,9 +41,12 @@ public:
 
     void init_bell();
 
+    void bellSetUp();
+
     int pile_clicked(sf::Vector2i mousePos);
 
     bool ring_bell(sf::Vector2i mousePos) const;
+
 };
 
 /*

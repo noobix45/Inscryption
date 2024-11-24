@@ -38,7 +38,13 @@ void Slot::textures_init()
     slot_sprite.setOrigin(static_cast<float>(one_slot_width) / 2, static_cast<float>(one_slot_height) / 2);
 }
 
-void Slot::draw(sf::RenderWindow &window, const float &x, const float &y)
+/*
+void Slot::setPos(const float&x, const float& y)
+{
+
+}*/
+
+void Slot::draw(sf::RenderWindow &window, const float&x,const float& y)
 {
     slot_sprite.setPosition(x + slot_sprite.getLocalBounds().width / 2, y + slot_sprite.getLocalBounds().height / 2);
     window.draw(slot_sprite);
@@ -52,3 +58,12 @@ void Slot::update(sf::RenderWindow &window) const
 }
 
 sf::Sprite &Slot::get_sprite() { return slot_sprite; }
+
+std::ostream& operator<<(std::ostream &os, const Slot &slot)
+{
+    if(!slot.is_empty())
+    os << slot.get_card();
+    else
+        os<<"Slot is empty\n";
+    return os;
+}

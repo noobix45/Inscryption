@@ -21,21 +21,18 @@ public:
 };
 */
 
-// to do: mai multi operatori de afisare
+// to do: mai multi operatori de afisare - Check
 // to do: la deck suprascris toti operatorii
-// to do: board nu trebuie copiata sterge copierea si egalu, constante pentru nr de linii si nr de coloane
-// to do: enum effect pus ori in namespace ori facut enumclass
-// to do: in card.cpp constructor de copiere de folosit lista de initializare
-// to do: delete uri pentru toate cardurile construite!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-// to do: schimba numele la get deck si la whose deck
-// to do: My Window nume la fereastra pentru memory leaks verifica
-
-// to do: check errors, especially for piles (if pile size !=0 draw else don't)
+// to do: board constante pentru nr de linii si nr de coloane - Check
+// to do: enum effect pus ori in namespace ori facut enumclass - Check
+// to do: schimba numele la get deck si la whose deck - Check
 // to do: clean up the logic, see if you can get rid of repetitions.
-// to do: start working on the logic of taking and dealing damage.
+// to do: move the play game outside the constructor - the constructor does too much, it only needds to build essential - Check
+// to do: start working on the logic of sacrificing, taking and dealing damage.
 
 int main() {
     Game game;
+    game.play_game();
     return 0;
 }
 

@@ -14,7 +14,7 @@ private:
     int damage = 0; // how much damage a card deals (if any)
     int cost_in_blood = 0; // how much blood it takes to deploy card (if any)
     int cost_in_bones = 0; // how many bones it takes to deploy card (if any)
-    Effect e = none;
+    Effect e = Effect::none;
     sf::Texture card_texture;
     sf::Sprite card_sprite;
     sf::Text hp_text;

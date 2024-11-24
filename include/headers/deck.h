@@ -14,16 +14,17 @@ public:
 
     ~Deck();
 
-    void get_deck();
+    void make_deck();
 
     [[nodiscard]] int get_num_of_cards() const; //how many cards are in the deck
     [[nodiscard]] Card* get_card(int i) const; // gets info about a card
     void add_card(Card *card); //when a card is drawn from the draw pile it is added to the deck
-    void remove_card(int i);
+
+    static std::pair<float, float> get_start_positions(const sf::RenderWindow &window, int player_id);
 
     friend std::ostream &operator<<(std::ostream &out, const Deck &deck);
 
-    void deck_draw(sf::RenderWindow &window) const;
+    void deck_draw(sf::RenderWindow &window,const float&,const float&) const;
 
     std::vector<Card*>& get_all();
 

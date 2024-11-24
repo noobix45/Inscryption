@@ -17,7 +17,7 @@ Player::~Player()
     deck.get_all().clear();
     std::cout << "Finished destruction of Player " << id << "\n";
 }
-void Player::make_deck() { deck.get_deck(); }
+void Player::make_deck() { deck.make_deck(); }
 
 void Player::draw_card(Pile &pile)
 {
@@ -28,7 +28,7 @@ void Player::draw_card(Pile &pile)
 }
 
 
-void Player::deck_draw(sf::RenderWindow &window) const { deck.deck_draw(window); }
+void Player::deck_draw(sf::RenderWindow &window,const float& x,const float& y) const { deck.deck_draw(window,x,y); }
 
 std::ostream &operator<<(std::ostream &out, const Player &player)
 {
@@ -39,4 +39,4 @@ std::ostream &operator<<(std::ostream &out, const Player &player)
     return out;
 }
 
-std::vector<Card*>& Player::whose_deck() { return deck.get_all(); }
+std::vector<Card*>& Player::get_deck() { return deck.get_all(); }
