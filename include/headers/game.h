@@ -46,7 +46,6 @@ private:
     int pile_clicked(sf::Vector2i mousePos);
 
     bool ring_bell(sf::Vector2i mousePos) const;
-
 };
 
 /*

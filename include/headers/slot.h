@@ -28,13 +28,13 @@ public:
     void textures_init();
 
     //void setPos(const float&,const float&);
-    void draw(sf::RenderWindow &window,const float& x,const float &y);
+    void draw(sf::RenderWindow &window, const float &x, const float &y);
 
     void update(sf::RenderWindow &window) const;
 
     sf::Sprite& get_sprite();
 
-    friend std::ostream& operator<<(std::ostream &os, const Slot &slot);
+    friend std::ostream &operator<<(std::ostream &os, const Slot &slot);
 };
 
 #endif //SLOT_H
