@@ -12,7 +12,7 @@ class Pile
     sf::Texture pile_texture;
     sf::Sprite pile_sprite;
 public:
-    explicit Pile(int id, const sf::Font &); // pile 1  = squirrels // pile 2 = normal cards
+    Pile(int id, const std::vector<Card*>& predefined); // pile 1  = squirrels // pile 2 = normal cards
 
     ~Pile();
 
@@ -20,7 +20,7 @@ public:
 
     Card *get_card();
 
-    void get_pile();
+    void make_pile(const std::vector<Card*>& predefined);
 
     int get_size() const;
 

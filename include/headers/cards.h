@@ -17,18 +17,20 @@ private:
     Effect e = Effect::none;
     sf::Texture card_texture;
     sf::Sprite card_sprite;
+    sf::Font font;
     sf::Text hp_text;
     sf::Text damage_text;
     bool clicked = false;
 
 public:
     Card(); // pentru caz default in card_factoy
+    Card(std::string name_, int hp_, int damage_, int cost_in_blood_, Effect e_, const sf::Texture &texture_,
+         const sf::Font &font_);
     //constructor for cards that take blood
-    Card(const std::string& file_name, std::string name_, int hp_, int damage_, int cost_in_blood_, Effect e_,const sf::Font& font);
 
     //constructor for cards that take bones
     Card(const std::string& file_name, std::string name_, int hp_, int damage_, int cost_in_bones_, Effect e_,
-        [[maybe_unused]] bool bone,const sf::Font& font);
+        const sf::Texture& texture_,const sf::Font& font_,[[maybe_unused]] bool bone);
 
     //destructor
     ~Card();
@@ -40,13 +42,15 @@ public:
 
     Card &operator=(const Card &other_card);
 
+    bool operator==(const Card &) const;
+
     friend std::ostream &operator <<(std::ostream &out, const Card &card);
 
     void init_texture(const std::string& file_name,const sf::Font& font);
 
     void draw(sf::RenderWindow &window, const float &, const float &);
 
-    sf::Sprite& get_sprite();
+    const sf::Sprite& get_sprite() const;
 
     void on_click_select();
 
@@ -57,6 +61,8 @@ public:
     void scale_small();
 
     void scale_big();
+
+    void initStyle();
 
     void update_number(sf::RenderWindow &window);
 };

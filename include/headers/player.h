@@ -13,11 +13,11 @@ private:
     Deck deck;
 
 public:
-    Player(std::string name_, int id_, const sf::Font &);
+    Player(std::string name_, int id_);
 
     ~Player();
 
-    void make_deck();
+    void make_deck(const std::vector<Card*>& predefined);
 
     void draw_card(Pile &pile);
 

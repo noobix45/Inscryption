@@ -10,11 +10,11 @@ class Deck
     std::vector<Card*> deck; // cartile din deck-ul jucatorului
 
 public:
-    explicit Deck(int player_id_, const sf::Font &);
+    explicit Deck(int player_id_);
 
     ~Deck();
 
-    void make_deck();
+    void make_deck(const std::vector<Card*>& predefined);
 
     [[nodiscard]] int get_num_of_cards() const; //how many cards are in the deck
     [[nodiscard]] Card* get_card(int i) const; // gets info about a card

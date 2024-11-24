@@ -4,9 +4,8 @@
 #include "pile.h"
 #include "board.h"
 #include <SFML/Graphics.hpp>
-
 #include "cards_factory.h"
-#include "font_manager.h"
+//#include "font_manager.h"
 
 class Game
 {
@@ -16,7 +15,7 @@ public:
     void play_game();
 
 private:
-    FontManager font_manager_;
+    CardsFactory cardsFactory;
     Pile squirrel_pile;
     Pile normal_pile;
     Player player1;

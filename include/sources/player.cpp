@@ -2,7 +2,7 @@
 #include "headers/slot.h"
 #include <iostream>
 
-Player::Player(std::string name_, const int id_,const sf::Font& font) : name{std::move(name_)}, id{id_}, blood{0}, bones{0}, deck{id_,font}
+Player::Player(std::string name_, const int id_) : name{std::move(name_)}, id{id_}, blood{0}, bones{0}, deck{id_}
 {
     std::cout << "Player "<<id<<" created" << std::endl;
 }
@@ -17,7 +17,7 @@ Player::~Player()
     deck.get_all().clear();
     std::cout << "Finished destruction of Player " << id << "\n";
 }
-void Player::make_deck() { deck.make_deck(); }
+void Player::make_deck(const std::vector<Card*>& predefined) { deck.make_deck(predefined); }
 
 void Player::draw_card(Pile &pile)
 {

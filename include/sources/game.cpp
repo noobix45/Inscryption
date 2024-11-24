@@ -1,22 +1,21 @@
 #include "headers/game.h"
 #include "headers/cards_factory.h"
-#include "headers/font_manager.h"
 #include <iostream>
+//#include "headers/font_manager.h"
 
 Game::Game() :
-                font_manager_("heaviwei.ttf"),
-                squirrel_pile(1,font_manager_.getFont()),
-               normal_pile(2,font_manager_.getFont()),
-               player1{"Player1", 1,font_manager_.getFont()},
-               player2{"Player2", 2,font_manager_.getFont()},
+                squirrel_pile(1,cardsFactory.getPreDef()),
+               normal_pile(2,cardsFactory.getPreDef()),
+               player1{"Player1", 1},
+               player2{"Player2", 2},
                 window(sf::VideoMode::getDesktopMode(), "Inscryption", sf::Style::Fullscreen) {}
 
 void Game::play_game()
 {
     board.get_offset(window, one_slot_width, one_slot_height);
 
-    player1.make_deck();
-    player2.make_deck();
+    player1.make_deck(cardsFactory.getPreDef());
+    player2.make_deck(cardsFactory.getPreDef());
 
     init_background();
     init_bell(); // init texture bell

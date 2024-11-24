@@ -5,9 +5,9 @@
 #include <iostream>
 #define pile_size 5
 
-Pile::Pile(const int id, const sf::Font &font) : pile_id{id}, font_(font)
+Pile::Pile(const int id, const std::vector<Card*>& predefined) : pile_id{id}
 {
-    get_pile();
+    make_pile(predefined);
     init_texture();
     std::cout << "Pile " << pile_id << " created" << std::endl;
 }
@@ -26,19 +26,19 @@ Pile::~Pile()
     std::cout.flush();
 }
 
-void Pile::get_pile()
+void Pile::make_pile (const std::vector<Card*>& predefined)
 {
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_int_distribution<int> dis(1, num_of_types);
     if (this->pile_id == 1)
-        for (int i = 0; i < pile_size; i++) { pile.push(new Card(card_factory(CardType::Squirrel,font_))); }
+        for (int i = 0; i < pile_size; i++) { pile.push(new Card(*predefined[0])); }
     else
     {
         for (int i = 0; i < pile_size; i++)
         {
-            int r = dis(gen); // 1 2 3... possible outcomes
-            pile.push(new Card(card_factory(static_cast<CardType>(r),font_)));
+            const int r = dis(gen); // 1 2 3... possible outcomes
+            pile.push(new Card(*predefined[r]));
         }
     }
 }
