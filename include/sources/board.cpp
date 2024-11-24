@@ -17,7 +17,7 @@ Board::Board()  : board()
 
 Board::~Board()
 {
-    /*
+
     for (int i = 0; i < lin; ++i)
     {
         for (int j = 0; j < col; ++j)
@@ -29,7 +29,7 @@ Board::~Board()
             }
             delete board[i][j];
         }
-    }*/
+    }
     std::cout << "Board Destroyed" << std::endl;
     //std::cout.flush();
 }

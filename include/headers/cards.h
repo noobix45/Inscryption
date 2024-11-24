@@ -30,7 +30,7 @@ public:
 
     //constructor for cards that take bones
     Card(std::string name_, int hp_, int damage_, int cost_in_bones_, Effect e_,
-        const sf::Texture& texture_,const sf::Font& font_,[[maybe_unused]] bool bone);
+         const sf::Texture& texture_,const sf::Font& font_,[[maybe_unused]] bool bone);
 
     //destructor
     ~Card();
