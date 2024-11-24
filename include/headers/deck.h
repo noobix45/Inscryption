@@ -14,7 +14,7 @@ public:
 
     ~Deck();
 
-    void make_deck(const std::vector<Card*>& predefined);
+    void make_deck(const std::vector<Card *> &predefined);
 
     [[nodiscard]] int get_num_of_cards() const; //how many cards are in the deck
     [[nodiscard]] Card* get_card(int i) const; // gets info about a card

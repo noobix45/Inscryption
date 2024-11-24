@@ -5,7 +5,7 @@
 #include <iostream>
 #define pile_size 5
 
-Pile::Pile(const int id, const std::vector<Card*>& predefined) : pile_id{id}
+Pile::Pile(const int id, const std::vector<Card *> &predefined) : pile_id{id}
 {
     make_pile(predefined);
     init_texture();
@@ -26,7 +26,7 @@ Pile::~Pile()
     std::cout.flush();
 }
 
-void Pile::make_pile (const std::vector<Card*>& predefined)
+void Pile::make_pile(const std::vector<Card *> &predefined)
 {
     std::random_device rd;
     std::mt19937 gen(rd());

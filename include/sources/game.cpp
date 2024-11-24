@@ -3,12 +3,11 @@
 #include <iostream>
 //#include "headers/font_manager.h"
 
-Game::Game() :
-                squirrel_pile(1,cardsFactory.getPreDef()),
-               normal_pile(2,cardsFactory.getPreDef()),
+Game::Game() : squirrel_pile(1, cardsFactory.getPreDef()),
+               normal_pile(2, cardsFactory.getPreDef()),
                player1{"Player1", 1},
                player2{"Player2", 2},
-                window(sf::VideoMode::getDesktopMode(), "Inscryption", sf::Style::Fullscreen) {}
+               window(sf::VideoMode::getDesktopMode(), "Inscryption", sf::Style::Fullscreen) {}
 
 void Game::play_game()
 {

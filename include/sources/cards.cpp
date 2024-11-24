@@ -23,17 +23,14 @@ Card::Card(const std::string &file_name, std::string name_, const int hp_, const
                                         cost_in_bones{cost_in_bones_}, e{e_},
                                         card_texture(texture_), font(font_)
 {
-    std::cout<<name<<" created"<<std::endl;
+    std::cout << name << " created" << std::endl;
 }
 
-Card::~Card()
-{
-    std::cout<<this->name<< " Destroyed"<<std::endl;
-}
+Card::~Card() { std::cout << this->name << " Destroyed" << std::endl; }
 
-Card::Card(const Card &other_card) : name(other_card.name), hp(other_card.hp),damage(other_card.damage),
-cost_in_blood(other_card.cost_in_blood),cost_in_bones(other_card.cost_in_bones), e(other_card.e),
-card_texture(other_card.card_texture),font(other_card.font)// constructor de copiere
+Card::Card(const Card &other_card) : name(other_card.name), hp(other_card.hp), damage(other_card.damage),
+                                     cost_in_blood(other_card.cost_in_blood), cost_in_bones(other_card.cost_in_bones), e(other_card.e),
+                                     card_texture(other_card.card_texture),font(other_card.font)// constructor de copiere
 {
     initStyle();
     std::cout<<this->name<< " Created from copy constructor"<<std::endl;
@@ -55,7 +52,7 @@ Card &Card::operator=(const Card &other_card)
         font = other_card.font;
         initStyle();
     }
-    std::cout<<this->name<< " operator egal"<<std::endl;
+    std::cout << this->name << " operator egal"<<std::endl;
     return *this;
 }
 
@@ -129,8 +126,8 @@ void Card::scale_small()
 void Card::scale_big()
 {
     const sf::Vector2u textureSize = card_texture.getSize();
-    const float scaleX =( one_slot_width / static_cast<float>(textureSize.x))*1.1f;
-    const float scaleY =( one_slot_height / static_cast<float>(textureSize.y)) *1.1f;
+    const float scaleX = (one_slot_width / static_cast<float>(textureSize.x)) * 1.1f;
+    const float scaleY = (one_slot_height / static_cast<float>(textureSize.y)) * 1.1f;
     card_sprite.setScale(scaleX, scaleY);
 }
 

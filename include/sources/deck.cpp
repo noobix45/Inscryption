@@ -6,7 +6,6 @@
 
 Deck::Deck(const int player_id_) : player_id{player_id_}
 {
-
     std::cout << "Deck " << player_id << " created\n";
 }
 
@@ -19,7 +18,7 @@ Deck::~Deck()
 }
 
 
-void Deck::make_deck(const std::vector<Card*>& predefined)
+void Deck::make_deck(const std::vector<Card *> &predefined)
 {
     // ii da jucatorului carti random la inceput de joc
 
