@@ -17,7 +17,7 @@ Card::Card(std::string name_, const int hp_, int const damage_, const int cost_i
 }
 
 // Constructor for cards that take bones
-Card::Card(const std::string &file_name, std::string name_, const int hp_, const int damage_, const int cost_in_bones_,
+Card::Card(std::string name_, const int hp_, const int damage_, const int cost_in_bones_,
            const Effect e_, const sf::Texture &texture_, const sf::Font &font_,
            [[maybe_unused]] bool bone): name{std::move(name_)}, hp{hp_}, damage{damage_}, cost_in_blood{0},
                                         cost_in_bones{cost_in_bones_}, e{e_},
