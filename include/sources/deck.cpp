@@ -4,7 +4,7 @@
 #include "headers/cards_factory.h"
 #include "headers/slot.h"
 
-Deck::Deck(const int player_id_) : player_id{player_id_}
+Deck::Deck(const int player_id_, const sf::Font &font) : player_id{player_id_}, font_(font)
 {
     std::cout << "Deck " << player_id << " created\n";
 }
@@ -18,7 +18,7 @@ Deck::~Deck()
 }
 
 
-void Deck::make_deck(const std::vector<Card *> &predefined)
+void Deck::make_deck()
 {
     // ii da jucatorului carti random la inceput de joc
 
@@ -26,11 +26,11 @@ void Deck::make_deck(const std::vector<Card *> &predefined)
     std::mt19937 gen(rd());
     std::uniform_int_distribution<int> dis(1, num_of_types);
 
-    deck.push_back(new Card(*predefined[0]));
+    deck.push_back(new Card(card_factory(CardType::Squirrel, font_)));
     for (int i = 0; i < 3; i++) //deckul are 3 carti plus veverita initial
     {
-        const int r = dis(gen);
-        deck.push_back(new Card(*predefined[r]));
+        int r = dis(gen);
+        deck.push_back(new Card(card_factory(static_cast<CardType>(r), font_)));
     }
 }
 

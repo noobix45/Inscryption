@@ -4,8 +4,9 @@
 #include "pile.h"
 #include "board.h"
 #include <SFML/Graphics.hpp>
+
 #include "cards_factory.h"
-//#include "font_manager.h"
+#include "font_manager.h"
 
 class Game
 {
@@ -15,7 +16,7 @@ public:
     void play_game();
 
 private:
-    CardsFactory cardsFactory;
+    FontManager font_manager_;
     Pile squirrel_pile;
     Pile normal_pile;
     Player player1;
@@ -32,11 +33,11 @@ private:
 
     void select_card(sf::Vector2i, int, Card *&selected_card);
 
-    static Card* go_through_deck(sf::Vector2i mousePos,std::vector<Card*>& deck);
+    static Card* go_through_deck(sf::Vector2i mousePos,std::vector<Card*>&);
 
-    bool place_in_board(sf::Vector2i mousePos, int, Card *&selected_card) const;
+    bool place_in_board(sf::Vector2i mousePos, int, Card *) const;
 
-    static void delete_from_deck(std::vector<Card*>&, Card *&selected_card);
+    static void delete_from_deck(std::vector<Card*>&, const Card* );
 
     void init_bell();
 

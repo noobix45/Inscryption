@@ -1,25 +1,26 @@
 #include "headers/game.h"
 #include "headers/cards_factory.h"
+#include "headers/font_manager.h"
 #include <iostream>
-//#include "headers/font_manager.h"
 
-Game::Game() : squirrel_pile(1, cardsFactory.getPreDef()),
-               normal_pile(2, cardsFactory.getPreDef()),
-               player1{"Player1", 1},
-               player2{"Player2", 2},
+Game::Game() : font_manager_("heaviwei.ttf"),
+               squirrel_pile(1, font_manager_.getFont()),
+               normal_pile(2, font_manager_.getFont()),
+               player1{"Player1", 1, font_manager_.getFont()},
+               player2{"Player2", 2, font_manager_.getFont()},
                window(sf::VideoMode::getDesktopMode(), "Inscryption", sf::Style::Fullscreen) {}
 
 void Game::play_game()
 {
     board.get_offset(window, one_slot_width, one_slot_height);
 
-    player1.make_deck(cardsFactory.getPreDef());
-    player2.make_deck(cardsFactory.getPreDef());
+    player1.make_deck();
+    player2.make_deck();
 
     init_background();
-    init_bell(); // init texture bell
+    init_bell(); // init texture bell si calculeaza pos pentru piles
 
-    Card* selected_card = nullptr; // la momentul inceperii nicio carte nu este selectata
+    Card *selected_card = nullptr; // la momentul inceperii nicio carte nu este selectata
     bool card_selected = false;
 
     int current_phase = 0; // 0 means draw phase // 1 means playing phase - jucatorii pot sacrifica sau juca carti
@@ -69,7 +70,6 @@ void Game::play_game()
                             // functia returneaza daca am plasat sau nu o carte, ca sa stiu daca o sterg din deck sau nu
                             const int board_index = (current_player == 1) ? 1 : 0;
                             auto &player = (current_player == 1) ? player1 : player2;
-
 
                             if (place_in_board(mousePos, board_index, selected_card))
                             {
@@ -125,15 +125,17 @@ void Game::play_game()
 
 void Game::select_card(const sf::Vector2i mousePos,const int id, Card *&selected_card) // vreau sa modific selectia
 {
+    Card *temp_card;
     if (id == 1)
     {
-
+        temp_card = go_through_deck(mousePos, player1.get_deck());
         //ia deck-ul playerului care apeleaza// un pic unintuitive get_deck era deja luat ;)
-        selected_card = go_through_deck(mousePos, player1.get_deck());
+        selected_card = temp_card;
     } else if (id == 2)
     {
-        selected_card = go_through_deck(mousePos, player2.get_deck());
+        temp_card = go_through_deck(mousePos, player2.get_deck());
         //ia deck-ul playerului care apeleaza// un pic unintuitive get_deck era deja luat ;)
+        selected_card = temp_card;
     }
 }
 
@@ -142,18 +144,18 @@ Card *Game::go_through_deck(const sf::Vector2i mousePos, std::vector<Card *> &de
     for (Card *c: deck) // parcurge deckul si verifica daca click-il a fost in spatiul unei carti
     {
         if(!c->is_clicked()) // maybe a bit extra?
-            if(c->get_sprite().getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)))
-            {
-                c->on_click_select();
+        if(c->get_sprite().getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)))
+        {
+            c->on_click_select();
                 return c; // either returning card that was selected
             }
     }
     return nullptr; //or if none was selected I am returning nullptr
 }
 
-bool Game::place_in_board(const sf::Vector2i mousePos, const int row, Card *&selected_card) const
+bool Game::place_in_board(const sf::Vector2i mousePos, const int row, Card *selected_card) const
 {
-    for(int j = 0; j < 4; j++)
+    for (int j = 0; j < 4; j++)
     {
         if (board.get_slot(row, j)->get_sprite().getGlobalBounds().contains(
             static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)))
@@ -169,8 +171,9 @@ bool Game::place_in_board(const sf::Vector2i mousePos, const int row, Card *&sel
     return false; // n am plasat cartea in board so don't delete from deck
 }
 
-void Game::delete_from_deck(std::vector<Card *>& deck, Card *&selected_card)
-{ // parcurg decku-ul si cand am ajuns la cartea plasata o sterg
+void Game::delete_from_deck(std::vector<Card *> &deck, const Card *selected_card)
+{
+    // parcurg decku-ul si cand am ajuns la cartea plasata o sterg
     const Card *temp_card = nullptr;
     for(int i = 0; i < static_cast<int>(deck.size()); i++)
     {

@@ -63,7 +63,7 @@ add_executable(${PROJECT_NAME}
         include/sources/slot.cpp
         include/headers/font_manager.h
         include/sources/font_manager.cpp
-        include/sources/cards_factory.cpp
+        #include/sources/cards_factory.cpp
 )
 
 include(cmake/CompilerFlags.cmake)

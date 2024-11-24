@@ -13,7 +13,7 @@
 
 class Board
 {
-    std::array<std::array<Slot*, col>, lin> board;
+    std::array<std::array<Slot *, col>, lin> board;
     unsigned int board_width = 0;
     unsigned int board_height = 0;
     float offset_x = 0;
@@ -24,8 +24,10 @@ public:
 
     ~Board();
 
+    void setUp() const;
+
     void draw(sf::RenderWindow &window) const; // to elimiate from board
-    void place_card(Card* new_card, int, int) const;
+    void place_card(Card *, int, int) const;
 
     void remove_card(int, int) const;
 
