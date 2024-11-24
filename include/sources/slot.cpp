@@ -12,18 +12,18 @@ bool Slot::is_empty() const
     return card == nullptr; // daca card e nullptr return true else return false,
 }
 
-Card *Slot::get_card() const { return card; }
+Card *Slot::get_card() const { return card.get(); }
 
-void Slot::place_card(Card *new_card)
+void Slot::place_card(std::unique_ptr<Card> new_card)
 {
     if (card == nullptr) // daca slotul e gol // card e cartea interna, privata a slotului
     {
-        card = new_card;
+        card = std::move(new_card);
         // debugg std::cout<<"New card is "<<*new_card<<"\n";
     } else { std::cout << "Slot is already in use" << std::endl; }
 }
 
-void Slot::remove_card() { card = nullptr; }
+void Slot::remove_card() { card.reset(); }
 
 void Slot::textures_init()
 {
@@ -53,8 +53,10 @@ void Slot::draw(sf::RenderWindow &window, const float &x, const float &y)
 
 void Slot::update(sf::RenderWindow &window) const
 {
-    card->draw(window, slot_sprite.getPosition().x, slot_sprite.getPosition().y);
-    card->update_number(window);
+    if(card){
+        card->draw(window, slot_sprite.getPosition().x, slot_sprite.getPosition().y);
+        card->update_number(window);
+    }
 }
 
 sf::Sprite &Slot::get_sprite() { return slot_sprite; }
@@ -62,7 +64,7 @@ sf::Sprite &Slot::get_sprite() { return slot_sprite; }
 std::ostream &operator<<(std::ostream &os, const Slot &slot)
 {
     if (!slot.is_empty())
-        os << slot.get_card();
+        os << *slot.get_card();
     else
         os << "Slot is empty\n";
     return os;

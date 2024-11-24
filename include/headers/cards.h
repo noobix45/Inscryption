@@ -36,11 +36,14 @@ public:
     ~Card();
 
     //default copy constructor
-    Card(const Card &other_card);
+    Card(const Card &other_card)=delete;
 
     [[nodiscard]] std::string get_name() const;
 
-    Card &operator=(const Card &other_card);
+    Card &operator=(const Card &other_card)=delete;
+
+    Card(Card&& other_card) noexcept;
+    Card& operator=(Card&& other_card) noexcept;
 
     bool operator==(const Card &) const;
 
