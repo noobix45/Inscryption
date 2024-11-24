@@ -34,13 +34,13 @@ void Pile::get_pile()
     std::mt19937 gen(rd());
     std::uniform_int_distribution<int> dis(1, num_of_types);
     if (this->pile_id == 1)
-        for (int i = 0; i < pile_size; i++) { pile.push(std::move(card_factory(CardType::Squirrel, font_)));  }
+        for (int i = 0; i < pile_size; i++) { pile.push(card_factory(CardType::Squirrel, font_)); }
     else
     {
         for (int i = 0; i < pile_size; i++)
         {
             int r = dis(gen); // 1 2 3... possible outcomes
-            pile.push(std::move(card_factory(static_cast<CardType>(r),font_)));
+            pile.push(card_factory(static_cast<CardType>(r), font_));
         }
     }
 }
