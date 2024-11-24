@@ -19,7 +19,7 @@ void Game::play_game()
     player2.make_deck();
 
     init_background();
-    void init_bell(); // init texture bell si calculeaza pos pentru piles
+    init_bell(); // init texture bell
 
     Card *selected_card = nullptr; // la momentul inceperii nicio carte nu este selectata
     bool card_selected = false;
