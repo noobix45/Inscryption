@@ -30,13 +30,13 @@ private:
 
     void init_background();
 
-    void select_card(sf::Vector2i, int, std::unique_ptr<Card>& selected_card);
+    void select_card(sf::Vector2i, int, Card *&selected_card);
 
-    static std::unique_ptr<Card> go_through_deck(sf::Vector2i mousePos,std::vector<std::unique_ptr<Card>>& deck);
+    static Card* go_through_deck(sf::Vector2i mousePos,std::vector<Card*>& deck);
 
-    bool place_in_board(sf::Vector2i mousePos, int, std::unique_ptr<Card>& selected_card) const;
+    bool place_in_board(sf::Vector2i mousePos, int, Card *&selected_card) const;
 
-    static void delete_from_deck(std::vector<std::unique_ptr<Card>>&, const std::unique_ptr<Card>& selected_card);
+    static void delete_from_deck(std::vector<Card*>&, Card *&selected_card);
 
     void init_bell();
 

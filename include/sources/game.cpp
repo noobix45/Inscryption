@@ -19,7 +19,7 @@ void Game::play_game()
     init_background();
     init_bell(); // init texture bell
 
-    std::unique_ptr<Card> selected_card = nullptr; // la momentul inceperii nicio carte nu este selectata
+    Card* selected_card = nullptr; // la momentul inceperii nicio carte nu este selectata
     bool card_selected = false;
 
     int current_phase = 0; // 0 means draw phase // 1 means playing phase - jucatorii pot sacrifica sau juca carti
@@ -68,12 +68,12 @@ void Game::play_game()
                         {
                             // functia returneaza daca am plasat sau nu o carte, ca sa stiu daca o sterg din deck sau nu
                             const int board_index = (current_player == 1) ? 1 : 0;
-                            //auto &player = (current_player == 1) ? player1 : player2;
+                            auto &player = (current_player == 1) ? player1 : player2;
 
 
                             if (place_in_board(mousePos, board_index, selected_card))
                             {
-                                //delete_from_deck(player.get_deck(), selected_card);
+                                delete_from_deck(player.get_deck(), selected_card);
                             }
 
                             selected_card->on_click_unselect();
@@ -123,7 +123,7 @@ void Game::play_game()
     }
 }
 
-void Game::select_card(const sf::Vector2i mousePos,const int id, std::unique_ptr<Card>& selected_card) // vreau sa modific selectia
+void Game::select_card(const sf::Vector2i mousePos,const int id, Card *&selected_card) // vreau sa modific selectia
 {
     if (id == 1)
     {
@@ -137,29 +137,21 @@ void Game::select_card(const sf::Vector2i mousePos,const int id, std::unique_ptr
     }
 }
 
-std::unique_ptr<Card> Game::go_through_deck(const sf::Vector2i mousePos, std::vector<std::unique_ptr<Card>>& deck)
+Card *Game::go_through_deck(const sf::Vector2i mousePos, std::vector<Card *> &deck)
 {
-    for (auto it = deck.begin(); it != deck.end(); ++it) // Use iterator to modify the vector // modification generated
+    for (Card *c: deck) // parcurge deckul si verifica daca click-il a fost in spatiul unei carti
     {
-        auto& c = *it; // Reference to the card pointer
-
-        if (!c->is_clicked()) // Skip if card is already selected
-        {
-            if (c->get_sprite().getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)))
+        if(!c->is_clicked()) // maybe a bit extra?
+            if(c->get_sprite().getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)))
             {
                 c->on_click_select();
-
-                // Remove the selected card from the deck and return it
-                std::unique_ptr<Card> selected_card = std::move(*it); // Move the unique_ptr out of the vector
-                deck.erase(it); // Remove the card from the vector
-                return selected_card; // Return the moved unique_ptr
+                return c; // either returning card that was selected
             }
-        }
     }
-    return nullptr; // Return nullptr if no card was selected
+    return nullptr; //or if none was selected I am returning nullptr
 }
 
-bool Game::place_in_board(const sf::Vector2i mousePos, const int row, std::unique_ptr<Card>& selected_card) const
+bool Game::place_in_board(const sf::Vector2i mousePos, const int row, Card *&selected_card) const
 {
     for(int j = 0; j < 4; j++)
     {
@@ -169,7 +161,7 @@ bool Game::place_in_board(const sf::Vector2i mousePos, const int row, std::uniqu
             if (board.get_slot(row, j)->is_empty())
             {
                 selected_card->on_click_unselect(); // trece la animatia de unclicked
-                board.place_card(std::move(selected_card), row, j);
+                board.place_card(selected_card, row, j);
                 return true; // am plasat cartea
             }
         }
@@ -177,16 +169,16 @@ bool Game::place_in_board(const sf::Vector2i mousePos, const int row, std::uniqu
     return false; // n am plasat cartea in board so don't delete from deck
 }
 
-void Game::delete_from_deck(std::vector<std::unique_ptr<Card>>& deck,const std::unique_ptr<Card>& selected_card)
+void Game::delete_from_deck(std::vector<Card *>& deck, Card *&selected_card)
 { // parcurg decku-ul si cand am ajuns la cartea plasata o sterg
-    for (auto c = deck.begin(); c != deck.end(); ++c)
+    const Card *temp_card = nullptr;
+    for(int i = 0; i < static_cast<int>(deck.size()); i++)
     {
-        // Dereference unique_ptr to get the raw Card pointer
-        if (c->get() == selected_card.get())
+        temp_card = deck[i];
+        if(temp_card == selected_card)
         {
-            deck.erase(c);
+            deck.erase(deck.begin() + i);
             deck.shrink_to_fit();
-            return;
         }
     }
 }

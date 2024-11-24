@@ -27,7 +27,7 @@ public:
 
     friend std::ostream &operator<<(std::ostream &out, const Player &player);
 
-    std::vector<std::unique_ptr<Card>>& get_deck();
+    std::vector<Card*>& get_deck();
 };
 
 #endif

@@ -39,4 +39,4 @@ std::ostream &operator<<(std::ostream &out, const Player &player)
     return out;
 }
 
-std::vector<std::unique_ptr<Card>>& Player::get_deck() { return deck.get_all(); }
+std::vector<Card*>& Player::get_deck() { return deck.get_all(); }

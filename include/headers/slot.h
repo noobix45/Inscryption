@@ -9,7 +9,7 @@
 
 class Slot
 {
-    std::unique_ptr<Card> card; // daca exista cartea are o valoare, daca nu e nullptr
+    Card* card; // daca exista cartea are o valoare, daca nu e nullptr
     sf::Texture slot_texture;
     sf::Sprite slot_sprite;
 
@@ -22,7 +22,7 @@ public:
 
     Card *get_card() const;
 
-    void place_card(std::unique_ptr<Card> new_card);
+    void place_card(Card* new_card);
 
     void remove_card();
 

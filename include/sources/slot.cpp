@@ -12,18 +12,18 @@ bool Slot::is_empty() const
     return card == nullptr; // daca card e nullptr return true else return false,
 }
 
-Card *Slot::get_card() const { return card.get(); }
+Card *Slot::get_card() const { return card; }
 
-void Slot::place_card(std::unique_ptr<Card> new_card)
+void Slot::place_card(Card* new_card)
 {
     if (card == nullptr) // daca slotul e gol // card e cartea interna, privata a slotului
     {
-        card = std::move(new_card);
+        card = new_card;
         // debugg std::cout<<"New card is "<<*new_card<<"\n";
     } else { std::cout << "Slot is already in use" << std::endl; }
 }
 
-void Slot::remove_card() { card.reset(); }
+void Slot::remove_card() { card = nullptr; }
 
 void Slot::textures_init()
 {
@@ -64,7 +64,7 @@ sf::Sprite &Slot::get_sprite() { return slot_sprite; }
 std::ostream &operator<<(std::ostream &os, const Slot &slot)
 {
     if (!slot.is_empty())
-        os << *slot.get_card();
+        os << slot.get_card();
     else
         os << "Slot is empty\n";
     return os;

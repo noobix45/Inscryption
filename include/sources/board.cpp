@@ -9,7 +9,7 @@ Board::Board()  : board()
     {
         for (int j = 0; j < col; j++)
         {
-            board[i][j] = std::make_unique<Slot>();
+            board[i][j] = new Slot;
         }
     }
     std::cout << "board created" << std::endl;
@@ -48,14 +48,14 @@ void Board::draw(sf::RenderWindow &window) const
     }
 }
 
-void Board::place_card(std::unique_ptr<Card> new_card, const int l, const int c) const
+void Board::place_card(Card* new_card, const int l, const int c) const
 {
     if (l < 0 || l > lin || c < 0 || c > col)
     {
         std::cout << "Slot is out of bounds\n";
         return;
     }
-    if (board[l][c]->is_empty() == true) { board[l][c]->place_card(std::move(new_card)); } else
+    if (board[l][c]->is_empty() == true) { board[l][c]->place_card(new_card); } else
     {
         //std::cout << "Slot is already occupied\n";
     }
@@ -79,7 +79,7 @@ void Board::get_offset(const sf::RenderWindow &window, const unsigned int &slot_
     offset_y = (window_y - static_cast<float>(board_height)) / 2;
 }
 
-Slot* Board::get_slot(const unsigned int &i, const unsigned int &j) const { return board[i][j].get(); }
+Slot* Board::get_slot(const unsigned int &i, const unsigned int &j) const { return board[i][j]; }
 
 std::ostream &operator<<(std::ostream &os, const Board &board)
 {
@@ -87,17 +87,8 @@ std::ostream &operator<<(std::ostream &os, const Board &board)
     {
         for (int j = 0; j < col; ++j)
         {
-            if (const Slot* slot = board.get_slot(i, j); slot->is_empty())
-            {
-                os << "[Empty] ";
-            }
-            else
-            {
-                os << *slot->get_card() << " ";
-            }
-
+            os<<board.get_slot(i,j);
         }
-        os<<"\n";
     }
     return os;
 }
