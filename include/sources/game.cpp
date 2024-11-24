@@ -235,7 +235,7 @@ void Game::init_background()
 
 void Game::init_bell()
 {
-    if (!bell_texture.loadFromFile("pictures/bell.png")) { std::cout<< " Unable to load bell\n"; }
+    if (!bell_texture.loadFromFile("pictures/bell.png")) { std::cout << " Unable to load bell\n"; }
     bell_sprite.setTexture(bell_texture);
 }
 

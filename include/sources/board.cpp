@@ -4,7 +4,7 @@
 #define row 2
 #define col 4
 
-Slot Board::predefined_slot = Slot(); // generated
+Slot Board::predefined_slot; // generated
 
 void Board::initializePredefinedSlot(const sf::Texture &texture)
 {
@@ -14,8 +14,9 @@ void Board::initializePredefinedSlot(const sf::Texture &texture)
 Board::Board(): board{}
 {
     std::cout << "Initializing slot texture\n";
-    texture_init();
-    initializePredefinedSlot(texture);
+    const Slot temp_slot; // generated
+    predefined_slot = temp_slot;
+
     std::cout << "Creating each individual slot...\n";
     for (int i = 0; i < row; i++)
         for (int j = 0; j < col; j++)

@@ -13,7 +13,7 @@ class Slot
     sf::Sprite slot_sprite;
 
 public:
-    Slot() = default;
+    Slot();
 
     Slot(const Slot &other_slot);
 
