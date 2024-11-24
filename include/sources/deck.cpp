@@ -26,26 +26,26 @@ void Deck::make_deck()
     std::mt19937 gen(rd());
     std::uniform_int_distribution<int> dis(1, num_of_types);
 
-    deck.push_back(new Card(card_factory(CardType::Squirrel, font_)));
+    deck.push_back(card_factory(CardType::Squirrel, font_));
     for (int i = 0; i < 3; i++) //deckul are 3 carti plus veverita initial
     {
         int r = dis(gen);
-        deck.push_back(new Card(card_factory(static_cast<CardType>(r), font_)));
+        deck.push_back(card_factory(static_cast<CardType>(r), font_));
     }
 }
 
 int Deck::get_num_of_cards() const { return static_cast<int>(deck.size()); } //how many cards are in the deck
 
-Card* Deck::get_card(const int i) const { return deck[i]; } // gets info about a card
+Card* Deck::get_card(const int i) const { return deck[i].get(); } // gets info about a card
 
-void Deck::add_card(Card *card) { deck.push_back(card); } // este folosita la draw from pile
+void Deck::add_card(std::unique_ptr<Card> card) { deck.push_back(std::move(card)); } // este folosita la draw from pile
 //when a card is drawn from the draw pile it is added to the deck
 
 
 
 std::ostream &operator<<(std::ostream &out, const Deck &deck)
 {
-    for (int i = 0; i < deck.get_num_of_cards(); i++) { out << deck.get_card(i) << "\n"; }
+    for (int i = 0; i < deck.get_num_of_cards(); i++) { out << *(deck.get_card(i)) << "\n"; }
     return out;
 }
 
@@ -98,4 +98,4 @@ void Deck::deck_draw(sf::RenderWindow &window,const float&x, const float& y) con
     }
 }
 
-std::vector<Card*>& Deck::get_all() {return deck;}
+std::vector<std::unique_ptr<Card>>& Deck::get_all() {return deck;}

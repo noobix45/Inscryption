@@ -140,15 +140,15 @@ void Game::select_card(const sf::Vector2i mousePos,const int id, Card *&selected
     }
 }
 
-Card *Game::go_through_deck(const sf::Vector2i mousePos, std::vector<Card *> &deck)
+Card *Game::go_through_deck(const sf::Vector2i mousePos, const std::vector<std::unique_ptr<Card>>& deck)
 {
-    for (Card *c: deck) // parcurge deckul si verifica daca click-il a fost in spatiul unei carti
+    for (const auto& c : deck) // parcurge deckul si verifica daca click-il a fost in spatiul unei carti
     {
         if(!c->is_clicked()) // maybe a bit extra?
         if(c->get_sprite().getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)))
             {
                 c->on_click_select();
-                return c; // either returning card that was selected
+                return c.get(); // either returning card that was selected
             }
     }
     return nullptr; //or if none was selected I am returning nullptr
@@ -164,7 +164,7 @@ bool Game::place_in_board(const sf::Vector2i mousePos, const int row, Card *sele
             if (board.get_slot(row, j)->is_empty())
             {
                 selected_card->on_click_unselect(); // trece la animatia de unclicked
-                board.place_card(selected_card, row, j);
+                board.place_card(std::unique_ptr<Card>(selected_card), row, j);
                 return true; // am plasat cartea
             }
         }
@@ -172,16 +172,16 @@ bool Game::place_in_board(const sf::Vector2i mousePos, const int row, Card *sele
     return false; // n am plasat cartea in board so don't delete from deck
 }
 
-void Game::delete_from_deck(std::vector<Card *>& deck,const Card *selected_card)
+void Game::delete_from_deck(std::vector<std::unique_ptr<Card>>& deck,const Card *selected_card)
 { // parcurg decku-ul si cand am ajuns la cartea plasata o sterg
-    const Card *temp_card = nullptr;
-    for(int i = 0; i < static_cast<int>(deck.size()); i++)
+    for (auto c = deck.begin(); c != deck.end(); ++c)
     {
-        temp_card = deck[i];
-        if(temp_card == selected_card)
+        // Dereference unique_ptr to get the raw Card pointer
+        if (c->get() == selected_card)
         {
-            deck.erase(deck.begin() + i);
+            deck.erase(c);
             deck.shrink_to_fit();
+            return;
         }
     }
 }

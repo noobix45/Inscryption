@@ -10,11 +10,11 @@ Player::Player(std::string name_, const int id_,const sf::Font& font) : name{std
 Player::~Player()
 {
     std::cout << "Starting destruction of Player " << id << "\n";
-    for (const auto &card: deck.get_all())
+    /*for (const auto &card: deck.get_all())
     {
         delete card; // Delete the dynamically allocated card
     }
-    deck.get_all().clear();
+    deck.get_all().clear();*/
     std::cout << "Finished destruction of Player " << id << "\n";
 }
 void Player::make_deck() { deck.make_deck(); }
@@ -39,4 +39,4 @@ std::ostream &operator<<(std::ostream &out, const Player &player)
     return out;
 }
 
-std::vector<Card*>& Player::get_deck() { return deck.get_all(); }
+std::vector<std::unique_ptr<Card>>& Player::get_deck() { return deck.get_all(); }

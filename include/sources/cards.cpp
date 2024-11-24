@@ -30,12 +30,13 @@ Card::~Card()// = default;
     std::cout << name<< " destroyed" << std::endl;
 }
 
+/*
 Card::Card(const Card &other_card) : name(other_card.name), hp(other_card.hp), damage(other_card.damage),
                                      cost_in_blood(other_card.cost_in_blood), cost_in_bones(other_card.cost_in_bones),
                                      e(other_card.e) { std::cout << "carte copiata\n"; }
-
+*/
 std::string Card::get_name() const { return name; }
-
+/*
 Card &Card::operator=(const Card &other_card)
 {
     if (this != &other_card)
@@ -49,7 +50,7 @@ Card &Card::operator=(const Card &other_card)
     }
     return *this;
 }
-
+*/
 // Overload << operator for outputting card info
 std::ostream &operator<<(std::ostream &out, const Card &card)
 {
@@ -142,3 +143,46 @@ void Card::update_number(sf::RenderWindow &window)
     window.draw(damage_text);
 }
 
+Card::Card(Card&& other_card) noexcept
+    : name(std::move(other_card.name)),
+      hp(other_card.hp),
+      damage(other_card.damage),
+      cost_in_blood(other_card.cost_in_blood),
+      cost_in_bones(other_card.cost_in_bones),
+      e(other_card.e),
+      card_texture(other_card.card_texture),
+      card_sprite(std::move(other_card.card_sprite)),
+      hp_text(std::move(other_card.hp_text)),
+      damage_text(std::move(other_card.damage_text)),
+      clicked(other_card.clicked)
+{
+    std::cout << "Card moved: " << name << std::endl;
+    other_card.clicked = false; // Reset source object state
+}
+
+Card& Card::operator=(Card&& other_card) noexcept
+{
+    if (this != &other_card) // Avoid self-assignment
+    {
+        // Clean up current resources
+        card_sprite.setTexture(sf::Texture());
+        card_texture = sf::Texture();
+
+        // Transfer resources
+        name = std::move(other_card.name);
+        hp = other_card.hp;
+        damage = other_card.damage;
+        cost_in_blood = other_card.cost_in_blood;
+        cost_in_bones = other_card.cost_in_bones;
+        e = other_card.e;
+        card_texture = other_card.card_texture;
+        card_sprite = std::move(other_card.card_sprite);
+        hp_text = std::move(other_card.hp_text);
+        damage_text = std::move(other_card.damage_text);
+        clicked = other_card.clicked;
+
+        // Leave source object in a valid state
+        other_card.clicked = false;
+    }
+    return *this;
+}

@@ -16,13 +16,15 @@ Pile::~Pile()
 {
     if (pile.empty())
         std::cout << "Pile " << pile_id << " empty" << std::endl;
+        /*
+        else
+            while(!pile.empty())
+        {
+            delete pile.top();
+            pile.pop();
+        }*/
     else
-        while(!pile.empty())
-    {
-        delete pile.top();
-        pile.pop();
-    }
-    std::cout << "Pile "<<pile_id<<" deleted" << std::endl;
+        std::cout << "Pile " << pile_id << " deleted" << std::endl;
     std::cout.flush();
 }
 
@@ -32,13 +34,13 @@ void Pile::get_pile()
     std::mt19937 gen(rd());
     std::uniform_int_distribution<int> dis(1, num_of_types);
     if (this->pile_id == 1)
-        for (int i = 0; i < pile_size; i++) { pile.push(new Card(card_factory(CardType::Squirrel,font_))); }
+        for (int i = 0; i < pile_size; i++) { pile.push(std::move(card_factory(CardType::Squirrel, font_)));  }
     else
     {
         for (int i = 0; i < pile_size; i++)
         {
             int r = dis(gen); // 1 2 3... possible outcomes
-            pile.push(new Card(card_factory(static_cast<CardType>(r),font_)));
+            pile.push(std::move(card_factory(static_cast<CardType>(r),font_)));
         }
     }
 }
@@ -48,9 +50,9 @@ int Pile::get_size() const
     return static_cast<int>(pile.size());
 }
 
-Card *Pile::get_card()
+std::unique_ptr<Card> Pile::get_card()
 {
-    Card *card = pile.top();
+    std::unique_ptr<Card> card = std::move(pile.top());
     pile.pop();
     return card;
 }
@@ -58,31 +60,29 @@ Card *Pile::get_card()
 //get top card, remove top
 Card *Pile::get_top()
 {
-    Card *card = pile.top();
-    return card;
+    return pile.top().get(); // Just return a pointer to the top card
 }
 
 
 
 std::ostream &operator<<(std::ostream &out, Pile &pile)
 {
-    if (pile.pile_id == 1)
-    {
+    //if (pile.pile_id == 1)
+    //{
         // squirell
         out << "There are " << pile.pile.size() << " cards of type " << pile.get_top()->get_name() << "\n";
-        return out;
-    } else // other cards
-    {
-        out << "There are "<<pile.pile.size() << " cards inside this pile\n";
-        std::stack <Card*>temp = pile.pile;
-        while (!temp.empty())
-        {
-            out << temp.top() << "\n";
-            temp.pop();
-        }
-        out << "\nYou shouldn't peek ;) \n";
-        return out;
-    }
+    return out;
+    //}
+    /* // other cards
+     out << "There are "<<pile.pile.size() << " cards inside this pile\n";
+     std::stack<std::unique_ptr<Card>> temp = pile.pile;
+     while (!temp.empty())
+     {
+         out << *temp.top() << "\n";
+         temp.pop();
+     }
+     out << "\nYou shouldn't peek ;) \n";
+     return out;*/
 }
 
 void Pile::init_texture()
