@@ -46,12 +46,14 @@ private:
     void bellSetUp();
 
     void init_sacrifice();
+
     void sacrificeSetUp();
 
     int pile_clicked(sf::Vector2i mousePos);
 
     bool ring_bell(sf::Vector2i mousePos) const;
-    bool sacrifice(sf::Vector2i mousePos,int) const;
+
+    bool sacrifice(sf::Vector2i mousePos, int) const;
 };
 
 /*

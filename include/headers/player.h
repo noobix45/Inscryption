@@ -32,14 +32,16 @@ public:
     //static void ring_bell() {} // schimba randul jucatorului // vor fi implementate
     void deck_draw(sf::RenderWindow &window,const float&,const float&) const;
 
-    void count_draw(sf::RenderWindow &window,const float&,const float&);
+    void count_draw(sf::RenderWindow &window, const float &, const float &);
 
     friend std::ostream &operator<<(std::ostream &out, const Player &player);
 
     std::vector<Card*>& get_deck();
 
     void add_blood(int);
+
     void take_blood(int);
+
     int get_blood() const;
 
     void init_textures();

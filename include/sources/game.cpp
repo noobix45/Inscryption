@@ -209,16 +209,17 @@ bool Game::place_in_board(const sf::Vector2i mousePos, const int row, Card *sele
             if (board.get_slot(row, j)->is_empty())
             {
                 //std::cout <<"from place in board\n"<<player<<std::endl;
-                    //std::cout <<"Player" << row << " has "<< player.get_blood()<<" wants to play "<< selected_card->get_name()<<" which has "<<selected_card->get_blood()<<"\n";
+                //std::cout <<"Player" << row << " has "<< player.get_blood()<<" wants to play "<< selected_card->get_name()<<" which has "<<selected_card->get_blood()<<"\n";
 
-                    if(auto& player = (row == 1)? player1 : player2; player.get_blood() >= selected_card->get_blood()) // daca playerul are suficient blood sa joace cartea
-                    {
-                        //std::cout<<"card will be placed\n";
-                        selected_card->on_click_unselect(); // trece la animatia de unclicked
-                        board.place_card(selected_card, row, j);
-                        player.take_blood(selected_card->get_blood());
-                        return true; // am plasat
-                    }
+                if (auto &player = (row == 1) ? player1 : player2; player.get_blood() >= selected_card->get_blood())
+                // daca playerul are suficient blood sa joace cartea
+                {
+                    //std::cout<<"card will be placed\n";
+                    selected_card->on_click_unselect(); // trece la animatia de unclicked
+                    board.place_card(selected_card, row, j);
+                    player.take_blood(selected_card->get_blood());
+                    return true; // am plasat
+                }
 
             }
         }
@@ -294,7 +295,7 @@ void Game::bellSetUp()
 
 void Game::init_sacrifice()
 {
-    if(!sacrifice_texture.loadFromFile("pictures/sacrifice_mark.png")) { std::cout<< " Unable to load sacrifice\n"; }
+    if (!sacrifice_texture.loadFromFile("pictures/sacrifice_mark.png")) { std::cout << " Unable to load sacrifice\n"; }
     sacrifice_sprite.setTexture(sacrifice_texture);
 }
 
@@ -304,6 +305,6 @@ void Game::sacrificeSetUp()
     const float x = board.get_slot(0, 3)->get_sprite().getPosition().x;
     const float y = board.get_slot(0, 3)->get_sprite().getPosition().y;
     sacrifice_sprite.setOrigin(static_cast<float>(sacrifice_texture.getSize().x) / 2,
-                          static_cast<float>(sacrifice_texture.getSize().y) / 2);
+                               static_cast<float>(sacrifice_texture.getSize().y) / 2);
     sacrifice_sprite.setPosition(x+one_slot_width*3.5f, y + one_slot_height/2);
 }
