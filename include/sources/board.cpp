@@ -32,6 +32,12 @@ Board::~Board()
     std::cout.flush();
 }
 
+std::pair<float, float> Board::get_offset() const
+{
+    return {offset_x, offset_y};
+}
+
+
 /*
 void Board::setUp() const
 {
@@ -77,7 +83,7 @@ void Board::remove_card(const int l, const int c) const
     if (board[l][c]->is_empty() == true) { std::cout << "Slot is already empty\n"; } else { board[l][c]->remove_card(); }
 }
 
-void Board::get_offset(const sf::RenderWindow &window, const unsigned int &slot_width, const unsigned int &slot_height)
+void Board::make_offset(const sf::RenderWindow &window, const unsigned int &slot_width, const unsigned int &slot_height)
 {
     board_width = slot_width * col;
     board_height = slot_height * lin;

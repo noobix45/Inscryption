@@ -45,7 +45,7 @@ void Deck::add_card(Card *card) { deck.push_back(card); } // este folosita la dr
 
 std::ostream &operator<<(std::ostream &out, const Deck &deck)
 {
-    for (int i = 0; i < deck.get_num_of_cards(); i++) { out << deck.get_card(i) << "\n"; }
+    for (int i = 0; i < deck.get_num_of_cards(); i++) { out << *deck.get_card(i) << "\n"; }
     return out;
 }
 

@@ -8,20 +8,21 @@ Game::Game() : font_manager_("heaviwei.ttf"),
                normal_pile(2, font_manager_.getFont()),
                player1{"Player1", 1, font_manager_.getFont()},
                player2{"Player2", 2, font_manager_.getFont()},
-               window(sf::VideoMode::getDesktopMode(), "Inscryption", sf::Style::Fullscreen) {}
+               window(sf::VideoMode::getDesktopMode(), "My Window", sf::Style::Fullscreen) {}
 
 void Game::play_game()
 {
-    board.get_offset(window, one_slot_width, one_slot_height);
-
+    board.make_offset(window, one_slot_width, one_slot_height);
     player1.make_deck();
     player2.make_deck();
 
     init_background();
-    init_bell(); // init texture bell si calculeaza pos pentru piles
+    init_bell(); // init texture bell
+    init_sacrifice();
 
     Card *selected_card = nullptr; // la momentul inceperii nicio carte nu este selectata
     bool card_selected = false;
+    bool sacrifice_on = false;
 
     int current_phase = 0; // 0 means draw phase // 1 means playing phase - jucatorii pot sacrifica sau juca carti
     int current_player = 1;
@@ -56,6 +57,24 @@ void Game::play_game()
 
                     } else // e playing phase
                     {
+                        if (selected_card == nullptr && sacrifice_sprite.getGlobalBounds().contains(
+                                static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)))
+                        {
+                            sacrifice_on = true;
+                        }
+                        if (sacrifice_on)
+                        {
+                            const int board_index = (current_player == 1) ? 1 : 0;
+                            auto &player = (current_player == 1) ? player1 : player2;
+                            if (sacrifice(mousePos, board_index))
+                            {
+                                //std::cout << "Sacrifice detected giving player too blood\n";
+                                player.add_blood(1); // daca cartea are effect worthy sacrifice va fi 3
+                                std::cout << player;
+                                sacrifice_on = false;
+                            }
+                        }
+
                         if (!card_selected)
                         {
                             //inainte de selectie un player va fi obligat sa traga o carte din pile
@@ -68,12 +87,12 @@ void Game::play_game()
                         } else if (selected_card)
                         {
                             // functia returneaza daca am plasat sau nu o carte, ca sa stiu daca o sterg din deck sau nu
-                            const int board_index = (current_player == 1) ? 1 : 0;
-                            auto &player = (current_player == 1) ? player1 : player2;
+                            const int board_index2 = (current_player == 1) ? 1 : 0;
+                            auto &player_again = (current_player == 1) ? player1 : player2;
 
-                            if (place_in_board(mousePos, board_index, selected_card))
+                            if (place_in_board(mousePos, board_index2, selected_card))
                             {
-                                delete_from_deck(player.get_deck(), selected_card);
+                                delete_from_deck(player_again.get_deck(), selected_card);
                             }
 
                             selected_card->on_click_unselect();
@@ -115,12 +134,39 @@ void Game::play_game()
             for (int j = 0; j < 4; j++)
                 if (!board.get_slot(i, j)->is_empty())
                     board.get_slot(i, j)->update(window);
-        //board.remove_card(1,2); // this might not work after the changes
 
         player1.deck_draw(window, deck_fst1, deck_snd1);
-        player2.deck_draw(window,deck_fst2,deck_snd2);
+        player2.deck_draw(window, deck_fst2, deck_snd2);
+
+        sacrificeSetUp();
+        window.draw(sacrifice_sprite);
+
+        player1.count_draw(window, deck_fst1 - one_slot_width * 1.2f, deck_snd1);
+        player2.count_draw(window, deck_fst2 + one_slot_width * 1.0f, deck_snd2);
+        player1.update_numbers(window);
+        player2.update_numbers(window);
+
         window.display();
     }
+}
+
+bool Game::sacrifice(const sf::Vector2i mousePos, const int row) const
+{
+    for (int j = 0; j < 4; j++)
+    {
+        if (board.get_slot(row, j)->get_sprite().getGlobalBounds().contains(
+            static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)))
+        {
+            //std::cout << "sacrifice was clicked\n";
+            if (!(board.get_slot(row, j)->is_empty())) // daca slotul are carte in el
+            {
+                //std::cout << "sacrifice done\n";
+                board.get_slot(row, j)->remove_card(); // sterg cartea din slot definitiv ;)
+                return true;
+            }
+        }
+    }
+    return false;
 }
 
 void Game::select_card(const sf::Vector2i mousePos,const int id, Card *&selected_card) // vreau sa modific selectia
@@ -153,7 +199,7 @@ Card *Game::go_through_deck(const sf::Vector2i mousePos, std::vector<Card *> &de
     return nullptr; //or if none was selected I am returning nullptr
 }
 
-bool Game::place_in_board(const sf::Vector2i mousePos, const int row, Card *selected_card) const
+bool Game::place_in_board(const sf::Vector2i mousePos, const int row, Card *selected_card)
 {
     for (int j = 0; j < 4; j++)
     {
@@ -162,9 +208,18 @@ bool Game::place_in_board(const sf::Vector2i mousePos, const int row, Card *sele
         {
             if (board.get_slot(row, j)->is_empty())
             {
-                selected_card->on_click_unselect(); // trece la animatia de unclicked
-                board.place_card(selected_card, row, j);
-                return true; // am plasat cartea
+                //std::cout <<"from place in board\n"<<player<<std::endl;
+                    //std::cout <<"Player" << row << " has "<< player.get_blood()<<" wants to play "<< selected_card->get_name()<<" which has "<<selected_card->get_blood()<<"\n";
+
+                    if(auto& player = (row == 1)? player1 : player2; player.get_blood() >= selected_card->get_blood()) // daca playerul are suficient blood sa joace cartea
+                    {
+                        //std::cout<<"card will be placed\n";
+                        selected_card->on_click_unselect(); // trece la animatia de unclicked
+                        board.place_card(selected_card, row, j);
+                        player.take_blood(selected_card->get_blood());
+                        return true; // am plasat
+                    }
+
             }
         }
     }
@@ -204,10 +259,10 @@ void Game::init_bell()
 {
     if(!bell_texture.loadFromFile("pictures/bell.png")) { std::cout<< " Unable to load bell\n"; }
     bell_sprite.setTexture(bell_texture);
-
+}
 
     //eturn std::make_pair(std::make_pair(x1,y1),std::make_pair(x2,y2));
-}
+
 
 int Game::pile_clicked(const sf::Vector2i mousePos)
 {
@@ -235,4 +290,20 @@ void Game::bellSetUp()
     const float pos_xb = board.get_slot(0, 0)->get_sprite().getPosition().x;
     const float pos_yb = board.get_slot(0, 0)->get_sprite().getPosition().y;
     bell_sprite.setPosition(pos_xb - 1.5f * one_slot_width, pos_yb + one_slot_height / 2); // 729,427
+}
+
+void Game::init_sacrifice()
+{
+    if(!sacrifice_texture.loadFromFile("pictures/sacrifice_mark.png")) { std::cout<< " Unable to load sacrifice\n"; }
+    sacrifice_sprite.setTexture(sacrifice_texture);
+}
+
+
+void Game::sacrificeSetUp()
+{
+    const float x = board.get_slot(0, 3)->get_sprite().getPosition().x;
+    const float y = board.get_slot(0, 3)->get_sprite().getPosition().y;
+    sacrifice_sprite.setOrigin(static_cast<float>(sacrifice_texture.getSize().x) / 2,
+                          static_cast<float>(sacrifice_texture.getSize().y) / 2);
+    sacrifice_sprite.setPosition(x+one_slot_width*3.5f, y + one_slot_height/2);
 }

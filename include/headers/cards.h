@@ -59,6 +59,8 @@ public:
     void scale_big();
 
     void update_number(sf::RenderWindow &window);
+
+    int get_blood() const;
 };
 
 #endif

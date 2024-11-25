@@ -26,6 +26,8 @@ private:
     sf::Sprite background_sprite;
     sf::Texture bell_texture;
     sf::Sprite bell_sprite;
+    sf::Texture sacrifice_texture;
+    sf::Sprite sacrifice_sprite;
     Board board;
     sf::RenderWindow window;
 
@@ -35,7 +37,7 @@ private:
 
     static Card* go_through_deck(sf::Vector2i mousePos,std::vector<Card*>&);
 
-    bool place_in_board(sf::Vector2i mousePos, int, Card *) const;
+    bool place_in_board(sf::Vector2i mousePos, int, Card *);
 
     static void delete_from_deck(std::vector<Card*>&, const Card* );
 
@@ -43,9 +45,13 @@ private:
 
     void bellSetUp();
 
+    void init_sacrifice();
+    void sacrificeSetUp();
+
     int pile_clicked(sf::Vector2i mousePos);
 
     bool ring_bell(sf::Vector2i mousePos) const;
+    bool sacrifice(sf::Vector2i mousePos,int) const;
 };
 
 /*

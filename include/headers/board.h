@@ -31,7 +31,8 @@ public:
 
     void remove_card(int, int) const;
 
-    void get_offset(const sf::RenderWindow &window, const unsigned int &, const unsigned int &);
+    std::pair<float,float> get_offset() const;
+    void make_offset(const sf::RenderWindow &window, const unsigned int &, const unsigned int &);
 
     [[nodiscard]] Slot *get_slot(const unsigned int &, const unsigned int &) const;
 

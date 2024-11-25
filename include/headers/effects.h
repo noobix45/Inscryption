@@ -10,14 +10,19 @@ inline std::ostream& operator<<(std::ostream& os, const Effect& effect)
     {
         case Effect::none:
             os << "none";
+            break;
         case Effect::air_defence:
             os << "air_defence";
+            break;
         case Effect::dam:
             os << "dam";
+            break;
         case Effect::bifurcated:
             os << "bifurcated";
+            break;
         default:
             os << "none";
+            break;
     }
     return os;
 }

@@ -88,6 +88,8 @@ sf::Sprite& Card::get_sprite()
     return card_sprite;
 }
 
+int Card::get_blood() const { return cost_in_blood; }
+
 void Card::on_click_select()
 {
     scale_big();

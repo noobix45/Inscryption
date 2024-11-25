@@ -23,7 +23,7 @@ void Slot::place_card(Card *new_card)
     } else { std::cout << "Slot is already in use" << std::endl; }
 }
 
-void Slot::remove_card() { card = nullptr; }
+void Slot::remove_card() { delete card; card = nullptr; }
 
 void Slot::textures_init()
 {
