@@ -8,7 +8,8 @@ Game::Game() : window(sf::VideoMode::getDesktopMode(), "My Window", sf::Style::F
                squirrel_pile(1, font_manager_.getFont()),
                normal_pile(2, font_manager_.getFont()),
                player1{"Player1", 1, font_manager_.getFont()},
-               player2{"Player2", 2, font_manager_.getFont()}
+               player2{"Player2", 2, font_manager_.getFont()},
+               selected_card(nullptr), card_selected(false), sacrifice_on(false), current_phase(0), current_player(1)
 {
     window.setFramerateLimit(60);
 }
@@ -212,7 +213,7 @@ bool Game::sacrifice(const sf::Vector2i mousePos, const int row) const
     return false;
 }
 
-void Game::select_card(const sf::Vector2i mousePos,const int id) // vreau sa selectez o carte
+void Game::select_card(const sf::Vector2i mousePos, const int id) // vreau sa selectez o carte
 {
     if (id == 1)
     {

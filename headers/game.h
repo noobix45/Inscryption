@@ -31,12 +31,12 @@ private:
     sf::Sprite sacrifice_sprite;
     Board board;
 
-    Card *selected_card = nullptr; // la momentul inceperii nicio carte nu este selectata
-    bool card_selected = false;
-    bool sacrifice_on = false;
+    Card *selected_card; // la momentul inceperii nicio carte nu este selectata
+    bool card_selected;
+    bool sacrifice_on;
 
-    int current_phase = 0; // 0 means draw phase // 1 means playing phase - jucatorii pot sacrifica sau juca carti
-    int current_player = 1;
+    int current_phase; // 0 means draw phase // 1 means playing phase - jucatorii pot sacrifica sau juca carti
+    int current_player;
 
     void draw_phase_logic(sf::Vector2i mousePos);
     void sacrifice_logic(sf::Vector2i mousePos);
@@ -49,7 +49,9 @@ private:
     bool ring_bell(sf::Vector2i mousePos) const;
 
     bool sacrifice(sf::Vector2i mousePos, int) const;
+
     void select_card(sf::Vector2i, int);
+
     static Card* go_through_deck(sf::Vector2i mousePos,std::vector<Card*>&);
     bool place_in_board(sf::Vector2i mousePos, int, Card *);
 
