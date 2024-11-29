@@ -53,7 +53,7 @@ private:
     void select_card(sf::Vector2i, int);
 
     static Card* go_through_deck(sf::Vector2i mousePos,std::vector<Card*>&);
-    bool place_in_board(sf::Vector2i mousePos, int, Card *);
+    bool place_in_board(sf::Vector2i mousePos, int);
 
     void init_background();
     void init_bell();

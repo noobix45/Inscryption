@@ -104,7 +104,7 @@ void Game::place_card_logic(const sf::Vector2i mousePos)
     const int board_index2 = (current_player == 1) ? 1 : 0;
     auto &player_again = (current_player == 1) ? player1 : player2;
 
-    if (place_in_board(mousePos, board_index2, selected_card)) // returneaza true daca s-a plasat o carte
+    if (place_in_board(mousePos, board_index2)) // returneaza true daca s-a plasat o carte
     {
         player_again.delete_from_deck(selected_card); // se muta cartea din deck in board
     }
@@ -238,7 +238,7 @@ Card *Game::go_through_deck(const sf::Vector2i mousePos, std::vector<Card *> &de
     return nullptr; //or if none was selected I am returning nullptr
 }
 
-bool Game::place_in_board(const sf::Vector2i mousePos, const int row, Card *selected_card)
+bool Game::place_in_board(const sf::Vector2i mousePos, const int row)
 {
     for (int j = 0; j < 4; j++)
     {
