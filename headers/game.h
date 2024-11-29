@@ -49,7 +49,7 @@ private:
     bool ring_bell(sf::Vector2i mousePos) const;
 
     bool sacrifice(sf::Vector2i mousePos, int) const;
-    void select_card(sf::Vector2i, int, Card *&selected_card);
+    void select_card(sf::Vector2i, int);
     static Card* go_through_deck(sf::Vector2i mousePos,std::vector<Card*>&);
     bool place_in_board(sf::Vector2i mousePos, int, Card *);
 

@@ -44,9 +44,9 @@ void Game::play_game()
                     if (!card_selected)
                     {
                         if (current_player == 1)
-                            select_card(mousePos, 1, selected_card); //selecteaza o carte din deck sau nu
+                            select_card(mousePos, 1); //selecteaza o carte din deck sau nu
                         else
-                            select_card(mousePos, 2, selected_card);
+                            select_card(mousePos, 2);
                         if (selected_card != nullptr) { card_selected = true; }
                     }
                     else if (selected_card)
@@ -212,7 +212,7 @@ bool Game::sacrifice(const sf::Vector2i mousePos, const int row) const
     return false;
 }
 
-void Game::select_card(const sf::Vector2i mousePos,const int id, Card *&selected_card) // vreau sa selectez o carte
+void Game::select_card(const sf::Vector2i mousePos,const int id) // vreau sa selectez o carte
 {
     if (id == 1)
     {
