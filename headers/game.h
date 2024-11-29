@@ -3,10 +3,10 @@
 #include "player.h"
 #include "pile.h"
 #include "board.h"
-#include <SFML/Graphics.hpp>
-
 #include "cards_factory.h"
 #include "font_manager.h"
+#include <SFML/Graphics.hpp>
+
 
 class Game
 {
@@ -31,32 +31,34 @@ private:
     sf::Sprite sacrifice_sprite;
     Board board;
 
-    void init_background();
+    Card *selected_card = nullptr; // la momentul inceperii nicio carte nu este selectata
+    bool card_selected = false;
+    bool sacrifice_on = false;
 
-    void select_card(sf::Vector2i, int, Card *&selected_card);
+    int current_phase = 0; // 0 means draw phase // 1 means playing phase - jucatorii pot sacrifica sau juca carti
+    int current_player = 1;
 
-    static Card* go_through_deck(sf::Vector2i mousePos,std::vector<Card*>&);
+    void draw_phase_logic(sf::Vector2i mousePos);
+    void sacrifice_logic(sf::Vector2i mousePos);
+    void place_card_logic(sf::Vector2i mousePos);
 
-    bool place_in_board(sf::Vector2i mousePos, int, Card *);
-
-    static void delete_from_deck(std::vector<Card*>&, const Card* );
-
-    void init_bell();
-
-    void bellSetUp();
-
-    void init_sacrifice();
-
-    void sacrificeSetUp();
+    void drawEverything();
+    void initEverything();
 
     int pile_clicked(sf::Vector2i mousePos);
-
     bool ring_bell(sf::Vector2i mousePos) const;
 
     bool sacrifice(sf::Vector2i mousePos, int) const;
+    void select_card(sf::Vector2i, int, Card *&selected_card);
+    static Card* go_through_deck(sf::Vector2i mousePos,std::vector<Card*>&);
+    bool place_in_board(sf::Vector2i mousePos, int, Card *);
+
+    void init_background();
+    void init_bell();
+    void init_sacrifice();
 };
 
-/*
+/*    supeeeeeeeeeer old
 int r = rand()%4;
     Card c = card_factory(CardType(r));
     std::cout<<"Random card test: \n";

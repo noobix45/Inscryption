@@ -3,8 +3,7 @@
 #include "cards.h"
 #include <SFML/Graphics.hpp>
 
-#define one_slot_width 154
-#define one_slot_height 226
+
 
 class Slot
 {
@@ -25,13 +24,11 @@ public:
 
     void remove_card();
 
+    void update(sf::RenderWindow &window) const;
+
     void textures_init();
 
     void setPos(const float&,const float&);
-
-   // void draw(sf::RenderWindow &window, const float &x, const float &y); deprecated
-
-    void update(sf::RenderWindow &window) const;
 
     sf::Sprite& get_sprite();
 

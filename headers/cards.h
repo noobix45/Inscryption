@@ -3,7 +3,6 @@
 #include "effects.h"
 #include <SFML/Graphics.hpp>
 
-
 enum class CardType { Squirrel, Adder, Wolf, Beaver, Mantis, Bullfrog };
 
 class Card
@@ -36,17 +35,19 @@ public:
     //default copy constructor
     Card(const Card &other_card);
 
-    [[nodiscard]] std::string get_name() const;
-
     Card &operator=(const Card &other_card);
 
     friend std::ostream &operator <<(std::ostream &out, const Card &card);
+
+    [[nodiscard]] std::string get_name() const;
 
     void init_texture(const std::string& file_name,const sf::Font& font);
 
     void draw(sf::RenderWindow &window, const float &, const float &);
 
     sf::Sprite& get_sprite();
+
+    int get_blood() const;
 
     void on_click_select();
 
@@ -59,8 +60,6 @@ public:
     void scale_big();
 
     void update_number(sf::RenderWindow &window);
-
-    int get_blood() const;
 };
 
 #endif

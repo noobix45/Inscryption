@@ -1,7 +1,7 @@
-#include "headers/cards.h"
+#include "cards.h"
+#include "slot.h"
+#include "constante.h"
 #include <iostream>
-
-#include "headers/slot.h"
 
 Card::Card() = default; // pentru caz default in card_factoy
 
@@ -34,8 +34,6 @@ Card::Card(const Card &other_card) : name(other_card.name), hp(other_card.hp), d
                                      cost_in_blood(other_card.cost_in_blood), cost_in_bones(other_card.cost_in_bones),
                                      e(other_card.e) { std::cout << "carte copiata\n"; }
 
-std::string Card::get_name() const { return name; }
-
 Card &Card::operator=(const Card &other_card)
 {
     if (this != &other_card)
@@ -50,7 +48,6 @@ Card &Card::operator=(const Card &other_card)
     return *this;
 }
 
-// Overload << operator for outputting card info
 std::ostream &operator<<(std::ostream &out, const Card &card)
 {
     out << card.name << " hp: " << card.hp << " damage: " << card.damage;
@@ -61,6 +58,9 @@ std::ostream &operator<<(std::ostream &out, const Card &card)
     out << " effect: " << card.e << "\n";
     return out;
 }
+
+std::string Card::get_name() const { return name; }
+
 
 void Card::init_texture(const std::string &file_name,const sf::Font& font)
 {
@@ -95,7 +95,7 @@ void Card::on_click_select()
     scale_big();
     clicked = true;
 }
- /// move the scale procces in a separate function
+
 void Card::on_click_unselect()
 {
     scale_small();
@@ -107,16 +107,16 @@ bool Card::is_clicked() const{ return clicked; }
 void Card::scale_small()
 {
     const sf::Vector2u textureSize = card_texture.getSize();
-    const float scaleX = one_slot_width / static_cast<float>(textureSize.x);
-    const float scaleY = one_slot_height / static_cast<float>(textureSize.y);
+    const float scaleX = ONE_SLOT_WIDTH / static_cast<float>(textureSize.x);
+    const float scaleY = ONE_SLOT_HEIGHT / static_cast<float>(textureSize.y);
     card_sprite.setScale(scaleX, scaleY);
 }
 
 void Card::scale_big()
 {
     const sf::Vector2u textureSize = card_texture.getSize();
-    const float scaleX =( one_slot_width / static_cast<float>(textureSize.x))*1.1f;
-    const float scaleY =( one_slot_height / static_cast<float>(textureSize.y)) *1.1f;
+    const float scaleX =( ONE_SLOT_WIDTH / static_cast<float>(textureSize.x))*1.1f;
+    const float scaleY =( ONE_SLOT_HEIGHT / static_cast<float>(textureSize.y)) *1.1f;
     card_sprite.setScale(scaleX, scaleY);
 }
 
@@ -143,4 +143,3 @@ void Card::update_number(sf::RenderWindow &window)
     window.draw(hp_text);
     window.draw(damage_text);
 }
-

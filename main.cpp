@@ -1,4 +1,4 @@
-#include "include/headers/game.h"
+#include "headers/game.h"
 /*
 class Scale{
 private:
@@ -21,14 +21,8 @@ public:
 };
 */
 
-// to do: mai multi operatori de afisare - Check
-// to do: la deck suprascris toti operatorii
-// to do: board constante pentru nr de linii si nr de coloane - Check
-// to do: enum effect pus ori in namespace ori facut enumclass - Check
-// to do: schimba numele la get deck si la whose deck - Check
-// to do: clean up the logic, see if you can get rid of repetitions.
-// to do: move the play game outside the constructor - the constructor does too much, it only needds to build essential - Check
-// to do: start working on the logic of sacrificing, taking and dealing damage.
+// to do: finish the logic, cards do damage and score
+// to do: tema2 - exceptii si derivate pentru efect fiecare carte devine o derivata
 
 int main() {
     Game game;
@@ -36,4 +30,3 @@ int main() {
     return 0;
 }
 
-// slot.png has 154 width, 226 height

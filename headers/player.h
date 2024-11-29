@@ -27,29 +27,23 @@ public:
     void make_deck();
 
     void draw_card(Pile &pile);
-
-    //static void sacrifice() {} // vor fi implementate
-    //static void ring_bell() {} // schimba randul jucatorului // vor fi implementate
-    void deck_draw(sf::RenderWindow &window,const float&,const float&) const;
-
-      void count_draw(sf::RenderWindow &window) const; //deprecated
-
-    friend std::ostream &operator<<(std::ostream &out, const Player &player);
+    void delete_from_deck(const Card *selected_card);
 
     std::vector<Card*>& get_deck();
 
     void add_blood(int);
-
     void take_blood(int);
-
     int get_blood() const;
 
+    void deck_draw(sf::RenderWindow &window) const;
+
+    void setDeckPos(const float &x, const float &y);
+
     void init_textures();
+    void setSpritesPos(const float &, const float &);
+    void count_draw(sf::RenderWindow &window);
 
-    void setPos(const float &, const float &);
-
-    void update_numbers(sf::RenderWindow &window);
-
+    friend std::ostream &operator<<(std::ostream &out, const Player &player);
 };
 
 #endif

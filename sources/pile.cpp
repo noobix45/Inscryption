@@ -1,13 +1,13 @@
-#include "headers/pile.h"
-#include "headers/cards_factory.h"
-#include "headers/slot.h"
+#include "pile.h"
+#include "cards_factory.h"
+#include "constante.h"
 #include <random>
 #include <iostream>
-#define pile_size 5
+
 
 Pile::Pile(const int id, const sf::Font &font) : pile_id{id}, font_(font)
 {
-    get_pile();
+    make_pile();
     init_texture();
     std::cout << "Pile " << pile_id << " created" << std::endl;
 }
@@ -26,33 +26,21 @@ Pile::~Pile()
     std::cout.flush();
 }
 
-void Pile::get_pile()
+void Pile::make_pile()
 {
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::uniform_int_distribution<int> dis(1, num_of_types);
+    std::uniform_int_distribution<int> dis(1, NUM_OF_TYPES);
     if (this->pile_id == 1)
-        for (int i = 0; i < pile_size; i++) { pile.push(new Card(card_factory(CardType::Squirrel,font_))); }
+        for (int i = 0; i < PILE_SIZE; i++) { pile.push(card_factory(CardType::Squirrel,font_)); }
     else
     {
-        for (int i = 0; i < pile_size; i++)
+        for (int i = 0; i < PILE_SIZE; i++)
         {
             int r = dis(gen); // 1 2 3... possible outcomes
-            pile.push(new Card(card_factory(static_cast<CardType>(r),font_)));
+            pile.push(card_factory(static_cast<CardType>(r),font_));
         }
     }
-}
-
-int Pile::get_size() const
-{
-    return static_cast<int>(pile.size());
-}
-
-Card *Pile::get_card()
-{
-    Card *card = pile.top();
-    pile.pop();
-    return card;
 }
 
 //get top card, remove top
@@ -61,8 +49,21 @@ Card *Pile::get_top()
     Card *card = pile.top();
     return card;
 }
+Card *Pile::get_card()
+{
+    Card *card = pile.top();
+    pile.pop();
+    return card;
+}
 
+bool Pile::is_clicked(const sf::Vector2i mousePos) const {
+    return pile_sprite.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePos));
+}
 
+int Pile::get_size() const
+{
+    return static_cast<int>(pile.size());
+}
 
 std::ostream &operator<<(std::ostream &out, Pile &pile)
 {
@@ -96,7 +97,7 @@ void Pile::init_texture()
             std::cout << "Error in loading card back texture\n";
             // maybe throw exception and stop launch of program??
         }
-        pile_sprite.setPosition(1191 + 2*one_slot_width,420); // intial 427
+        pile_sprite.setPosition(1191 + 2*ONE_SLOT_WIDTH,420); // intial 427
     }
     else
     {
@@ -104,7 +105,7 @@ void Pile::init_texture()
         {
             std::cout << "Error in loading card back texture\n";
         }
-        pile_sprite.setPosition(1191 + 2*one_slot_width,660); //initial 653
+        pile_sprite.setPosition(1191 + 2*ONE_SLOT_WIDTH,660); //initial 653
     }
     pile_sprite.setTexture(pile_texture);
     pile_sprite.setOrigin(static_cast<float>(pile_texture.getSize().x) / 2, static_cast<float>(pile_texture.getSize().y) / 2);
@@ -114,8 +115,8 @@ void Pile::init_texture()
 void Pile::scale()
 {
     const sf::Vector2u textureSize = pile_texture.getSize();
-    const float scaleX = one_slot_width / static_cast<float>(textureSize.x);
-    const float scaleY = one_slot_height / static_cast<float>(textureSize.y);
+    const float scaleX = ONE_SLOT_WIDTH / static_cast<float>(textureSize.x);
+    const float scaleY = ONE_SLOT_HEIGHT / static_cast<float>(textureSize.y);
     pile_sprite.setScale(scaleX, scaleY);
 }
 
@@ -125,17 +126,6 @@ void Pile::setPos(const float &x, const float &y)
 }
 
 
-/* deprecated se apeleaza in game cu window.draw direct
-void Pile::draw(sf::RenderWindow &window) const
-{
-    //pile_sprite.setPosition(x, y); se apeleaza pile.setPos in game o sg data
-    window.draw(pile_sprite);
-}
-*/
-
-bool Pile::is_clicked(const sf::Vector2i mousePos) const {
-    return pile_sprite.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePos));
-}
 
 sf::Sprite& Pile::get_sprite()
 {

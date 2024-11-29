@@ -1,26 +1,28 @@
 #ifndef PILE_H
 #define PILE_H
-#include <stack>
 #include "cards.h"
+#include <stack>
 
 class Pile
 {
-    // 2 piles will be defined, one with squirrels, one with normal cards
-    int pile_id;
+    int pile_id; // 2 piles will be defined, one with squirrels, one with normal cards
     sf::Font font_;
     std::stack<Card *> pile; // always draw from top, decrease number of cards by one when drawn.
     sf::Texture pile_texture;
     sf::Sprite pile_sprite;
+
 public:
     explicit Pile(int id, const sf::Font &); // pile 1  = squirrels // pile 2 = normal cards
 
     ~Pile();
 
+    void make_pile();
+
     [[nodiscard]] Card *get_top();
 
     Card *get_card();
 
-    void get_pile();
+    bool is_clicked(sf::Vector2i) const;
 
     int get_size() const;
 
@@ -28,13 +30,10 @@ public:
 
     void init_texture();
 
-    void setPos(const float &,const float &);
-
-    // void draw(sf::RenderWindow &window) const; deprecated
-
     void scale();
 
-    bool is_clicked(sf::Vector2i) const;
+    void setPos(const float &,const float &);
+
 
     sf::Sprite& get_sprite();
 };

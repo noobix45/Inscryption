@@ -54,15 +54,16 @@ add_executable(${PROJECT_NAME}
         main.cpp
         generated/src/Helper.cpp
         env_fixes.h
-        include/sources/game.cpp
-        include/sources/board.cpp
-        include/sources/cards.cpp
-        include/sources/deck.cpp
-        include/sources/pile.cpp
-        include/sources/player.cpp
-        include/sources/slot.cpp
-        include/headers/font_manager.h
-        include/sources/font_manager.cpp
+        sources/game.cpp
+        sources/board.cpp
+        sources/cards.cpp
+        sources/deck.cpp
+        sources/pile.cpp
+        sources/player.cpp
+        sources/slot.cpp
+        headers/font_manager.h
+        sources/font_manager.cpp
+        headers/constante.h
         #include/sources/cards_factory.cpp
 )
 
@@ -72,9 +73,10 @@ include(cmake/CompilerFlags.cmake)
 
 # use SYSTEM so cppcheck and clang-tidy do not report warnings from these directories
 target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE generated/include)
-target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE ${CMAKE_SOURCE_DIR}/include)
+target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE ${CMAKE_SOURCE_DIR}/headers)
 # target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE ext/<SomeHppLib>/include)
 target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE ${SFML_SOURCE_DIR}/include)
+
 target_link_directories(${PROJECT_NAME} PRIVATE ${SFML_BINARY_DIR}/lib)
 target_link_libraries(${PROJECT_NAME} PRIVATE sfml-graphics sfml-window sfml-system Threads::Threads)
 
