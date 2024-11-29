@@ -32,7 +32,7 @@ public:
     //static void ring_bell() {} // schimba randul jucatorului // vor fi implementate
     void deck_draw(sf::RenderWindow &window,const float&,const float&) const;
 
-    void count_draw(sf::RenderWindow &window, const float &, const float &);
+      void count_draw(sf::RenderWindow &window) const; //deprecated
 
     friend std::ostream &operator<<(std::ostream &out, const Player &player);
 
@@ -45,6 +45,8 @@ public:
     int get_blood() const;
 
     void init_textures();
+
+    void setPos(const float &, const float &);
 
     void update_numbers(sf::RenderWindow &window);
 

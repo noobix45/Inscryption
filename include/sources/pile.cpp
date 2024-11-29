@@ -119,11 +119,19 @@ void Pile::scale()
     pile_sprite.setScale(scaleX, scaleY);
 }
 
-void Pile::draw(sf::RenderWindow &window,const float &x, const float &y)
+void Pile::setPos(const float &x, const float &y)
 {
     pile_sprite.setPosition(x, y);
+}
+
+
+/* deprecated se apeleaza in game cu window.draw direct
+void Pile::draw(sf::RenderWindow &window) const
+{
+    //pile_sprite.setPosition(x, y); se apeleaza pile.setPos in game o sg data
     window.draw(pile_sprite);
 }
+*/
 
 bool Pile::is_clicked(const sf::Vector2i mousePos) const {
     return pile_sprite.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePos));

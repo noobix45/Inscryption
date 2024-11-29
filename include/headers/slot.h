@@ -27,8 +27,9 @@ public:
 
     void textures_init();
 
-    //void setPos(const float&,const float&);
-    void draw(sf::RenderWindow &window, const float &x, const float &y);
+    void setPos(const float&,const float&);
+
+   // void draw(sf::RenderWindow &window, const float &x, const float &y); deprecated
 
     void update(sf::RenderWindow &window) const;
 

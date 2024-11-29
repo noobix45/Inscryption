@@ -16,6 +16,7 @@ public:
     void play_game();
 
 private:
+    sf::RenderWindow window;
     FontManager font_manager_;
     Pile squirrel_pile;
     Pile normal_pile;
@@ -29,7 +30,6 @@ private:
     sf::Texture sacrifice_texture;
     sf::Sprite sacrifice_sprite;
     Board board;
-    sf::RenderWindow window;
 
     void init_background();
 

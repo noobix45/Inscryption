@@ -28,7 +28,9 @@ public:
 
     void init_texture();
 
-    void draw(sf::RenderWindow &window,const float&x,const float&y); //hardcoded position on drawing
+    void setPos(const float &,const float &);
+
+    // void draw(sf::RenderWindow &window) const; deprecated
 
     void scale();
 

@@ -3,16 +3,20 @@
 #include "headers/font_manager.h"
 #include <iostream>
 
-Game::Game() : font_manager_("heaviwei.ttf"),
+Game::Game() : window(sf::VideoMode::getDesktopMode(), "My Window", sf::Style::Fullscreen),
+               font_manager_("heaviwei.ttf"),
                squirrel_pile(1, font_manager_.getFont()),
                normal_pile(2, font_manager_.getFont()),
                player1{"Player1", 1, font_manager_.getFont()},
-               player2{"Player2", 2, font_manager_.getFont()},
-               window(sf::VideoMode::getDesktopMode(), "My Window", sf::Style::Fullscreen) {}
+               player2{"Player2", 2, font_manager_.getFont()}
+{
+    window.setFramerateLimit(60);
+}
 
 void Game::play_game()
 {
-    board.make_offset(window, one_slot_width, one_slot_height);
+    board.make_offset(window); //
+
     player1.make_deck();
     player2.make_deck();
 
@@ -27,8 +31,19 @@ void Game::play_game()
     int current_phase = 0; // 0 means draw phase // 1 means playing phase - jucatorii pot sacrifica sau juca carti
     int current_player = 1;
 
-    auto [deck_fst1, deck_snd1] = Deck::get_start_positions(window, 1);
+    auto [deck_fst1, deck_snd1] = Deck::get_start_positions(window, 1); // pozitii calc relativ la window
     auto [deck_fst2, deck_snd2] = Deck::get_start_positions(window, 2);
+
+    //// pozitiile la care se vor pune pile urile
+    const float x1 = board.get_slot(0, 3)->get_sprite().getPosition().x;
+    const float y1 = board.get_slot(0, 3)->get_sprite().getPosition().y;
+    squirrel_pile.setPos(x1 + 2 * one_slot_width, y1- 10);
+    // pentru pile 1 set pos la  x1 + 2 * one_slot_width, y1- 10
+
+    const float x2 = board.get_slot(1, 3)->get_sprite().getPosition().x;
+    const float y2 = board.get_slot(1, 3)->get_sprite().getPosition().y;
+    normal_pile.setPos(x2 + 2 * one_slot_width, y2 + 5);
+    // pentru pile 2 set pos la x2 + 2 * one_slot_width, y2 + 5
 
     while (window.isOpen())
     {
@@ -111,21 +126,18 @@ void Game::play_game()
 
         window.draw(background_sprite);
 
-        bellSetUp();
+        //bellSetUp(); called in init bell
         window.draw(bell_sprite);
 
-        const float x1 = board.get_slot(0, 3)->get_sprite().getPosition().x;
-        //// pozitiile la care se vor pune pile urile
-        const float y1 = board.get_slot(0, 3)->get_sprite().getPosition().y;
 
-        const float x2 = board.get_slot(1, 3)->get_sprite().getPosition().x;
-        const float y2 = board.get_slot(1, 3)->get_sprite().getPosition().y;
         if (squirrel_pile.get_size() > 0)
-            squirrel_pile.draw(window, x1 + 2 * one_slot_width, y1- 10);
+            window.draw(squirrel_pile.get_sprite());
+            //squirrel_pile.draw(window, x1 + 2 * one_slot_width, y1- 10); nu mai este nevoie de pozitie specificat la fiecare iteration
 
 
         if (normal_pile.get_size() > 0)
-            normal_pile.draw(window, x2 + 2 * one_slot_width, y2 + 5);
+            window.draw(normal_pile.get_sprite());
+            //normal_pile.draw(window, x2 + 2 * one_slot_width, y2 + 5);
 
 
         board.draw(window);
@@ -138,11 +150,15 @@ void Game::play_game()
         player1.deck_draw(window, deck_fst1, deck_snd1);
         player2.deck_draw(window, deck_fst2, deck_snd2);
 
-        sacrificeSetUp();
+        //sacrificeSetUp(); apelat o sg data in sacrifice init
         window.draw(sacrifice_sprite);
 
-        player1.count_draw(window, deck_fst1 - one_slot_width * 1.2f, deck_snd1);
-        player2.count_draw(window, deck_fst2 + one_slot_width * 1.0f, deck_snd2);
+        //player1.count_draw(window, deck_fst1 - one_slot_width * 1.2f, deck_snd1);
+        player1.setPos(deck_fst1 - one_slot_width * 1.2f, deck_snd1);
+        player2.setPos(deck_fst2 + one_slot_width * 1.0f, deck_snd2);
+        player1.count_draw(window);
+        player2.count_draw(window);
+        //player2.count_draw(window, deck_fst2 + one_slot_width * 1.0f, deck_snd2);
         player1.update_numbers(window);
         player2.update_numbers(window);
 
@@ -260,10 +276,20 @@ void Game::init_bell()
 {
     if(!bell_texture.loadFromFile("pictures/bell.png")) { std::cout<< " Unable to load bell\n"; }
     bell_sprite.setTexture(bell_texture);
+    bellSetUp();
 }
 
     //eturn std::make_pair(std::make_pair(x1,y1),std::make_pair(x2,y2));
 
+void Game::bellSetUp()
+{
+    bell_sprite.setScale(5.5f, 5.5f);
+    bell_sprite.setOrigin(static_cast<float>(bell_texture.getSize().x) / 2,
+                          static_cast<float>(bell_texture.getSize().y) / 2);
+    const float pos_xb = board.get_slot(0, 0)->get_sprite().getPosition().x;
+    const float pos_yb = board.get_slot(0, 0)->get_sprite().getPosition().y;
+    bell_sprite.setPosition(pos_xb - 1.5f * one_slot_width, pos_yb + one_slot_height / 2); // 729,427
+}
 
 int Game::pile_clicked(const sf::Vector2i mousePos)
 {
@@ -283,20 +309,12 @@ bool Game::ring_bell(const sf::Vector2i mousePos) const
     return false;
 }
 
-void Game::bellSetUp()
-{
-    bell_sprite.setScale(5.5f, 5.5f);
-    bell_sprite.setOrigin(static_cast<float>(bell_texture.getSize().x) / 2,
-                          static_cast<float>(bell_texture.getSize().y) / 2);
-    const float pos_xb = board.get_slot(0, 0)->get_sprite().getPosition().x;
-    const float pos_yb = board.get_slot(0, 0)->get_sprite().getPosition().y;
-    bell_sprite.setPosition(pos_xb - 1.5f * one_slot_width, pos_yb + one_slot_height / 2); // 729,427
-}
 
 void Game::init_sacrifice()
 {
     if (!sacrifice_texture.loadFromFile("pictures/sacrifice_mark.png")) { std::cout << " Unable to load sacrifice\n"; }
     sacrifice_sprite.setTexture(sacrifice_texture);
+    sacrificeSetUp();
 }
 
 

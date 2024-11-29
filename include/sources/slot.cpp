@@ -1,10 +1,21 @@
 #include "headers/slot.h"
 #include <iostream>
-Slot::Slot() : card(nullptr) { std::cout << "Slot created" << std::endl; }
+//#include <math.h>
+
+Slot::Slot() : card(nullptr)
+{
+    std::cout << "Slot created" << std::endl;
+    textures_init();
+}
 
 Slot::~Slot()
 {
     std::cout << "Slot destroyed" << std::endl;
+}
+
+void Slot::setPos(const float &x, const float &y)
+{
+    slot_sprite.setPosition(x,y);
 }
 
 bool Slot::is_empty() const
@@ -38,18 +49,13 @@ void Slot::textures_init()
     slot_sprite.setOrigin(static_cast<float>(one_slot_width) / 2, static_cast<float>(one_slot_height) / 2);
 }
 
-/*
-void Slot::setPos(const float&x, const float& y)
-{
-
-}*/
-
+/* deprecated
 void Slot::draw(sf::RenderWindow &window, const float &x, const float &y)
 {
     slot_sprite.setPosition(x + slot_sprite.getLocalBounds().width / 2, y + slot_sprite.getLocalBounds().height / 2);
     window.draw(slot_sprite);
 }
-
+*/
 
 void Slot::update(sf::RenderWindow &window) const
 {

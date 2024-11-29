@@ -44,19 +44,31 @@ int Player::get_blood() const { return blood; }
 
 void Player::deck_draw(sf::RenderWindow &window, const float &x, const float &y) const { deck.deck_draw(window, x, y); }
 
-void Player::count_draw(sf::RenderWindow &window, const float &x, const float &y)
+void Player::setPos(const float &x, const float &y)
 {
-    blood_sprite.setOrigin(static_cast<float>(blood_texture.getSize().x) / 2.0f,
-                           static_cast<float>(blood_texture.getSize().y) / 2.0f);
     blood_sprite.setPosition(x, y);
+}
+
+// deprecated
+void Player::count_draw(sf::RenderWindow &window) const
+{
+    // blood_sprite.setOrigin(static_cast<float>(blood_texture.getSize().x) / 2.0f, //apelat in init_textures
+    //                        static_cast<float>(blood_texture.getSize().y) / 2.0f);
+    // blood_sprite.setPosition(x, y);
     window.draw(blood_sprite);
 }
 
 void Player::init_textures()
 {
     if (!blood_texture.loadFromFile("pictures/blood.png")) { std::cout << "Unable to load blood.png\n"; }
+
     blood_sprite.setTexture(blood_texture);
+    blood_sprite.setOrigin(static_cast<float>(blood_texture.getSize().x) / 2.0f,
+        static_cast<float>(blood_texture.getSize().y) / 2.0f);
+
     blood_sprite.setScale(2.5f, 2.5f);
+
+
     blood_text.setFont(font);
     bone_text.setFont(font);
     //std::cout << "Sprite for blood set\n";
