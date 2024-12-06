@@ -24,4 +24,8 @@
 #define ONE_SLOT_HEIGHT 226
 #endif
 
+#ifndef SPACING
+#define SPACING (ONE_SLOT_HEIGHT*0.25f)
+#endif
+
 #endif //CONSTANTE_H

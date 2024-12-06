@@ -27,6 +27,22 @@ Board::~Board()
     std::cout.flush();
 }
 
+/* work in progress
+void Board::handle_round()
+{
+    for (int i = 0; i < LIN; ++i)     // de la stg la dreapta, de sus in jos
+    {
+        for (int j = 0; j < COL; ++j)
+        {
+            if(!board[i][j]->is_empty())
+            {
+                board[i][j]->get_card().action();
+            }
+        }
+    }
+}
+*/
+
 void Board::make_offset(const sf::RenderWindow &window)
 {
     board_width = ONE_SLOT_WIDTH * COL;

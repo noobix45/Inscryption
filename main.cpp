@@ -21,7 +21,10 @@ public:
 };
 */
 
-// to do: finish the logic, cards do damage and score
+// to do: finish the logic, cards do damage
+// to do: inside the function handle_actions() in gmae.cpp
+
+
 // to do: tema2 - exceptii si derivate pentru efect fiecare carte devine o derivata
 
 int main() {

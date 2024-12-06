@@ -88,7 +88,6 @@ std::ostream &operator<<(std::ostream &out, Pile &pile)
 
 void Pile::init_texture()
 {
-
     if(pile_id == 1)
     {
         if (!pile_texture.loadFromFile("pictures/squirrel_back.png"))

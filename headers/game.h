@@ -5,6 +5,7 @@
 #include "board.h"
 #include "cards_factory.h"
 #include "font_manager.h"
+#include "scales.h"
 #include <SFML/Graphics.hpp>
 
 
@@ -22,7 +23,7 @@ private:
     Pile normal_pile;
     Player player1;
     Player player2;
-    //Scale scale
+    Scales scales;
     sf::Texture background_texture;
     sf::Sprite background_sprite;
     sf::Texture bell_texture;
@@ -38,9 +39,10 @@ private:
     int current_phase; // 0 means draw phase // 1 means playing phase - jucatorii pot sacrifica sau juca carti
     int current_player;
 
-    void draw_phase_logic(sf::Vector2i mousePos);
-    void sacrifice_logic(sf::Vector2i mousePos);
-    void place_card_logic(sf::Vector2i mousePos);
+    void handle_draw_phase(sf::Vector2i mousePos);
+    void handle_sacrifice(sf::Vector2i mousePos);
+    void handle_place_card(sf::Vector2i mousePos);
+    void handle_actions(); // aici vor fi functiile care dau damage si se ocupa de efecte
 
     void drawEverything();
     void initEverything();
@@ -53,6 +55,7 @@ private:
     void select_card(sf::Vector2i, int);
 
     static Card* go_through_deck(sf::Vector2i mousePos,std::vector<Card*>&);
+
     bool place_in_board(sf::Vector2i mousePos, int);
 
     void init_background();

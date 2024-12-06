@@ -64,6 +64,8 @@ add_executable(${PROJECT_NAME}
         headers/font_manager.h
         sources/font_manager.cpp
         headers/constante.h
+        headers/scales.h
+        sources/scales.cpp
         #include/sources/cards_factory.cpp
 )
 

@@ -3,12 +3,15 @@
 #include "font_manager.h"
 #include <iostream>
 
+#include "scales.h"
+
 Game::Game() : window(sf::VideoMode::getDesktopMode(), "My Window", sf::Style::Fullscreen),
                font_manager_("heaviwei.ttf"),
                squirrel_pile(1, font_manager_.getFont()),
                normal_pile(2, font_manager_.getFont()),
                player1{"Player1", 1, font_manager_.getFont()},
                player2{"Player2", 2, font_manager_.getFont()},
+               scales(font_manager_.getFont()),
                selected_card(nullptr), card_selected(false), sacrifice_on(false), current_phase(0), current_player(1)
 {
     window.setFramerateLimit(60);
@@ -35,12 +38,12 @@ void Game::play_game()
 
                 if (current_phase == 0) // draw phase
                 {
-                    draw_phase_logic(mousePos);
+                    handle_draw_phase(mousePos);
                 }
 
                 else // e playing phase
                 {
-                    sacrifice_logic(mousePos);
+                    handle_sacrifice(mousePos);
 
                     if (!card_selected)
                     {
@@ -50,14 +53,12 @@ void Game::play_game()
                             select_card(mousePos, 2);
                         if (selected_card != nullptr) { card_selected = true; }
                     }
-                    else if (selected_card)
-                    {
-                        place_card_logic(mousePos);
-                    }
+                    else if (selected_card) { handle_place_card(mousePos); }
                     if(ring_bell(mousePos))
                     {
                         current_phase = 0; // inapoi la drawing phase
                         current_player = (current_player == 1) ? 2 : 1; // schimba jucatorul
+                        //handle_actions(); /// de implementat
                     }
                 }
             }
@@ -66,7 +67,14 @@ void Game::play_game()
     }
 }
 
-void Game::draw_phase_logic(const sf::Vector2i mousePos)
+/*
+void Game::handle_actions()
+{
+    baord.handle_round();
+}
+*/
+
+void Game::handle_draw_phase(const sf::Vector2i mousePos)
 {
     if (const int pile_id = pile_clicked(mousePos); pile_id == 1 || pile_id == 2) // verifica daca s-a dat click pe un pile
     {
@@ -78,10 +86,10 @@ void Game::draw_phase_logic(const sf::Vector2i mousePos)
     }
 }
 
-void Game::sacrifice_logic(const sf::Vector2i mousePos)
+void Game::handle_sacrifice(const sf::Vector2i mousePos)
 {
     if (selected_card == nullptr && sacrifice_sprite.getGlobalBounds().contains(
-                                static_cast<float>(mousePos.x), static_cast<float>(mousePos.y))) // daca se da click pe sacrifice
+            static_cast<float>(mousePos.x), static_cast<float>(mousePos.y))) // daca se da click pe sacrifice
     {
         sacrifice_on = true;
     }
@@ -99,7 +107,7 @@ void Game::sacrifice_logic(const sf::Vector2i mousePos)
     }
 }
 
-void Game::place_card_logic(const sf::Vector2i mousePos)
+void Game::handle_place_card(const sf::Vector2i mousePos)
 {
     const int board_index2 = (current_player == 1) ? 1 : 0;
     auto &player_again = (current_player == 1) ? player1 : player2;
@@ -117,8 +125,10 @@ void Game::place_card_logic(const sf::Vector2i mousePos)
 void Game::drawEverything()
 {
     window.clear();
-
     window.draw(background_sprite);
+
+    window.draw(scales.getSprite());
+    scales.draw_scales(window);
 
     window.draw(bell_sprite);
 
@@ -166,6 +176,9 @@ void Game::initEverything()
 
     player1.setSpritesPos(deck_fst1 - ONE_SLOT_WIDTH * 1.2f, deck_snd1);
     player2.setSpritesPos(deck_fst2 + ONE_SLOT_WIDTH * 1.0f, deck_snd2);
+
+    scales.setStartPos(deck_fst1 - ONE_SLOT_WIDTH, deck_snd1 - ONE_SLOT_HEIGHT*0.5f);
+    scales.make_scales();
 
     const float x1 = board.get_slot(0, 3)->get_sprite().getPosition().x;
     const float y1 = board.get_slot(0, 3)->get_sprite().getPosition().y;

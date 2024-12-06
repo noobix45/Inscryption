@@ -143,3 +143,4 @@ void Card::update_number(sf::RenderWindow &window)
     window.draw(hp_text);
     window.draw(damage_text);
 }
+
