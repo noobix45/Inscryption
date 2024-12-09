@@ -149,15 +149,15 @@ void Card::update_number(sf::RenderWindow &window)
     window.draw(damage_text);
 }
 
-void Card::deal_damage(const int damage,const Board& board,const int i,const int j) //ensure damage is poz
+void Card::deal_damage(const int d, const Board &board, const int i, const int j) //ensure damage is poz
 {
     if(!board.get_slot(i,j)->is_empty())
-    board.get_slot(i,j)->get_card()->take_damage(damage);
+    board.get_slot(i,j)->get_card()->take_damage(d);
 }
 
-void Card::take_damage(const int damage)
+void Card::take_damage(const int d)
 {
-    hp-=damage; // damage must be poz
+    hp-=d; // damage must be poz
 }
 
 

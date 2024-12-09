@@ -67,8 +67,8 @@ public:
     virtual void action(const Board&, const int i,const int j) = 0; // specifica temei //i j sunt indicii din slot la care se aflta cartea
     virtual Card* clone() const = 0;
 
-    static void deal_damage(int damage, const Board&, int,int);
-    void take_damage(int damage);
+    static void deal_damage(int d, const Board&, int,int); // d damage
+    void take_damage(int d);
 };
 
 #endif
