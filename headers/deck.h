@@ -11,6 +11,7 @@ class Deck
     float start_x=0, start_y=0;
 
 public:
+    Deck()=default;
     explicit Deck(int player_id_, const sf::Font &);
 
     ~Deck();
@@ -31,5 +32,12 @@ public:
 
     friend std::ostream &operator<<(std::ostream &out, const Deck &deck);
 
+
+    //nu sunt folosite in joc, doar pentru tema2
+    Deck(const Deck &); // constructor de copiere
+
+    Deck& operator=(Deck other); //op egal de mutare
+
+    friend void swap(Deck &a, Deck &b) noexcept; // functei custom de swap
 };
 #endif

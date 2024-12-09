@@ -1,8 +1,6 @@
 #include "game.h"
-#include "cards_factory.h"
 #include "font_manager.h"
 #include <iostream>
-
 #include "scales.h"
 
 Game::Game() : window(sf::VideoMode::getDesktopMode(), "My Window", sf::Style::Fullscreen),
@@ -58,7 +56,6 @@ void Game::play_game()
                     {
                         current_phase = 0; // inapoi la drawing phase
                         current_player = (current_player == 1) ? 2 : 1; // schimba jucatorul
-                        //handle_actions(); /// de implementat
                     }
                 }
             }
@@ -66,13 +63,6 @@ void Game::play_game()
         drawEverything();
     }
 }
-
-/*
-void Game::handle_actions()
-{
-    baord.handle_round();
-}
-*/
 
 void Game::handle_draw_phase(const sf::Vector2i mousePos)
 {
@@ -100,7 +90,8 @@ void Game::handle_sacrifice(const sf::Vector2i mousePos)
         if (sacrifice(mousePos, board_index)) // daca sacrificiul s-a facut
         {
             //std::cout << "Sacrifice detected giving blood to player\n";
-            player.add_blood(1); // daca cartea are effect worthy sacrifice va fi 3 (in viitor)
+            player.modify_blood(1); // daca cartea are effect worthy sacrifice va fi 3 (in viitor)
+            player.modify_bone(1);
             //std::cout << player;
             sacrifice_on = false;
         }
@@ -140,11 +131,14 @@ void Game::drawEverything()
 
     board.draw(window);
 
+    auto &player = current_player == 1 ? player1 : player2;
+    board.update(window, player);
+    /*
     for (int i = 0; i < 2; i++) // updateaza cartile din board (pentru cand damage va fi implementat)
         for (int j = 0; j < 4; j++)
             if (!board.get_slot(i, j)->is_empty())
                 board.get_slot(i, j)->update(window);
-
+*/
     player1.deck_draw(window);
     player2.deck_draw(window);
 
@@ -159,8 +153,8 @@ void Game::drawEverything()
 
 void Game::initEverything()
 {
-    player1.make_deck(); // apel catre deck sa se umple cu carti
-    player2.make_deck();
+    //player1.make_deck(); // apel catre deck sa se umple cu carti
+    //player2.make_deck();
 
     board.make_offset(window);
 
@@ -174,10 +168,12 @@ void Game::initEverything()
     player1.setDeckPos(deck_fst1, deck_snd1);
     player2.setDeckPos(deck_fst2, deck_snd2);
 
-    player1.setSpritesPos(deck_fst1 - ONE_SLOT_WIDTH * 1.2f, deck_snd1);
-    player2.setSpritesPos(deck_fst2 + ONE_SLOT_WIDTH * 1.0f, deck_snd2);
+    player1.setSpritesPos(std::make_pair(deck_fst1 - ONE_SLOT_WIDTH * 1.2f, deck_snd1),
+                          std::make_pair(deck_fst1 - ONE_SLOT_WIDTH * 1.8f, deck_snd1));
+    player2.setSpritesPos(std::make_pair(deck_fst2 + ONE_SLOT_WIDTH * 1.0f, deck_snd2),
+                          std::make_pair(deck_fst2 + ONE_SLOT_WIDTH * 1.8f, deck_snd2));
 
-    scales.setStartPos(deck_fst1 - ONE_SLOT_WIDTH, deck_snd1 - ONE_SLOT_HEIGHT*0.5f);
+    scales.setStartPos(deck_fst1 - ONE_SLOT_WIDTH, deck_snd1 - ONE_SLOT_HEIGHT * 0.5f);
     scales.make_scales();
 
     const float x1 = board.get_slot(0, 3)->get_sprite().getPosition().x;
@@ -202,11 +198,22 @@ bool Game::ring_bell(const sf::Vector2i mousePos) const
 {
     if (bell_sprite.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)))
     {
+        handle_round(current_player);
         return true;
     }
     return false;
 }
 
+void Game::handle_round(const int id) const
+{
+    if (id == 1)
+    {
+        board.perform_actions(1); // player 1 are row index 0
+    } else if (id == 2)
+    {
+        board.perform_actions(0); // player 2 are row index 1
+    }
+}
 bool Game::sacrifice(const sf::Vector2i mousePos, const int row) const
 {
     for (int j = 0; j < 4; j++)
@@ -260,12 +267,24 @@ bool Game::place_in_board(const sf::Vector2i mousePos, const int row)
         {
             if (board.get_slot(row, j)->is_empty())
             {
-                if (auto &player = (row == 1) ? player1 : player2; player.get_blood() >= selected_card->get_blood()) // daca playerul are suficient blood sa joace cartea
+                if (auto &player = (row == 1) ? player1 : player2;
+                    (selected_card->get_blood() != 0 && player.get_blood() >= selected_card->get_blood())
+                    || (selected_card->get_bone() != 0 && player1.get_bones() >= selected_card->get_bone())
+                    || (selected_card->get_blood() == 0 && selected_card->get_bone() == 0))
+                // daca playerul are suficient blood sa joace cartea
                 {
                     //std::cout<<"card will be placed\n";
                     selected_card->on_click_unselect(); // trece la animatia de unclicked
                     board.place_card(selected_card, row, j);
-                    player.take_blood(selected_card->get_blood());
+                    if (selected_card->get_blood() != 0)
+                    {
+                        player.modify_blood(-selected_card->get_blood());
+                        return true;
+                    }
+                    if (selected_card->get_bone() != 0)
+                    {
+                        player.modify_bone(-selected_card->get_bone());
+                    }
                     return true; // am plasat
                 }
             }

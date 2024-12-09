@@ -1,35 +1,50 @@
+//#include <iostream>
+
 #include "headers/game.h"
-/*
-class Scale{
-private:
-    int floor; // cat damage trebuie sa fie dat ca talerul balantei sa atinga masa
-    int left; // cat damage a dat un player
-    int right; // cat damage a dat celalat player
-public:
-    void check_scale(){
-        if(left == floor) {}//win Player2,
-        if(right == floor) {}//win Player1
-    }
-    void moved_by_right(){
-        // modifica balanta dupa damage-ul data de jucatorul care pune in dreapta (adica input player 1; NU AI)
-        // add damage to right // decrease damage from left
-    }
-    void moved_by_left(){
-        // modifica balanta dupa damage-ul data de jucatorul care pune in stanga (adica player 2 sau AI)
-        // add damage to left // decrease damage from right
-    }
-};
+
+//#include "cards_factory.h"
+//#include <iostream>
+
+/* copy swap pentru deck si pile, se schimba clasa pentru test de pile
+sf::Font font;
+font.loadFromFile("heaviwei.ttf");
+Deck p1(3,font);
+std::cout << "after p1 construct\n";
+Deck p2(p1);
+std::cout << "after p2 copy\n";
+Deck p3;
+p3 = p2;
+std::cout << "after p3=p2\n";
 */
 
-// to do: finish the logic, cards do damage
-// to do: inside the function handle_actions() in gmae.cpp
 
 
+/*
+ *tip1 - efecte care se produc odata cu deal damage: posion, bifurcated, air
+ *tip2 - efecte care se plaseaza pe slot la plasarea cartii in board
+ *          si care se termina la stergerea derivatei respective in destructor
+ *      pentru astea in update board slotul va avea o proprietate de add/remove damage/hp
+ *alte efecte to be continued
+ *
+ *
+ *Player isi joaca cartile apoi suna suna clopotelul, cartile lui actioneaza
+ *Atunci cand un player plaseaza o carte, efectul cartii respective se produce daca are efect de tip2
+*/
+//whenever a card dies it give 1 bone to the player it belongs to
+/*
+ *SAU
+ *cartile cu tip efect 1 for avea doar functia action pentru damage si posibil effect
+ *cartile cu tip efect 2 si poate 3 vor da damage in action si for face downcast ca sa isi faca efectul
+ */
+
+///to do!!!! op= copy pentru slot!!! tine pointeri deci e pentru tema2
 // to do: tema2 - exceptii si derivate pentru efect fiecare carte devine o derivata
+// to do: extra in board o functie static care sa memoreze numarul de runde jucate. Stats for nerds. ;)
 
 int main() {
     Game game;
     game.play_game();
+
     return 0;
 }
 

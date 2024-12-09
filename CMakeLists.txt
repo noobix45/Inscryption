@@ -66,6 +66,12 @@ add_executable(${PROJECT_NAME}
         headers/constante.h
         headers/scales.h
         sources/scales.cpp
+        headers/derivate.h
+        sources/derivate.cpp
+        headers/cards_factory.h
+        headers/deck.h
+        headers/pile.h
+        headers/game.h
         #include/sources/cards_factory.cpp
 )
 

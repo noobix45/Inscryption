@@ -16,8 +16,8 @@ private:
     sf::Text bone_text;
     sf::Texture blood_texture;
     sf::Sprite blood_sprite;
-    sf::Texture bones_texture;
-    sf::Sprite bones_sprite;
+    sf::Texture bone_texture;
+    sf::Sprite bone_sprite;
 
 public:
     Player(std::string name_, int id_, const sf::Font &);
@@ -31,16 +31,20 @@ public:
 
     std::vector<Card*>& get_deck();
 
-    void add_blood(int);
-    void take_blood(int);
+    void modify_blood(int);
+    //void take_blood(int);
     int get_blood() const;
+
+    void modify_bone(int);
+    //void take_bone(int);
+    int get_bones() const;
 
     void deck_draw(sf::RenderWindow &window) const;
 
     void setDeckPos(const float &x, const float &y);
 
     void init_textures();
-    void setSpritesPos(const float &, const float &);
+    void setSpritesPos(const std::pair<float,float> &,const std::pair<float,float>&);
     void count_draw(sf::RenderWindow &window);
 
     friend std::ostream &operator<<(std::ostream &out, const Player &player);

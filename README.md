@@ -12,6 +12,8 @@ veverite. (Veveritele au un singur scop: sacrificarea)
 https://youtu.be/dFQaM6Hu4xs?si=VZirtPF7D_q4jNZX
 
 Texturile au fost luate de pe site-urile urmatoare si sunt aceleasi texturi ca in jocul original:
+
+- https://generator.cards/
 - https://cards.vladde.me/
 - https://www.ingoh.net/inscryption/textures/
 
@@ -55,19 +57,20 @@ O cerință nu se consideră îndeplinită dacă este realizată doar ca o serie
 ## Tema 2
 
 #### Cerințe
-- [ ] separarea codului din clase în `.h` (sau `.hpp`) și `.cpp`
-- [ ] moșteniri:
+
+- [x] separarea codului din clase în `.h` (sau `.hpp`) și `.cpp`
+- [x] moșteniri:
   - minim o clasă de bază și **3 clase derivate** din aceeași ierarhie
   - ierarhia trebuie să fie cu bază proprie, nu derivată dintr-o clasă predefinită
   - [ ] funcții virtuale (pure) apelate prin pointeri de bază din clasa care conține atributul de tip pointer de bază
     - minim o funcție virtuală va fi **specifică temei** (e.g. nu simple citiri/afișări)
     - constructori virtuali (clone): sunt necesari, dar nu se consideră funcții specifice temei
     - afișare virtuală, interfață non-virtuală
-  - [ ] apelarea constructorului din clasa de bază din constructori din derivate
+  - [x] apelarea constructorului din clasa de bază din constructori din derivate
   - [ ] clasă cu atribut de tip pointer la o clasă de bază cu derivate; aici apelați funcțiile virtuale prin pointer de bază, eventual prin interfața non-virtuală din bază
-    - [ ] suprascris cc/op= pentru copieri/atribuiri corecte, copy and swap
+      - [x] suprascris cc/op= pentru copieri/atribuiri corecte, copy and swap
     - [ ] `dynamic_cast`/`std::dynamic_pointer_cast` pentru downcast cu sens
-    - [ ] smart pointers (recomandat, opțional)
+      - [x] smart pointers (recomandat, opțional)
 - [ ] excepții
   - [ ] ierarhie proprie cu baza `std::exception` sau derivată din `std::exception`; minim **3** clase pentru erori specifice
   - [ ] utilizare cu sens: de exemplu, `throw` în constructor (sau funcție care întoarce un obiect), `try`/`catch` în `main`

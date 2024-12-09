@@ -1,8 +1,11 @@
 #include "slot.h"
 #include "constante.h"
 #include <iostream>
+#include <player.h>
 
-Slot::Slot() : card(nullptr)
+#include "cards.h"
+
+Slot::Slot() : card(nullptr),damage_effect(0),hp_effect(0)
 {
     std::cout << "Slot created" << std::endl;
     textures_init();
@@ -36,10 +39,20 @@ void Slot::place_card(Card *new_card)
 
 void Slot::remove_card() { delete card; card = nullptr; }
 
-void Slot::update(sf::RenderWindow &window) const
+void Slot::update(sf::RenderWindow &window,Player& p)
 {
-    card->draw(window, slot_sprite.getPosition().x, slot_sprite.getPosition().y);
-    card->update_number(window);
+    if (card != nullptr)
+        if(!card->is_dead())
+        {
+            card->draw(window, slot_sprite.getPosition().x, slot_sprite.getPosition().y);
+            card->update_number(window);
+        }
+        else
+        {
+            //card is dead give 1 bone to the player delete the card mark slot as empty
+            p.modify_bone(1);
+            remove_card();
+        }
 }
 
 void Slot::textures_init()

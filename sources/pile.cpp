@@ -17,12 +17,16 @@ Pile::~Pile()
     if (pile.empty())
         std::cout << "Pile " << pile_id << " empty" << std::endl;
     else
-        while(!pile.empty())
     {
-        delete pile.top();
-        pile.pop();
+        while(!pile.empty())
+        {
+            delete pile.top();
+            pile.pop();
+
+        }
+        std::cout << "Pile "<<pile_id<<" deleted" << std::endl;
     }
-    std::cout << "Pile "<<pile_id<<" deleted" << std::endl;
+
     std::cout.flush();
 }
 
@@ -86,6 +90,7 @@ std::ostream &operator<<(std::ostream &out, Pile &pile)
     }
 }
 
+
 void Pile::init_texture()
 {
     if(pile_id == 1)
@@ -129,4 +134,61 @@ void Pile::setPos(const float &x, const float &y)
 sf::Sprite& Pile::get_sprite()
 {
     return pile_sprite;
+}
+
+// nu sunt folosite in joc, doar pentru tema 2
+// constructor de copiere foloseste op egal
+
+/*
+const std::stack<Card *> Pile::getPile() const
+{
+    return pile;
+}
+
+void Pile::customPop()
+{
+    pile.pop();
+}
+*/
+Pile::Pile(const Pile &other)
+{
+    std::cout << "Pile copy constructor start\n";
+
+    std::stack<Card*> tempStack;
+
+    std::stack<Card*> reverseStack = other.pile;  // shallow copy
+    while (!reverseStack.empty()) {
+        tempStack.push(reverseStack.top()->clone());
+        reverseStack.pop();
+    }
+
+    while (!tempStack.empty()) {
+        pile.push(tempStack.top());
+        tempStack.pop();
+    }
+
+    pile_id = other.pile_id;
+    font_ = other.font_;
+    pile_texture = other.pile_texture;
+    pile_sprite = other.pile_sprite;
+    std::cout << "Pile copy constructor end\n";
+}
+
+Pile & Pile::operator=(Pile other)
+{
+    std::cout << "Pile copy assignment operator start\n";
+    swap(*this,other);
+    std::cout << "Pile copy assignment operator end\n";
+    return *this;
+}
+void swap(Pile &first, Pile &second) noexcept
+{
+    std::cout<<"swap function start\n";
+    using std::swap;
+    swap(first.pile,second.pile);
+    swap(first.pile_id,second.pile_id);
+    swap(first.font_,second.font_);
+    swap(first.pile_texture,second.pile_texture);
+    swap(first.pile_sprite,second.pile_sprite);
+    std::cout<<"swap function end\n";
 }

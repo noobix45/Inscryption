@@ -5,6 +5,8 @@
 #include <array>
 #include <SFML/Graphics.hpp>
 
+class Player;
+
 class Board
 {
     std::array<std::array<Slot *, COL>, LIN> board;
@@ -22,11 +24,15 @@ public:
     void make_offset(const sf::RenderWindow &window);
     void setUp() const;
 
+    void perform_actions(int row_index) const;
+
     void place_card(Card *, int, int) const;
     void remove_card(int, int) const;
 
     [[nodiscard]] Slot *get_slot(const unsigned int &, const unsigned int &) const;
     std::pair<float,float> get_offset() const;
+
+    void update(sf::RenderWindow &window, Player &) const;
 
     void draw(sf::RenderWindow &window) const; // to elimiate from board
 

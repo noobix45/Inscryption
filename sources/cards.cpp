@@ -1,23 +1,24 @@
 #include "cards.h"
-#include "slot.h"
 #include "constante.h"
 #include <iostream>
+#include <utility>
 
-Card::Card() = default; // pentru caz default in card_factoy
+//deleted Card::Card(); // pentru caz default in card_factoy
 
 // Constructor for cards that take blood
 Card::Card(const std::string &file_name, std::string name_, const int hp_, int const damage_, const int cost_in_blood_,const Effect e_,
-    const sf::Font& font):
+    const sf::Font& font_):
 name{std::move(name_)}, hp{hp_}, damage{damage_}, cost_in_blood{cost_in_blood_}, cost_in_bones{0},e{e_}
 {
-    init_texture(file_name,font);
-    std::cout<<name<<" created"<<std::endl;
+    init_texture(file_name,font_);
+    std::cout<<name<<" created from abstract"<<std::endl;
 }
 
 // Constructor for cards that take bones
 Card::Card(const std::string &file_name, std::string name_, const int hp_, const int damage_, const int cost_in_bones_,
-    const Effect e_,[[maybe_unused]] bool bone, const sf::Font& font):
-name{std::move(name_)}, hp{hp_}, damage{damage_}, cost_in_blood{0},cost_in_bones{cost_in_bones_},e{e_} { init_texture(file_name,font); }
+    const Effect e_,[[maybe_unused]] bool bone, const sf::Font& font_):
+name{std::move(name_)}, hp{hp_}, damage{damage_}, cost_in_blood{0},cost_in_bones{cost_in_bones_},e{e_}
+{ init_texture(file_name,font_); }
 
 Card::~Card()// = default;
 {
@@ -89,6 +90,10 @@ sf::Sprite& Card::get_sprite()
 }
 
 int Card::get_blood() const { return cost_in_blood; }
+int Card::get_bone() const { return cost_in_bones; }
+
+bool Card::is_dead() const {return hp<=0;}
+
 
 void Card::on_click_select()
 {
@@ -143,4 +148,16 @@ void Card::update_number(sf::RenderWindow &window)
     window.draw(hp_text);
     window.draw(damage_text);
 }
+
+void Card::deal_damage(const int damage,const Board& board,const int i,const int j) //ensure damage is poz
+{
+    if(!board.get_slot(i,j)->is_empty())
+    board.get_slot(i,j)->get_card()->take_damage(damage);
+}
+
+void Card::take_damage(const int damage)
+{
+    hp-=damage; // damage must be poz
+}
+
 

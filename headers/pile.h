@@ -14,6 +14,7 @@ class Pile
 public:
     explicit Pile(int id, const sf::Font &); // pile 1  = squirrels // pile 2 = normal cards
 
+    Pile()=default;
     ~Pile();
 
     void make_pile();
@@ -34,8 +35,17 @@ public:
 
     void setPos(const float &,const float &);
 
-
     sf::Sprite& get_sprite();
+
+
+    //nu sunt folosite in joc, doar pentru tema2
+    //const std::stack<Card *> getPile() const;
+
+    //void customPop();
+
+    Pile(const Pile &other);
+    Pile &operator=(Pile other);
+    friend void swap(Pile &first, Pile &second) noexcept;
 };
 
 #endif

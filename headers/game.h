@@ -3,7 +3,6 @@
 #include "player.h"
 #include "pile.h"
 #include "board.h"
-#include "cards_factory.h"
 #include "font_manager.h"
 #include "scales.h"
 #include <SFML/Graphics.hpp>
@@ -42,7 +41,8 @@ private:
     void handle_draw_phase(sf::Vector2i mousePos);
     void handle_sacrifice(sf::Vector2i mousePos);
     void handle_place_card(sf::Vector2i mousePos);
-    void handle_actions(); // aici vor fi functiile care dau damage si se ocupa de efecte
+
+    void handle_round(int) const;
 
     void drawEverything();
     void initEverything();

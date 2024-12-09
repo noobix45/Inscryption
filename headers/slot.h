@@ -1,13 +1,17 @@
 #ifndef SLOT_H
 #define SLOT_H
-#include "cards.h"
 #include <SFML/Graphics.hpp>
 
+//////////////to do!!! op= copy pentru slot
 
+class Player;
+class Card;
 
 class Slot
 {
     Card *card; // daca exista cartea are o valoare, daca nu e nullptr
+    int damage_effect;
+    int hp_effect;
     sf::Texture slot_texture;
     sf::Sprite slot_sprite;
 
@@ -24,7 +28,7 @@ public:
 
     void remove_card();
 
-    void update(sf::RenderWindow &window) const;
+    void update(sf::RenderWindow &window,Player&);
 
     void textures_init();
 

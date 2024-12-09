@@ -1,26 +1,29 @@
 #ifndef CARDS_FACTORY_H
 #define CARDS_FACTORY_H
-#include "cards.h"
+#include "derivate.h"
 #include <SFML/Graphics.hpp>
 
-    inline Card* card_factory(const CardType type,const sf::Font& font)
+
+
+    inline Card* card_factory(const CardType type, const sf::Font& font)
     {
         switch (type)
         {
             case CardType::Squirrel:
-                return new Card{"pictures/squirrel.png", "Squirrel", 1, 0, 0, Effect::none,font};
+                return new Squirrel(font);
             case CardType::Adder:
-                return new Card{"pictures/adder.png", "Adder", 1, 1, 2, Effect::poison,font};
+                return new Adder(font);
             case CardType::Wolf:
-                return new Card{"pictures/wolf.png", "Wolf", 2, 3, 2, Effect::none,font};
+                return new Wolf(font);
             case CardType::Beaver:
-                return new Card{"pictures/beaver.png", "Beaver", 2, 1, 2, Effect::dam,font};
+                return new Beaver(font);
             case CardType::Mantis:
-                return new Card{"pictures/mantis.png", "Mantis", 1, 1, 1, Effect::bifurcated,font};
+                return new Mantis(font);
             case CardType::Bullfrog:
-                return new Card{"pictures/bullfrog.png", "Bullfrog", 2, 1, 1, Effect::air_defence,font};
+                return new Bullfrog(font);
             default:
-                return {};
+                return nullptr;
+            //return {};
         }
     }
 

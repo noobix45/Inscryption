@@ -6,6 +6,7 @@
 
 Deck::Deck(const int player_id_, const sf::Font &font) : player_id{player_id_}, font_(font)
 {
+    make_deck();
     std::cout << "Deck " << player_id << " created\n";
 }
 
@@ -118,4 +119,34 @@ std::ostream &operator<<(std::ostream &out, const Deck &deck)
 {
     for (int i = 0; i < deck.get_num_of_cards(); i++) { out << *deck.get_card(i) << "\n"; }
     return out;
+}
+
+
+//nu sunt folosite in joc, doar pentru tema 2
+Deck::Deck(const Deck &other)
+{
+    for(const auto& card : other.deck)
+    {
+        deck.emplace_back(card->clone());
+    }
+    font_ = other.font_;
+    player_id = other.player_id;
+    start_x = other.start_x;
+    start_y = other.start_y;
+}
+
+Deck& Deck::operator=(Deck other) noexcept
+{
+    swap(*this,other);
+    return *this;
+}
+
+void swap(Deck &a, Deck &b) noexcept
+{
+    using std::swap;
+    swap(a.deck,b.deck);
+    swap(a.player_id,b.player_id);
+    swap(a.start_x,b.start_x);
+    swap(a.start_y,b.start_y);
+    swap(a.font_,b.font_);
 }

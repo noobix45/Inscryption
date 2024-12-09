@@ -1,6 +1,7 @@
 #ifndef CARDS_H
 #define CARDS_H
 #include "effects.h"
+#include "board.h"
 #include <SFML/Graphics.hpp>
 
 enum class CardType { Squirrel, Adder, Wolf, Beaver, Mantis, Bullfrog };
@@ -21,16 +22,16 @@ private:
     bool clicked = false;
 
 public:
-    Card(); // pentru caz default in card_factoy
+    Card()=delete; // pentru caz default in card_factoy
     //constructor for cards that take blood
-    Card(const std::string& file_name, std::string name_, int hp_, int damage_, int cost_in_blood_, Effect e_,const sf::Font& font);
+    Card(const std::string& file_name, std::string name_, int hp_, int damage_, int cost_in_blood_, Effect e_,const sf::Font& font_);
 
     //constructor for cards that take bones
     Card(const std::string& file_name, std::string name_, int hp_, int damage_, int cost_in_bones_, Effect e_,
-        [[maybe_unused]] bool bone,const sf::Font& font);
+        [[maybe_unused]] bool bone,const sf::Font& font_);
 
     //destructor
-    ~Card();
+    virtual ~Card();
 
     //default copy constructor
     Card(const Card &other_card);
@@ -48,6 +49,8 @@ public:
     sf::Sprite& get_sprite();
 
     int get_blood() const;
+    int get_bone() const;
+    bool is_dead() const;
 
     void on_click_select();
 
@@ -60,6 +63,12 @@ public:
     void scale_big();
 
     void update_number(sf::RenderWindow &window);
+
+    virtual void action(const Board&, const int i,const int j) = 0; // specifica temei //i j sunt indicii din slot la care se aflta cartea
+    virtual Card* clone() const = 0;
+
+    static void deal_damage(int damage, const Board&, int,int);
+    void take_damage(int damage);
 };
 
 #endif

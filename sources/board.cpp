@@ -1,6 +1,7 @@
 #include "board.h"
+#include <cards.h>
 #include <iostream>
-
+#include "player.h"
 
 Board::Board()  : board()
 {
@@ -71,6 +72,15 @@ void Board::setUp() const
     }
 }
 
+void Board::perform_actions(const int row_index) const
+{
+    for (int j = 0; j < COL; ++j)
+    {
+        if (!board[row_index][j]->is_empty())
+            board[row_index][j]->get_card()->action(*this, row_index, j);
+    }
+}
+
 void Board::place_card(Card *card, const int l, const int c) const
 {
     if (l < 0 || l > LIN || c < 0 || c > COL)
@@ -95,6 +105,15 @@ std::pair<float, float> Board::get_offset() const
 {
     return {offset_x, offset_y};
 }
+
+void Board::update(sf::RenderWindow &window, Player &p) const
+{
+    for (int i = 0; i < 2; i++) // updateaza cartile din board (pentru cand damage va fi implementat)
+        for (int j = 0; j < 4; j++)
+            if (!get_slot(i, j)->is_empty())
+                get_slot(i, j)->update(window, p);
+}
+
 
 void Board::draw(sf::RenderWindow &window) const
 {
