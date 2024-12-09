@@ -32,10 +32,12 @@ public:
     std::vector<Card*>& get_deck();
 
     void modify_blood(int);
+
     //void take_blood(int);
     int get_blood() const;
 
     void modify_bone(int);
+
     //void take_bone(int);
     int get_bones() const;
 
@@ -44,7 +46,9 @@ public:
     void setDeckPos(const float &x, const float &y);
 
     void init_textures();
-    void setSpritesPos(const std::pair<float,float> &,const std::pair<float,float>&);
+
+    void setSpritesPos(const std::pair<float, float> &, const std::pair<float, float> &);
+
     void count_draw(sf::RenderWindow &window);
 
     friend std::ostream &operator<<(std::ostream &out, const Player &player);

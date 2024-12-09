@@ -28,7 +28,7 @@ public:
 
     void remove_card();
 
-    void update(sf::RenderWindow &window,Player&);
+    void update(sf::RenderWindow &window, Player &);
 
     void textures_init();
 
