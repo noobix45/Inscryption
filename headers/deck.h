@@ -36,7 +36,7 @@ public:
     //nu sunt folosite in joc, doar pentru tema2
     Deck(const Deck &); // constructor de copiere
 
-    Deck& operator=(Deck other); //op egal de mutare
+    Deck &operator=(Deck other) noexcept; //op egal de mutare
 
     friend void swap(Deck &a, Deck &b) noexcept; // functei custom de swap
 };

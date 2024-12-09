@@ -9,8 +9,7 @@ Squirrel::Squirrel(const sf::Font &font) : Card("pictures/squirrel.png", "Squirr
 void Squirrel::action(const Board &board, const int i, const int j)
 {
     std::cout << "I'm just a squirrel!" << std::endl;
-    std::cout << board.get_offset().first <<  " " << i << " " << j << std::endl;
-
+    std::cout << board.get_offset().first << " " << i << " " << j << std::endl;
 }
 
 
@@ -44,7 +43,7 @@ Wolf::Wolf(const sf::Font &font) : Card("pictures/wolf.png", "Wolf", 2, 3, 2, Ef
 void Wolf::action(const Board &board, const int i, const int j)
 {
     std::cout << "Normal attack\n";
-    std::cout << board.get_offset().first <<  " " << i << " " << j << std::endl;
+    std::cout << board.get_offset().first << " " << i << " " << j << std::endl;
 }
 
 Beaver::Beaver(const sf::Font &font) : Card("pictures/beaver.png", "Beaver", 2, 1, 2, Effect::dam, font)
@@ -55,8 +54,7 @@ Beaver::Beaver(const sf::Font &font) : Card("pictures/beaver.png", "Beaver", 2, 
 void Beaver::action(const Board &board, const int i, const int j)
 {
     std::cout << "Beaver attack\n";
-    std::cout << board.get_offset().first <<  " " << i << " " << j << std::endl;
-
+    std::cout << board.get_offset().first << " " << i << " " << j << std::endl;
 }
 
 Mantis::Mantis(const sf::Font &font) : Card("pictures/mantis.png", "Mantis", 1, 1, 1, Effect::bifurcated, font)
@@ -67,8 +65,7 @@ Mantis::Mantis(const sf::Font &font) : Card("pictures/mantis.png", "Mantis", 1, 
 void Mantis::action(const Board &board, const int i, const int j)
 {
     std::cout << "Bifurcated attack\n";
-    std::cout << board.get_offset().first <<  " " << i << " " << j << std::endl;
-
+    std::cout << board.get_offset().first << " " << i << " " << j << std::endl;
 }
 
 Bullfrog::Bullfrog(const sf::Font &font): Card("pictures/bullfrog.png", "Bullfrog", 2, 1, 1, Effect::air_defence, font)
@@ -79,8 +76,7 @@ Bullfrog::Bullfrog(const sf::Font &font): Card("pictures/bullfrog.png", "Bullfro
 void Bullfrog::action(const Board &board, const int i, const int j)
 {
     std::cout << "Bullfrog attack\n";
-    std::cout << board.get_offset().first <<  " " << i << " " << j << std::endl;
-
+    std::cout << board.get_offset().first << " " << i << " " << j << std::endl;
 }
 
 
