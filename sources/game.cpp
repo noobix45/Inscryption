@@ -20,8 +20,8 @@ Game::Game() : window(sf::VideoMode::getDesktopMode(), "My Window", sf::Style::F
 void Game::play_game()
 {
     initEverything();
-    bool first_round1=true;
-    bool first_round2=true;
+    bool first_round1 = true;
+    bool first_round2 = true;
 
     while (window.isOpen())
     {
@@ -32,7 +32,8 @@ void Game::play_game()
                 if (event.key.code == sf::Keyboard::Escape) { window.close(); }
 
             if (squirrel_pile.get_size() == 0 && normal_pile.get_size() == 0) // daca s-au terminat cartile
-            {current_phase = 1;}
+            {current_phase = 1;
+            }
 
             check_winner();
 
@@ -49,7 +50,7 @@ void Game::play_game()
 }
 
 //la prima runda playerii nu trag carte deci se sare la play phase si se se marcheaza ca a trecut prima runda
-void Game::first_round(bool &first_round1,bool &first_round2)
+void Game::first_round(bool &first_round1, bool &first_round2)
 {
     if (current_phase == 0)
     {
@@ -65,13 +66,12 @@ void Game::first_round(bool &first_round1,bool &first_round2)
 }
 
 
-void Game::handle_round_event(const sf::Vector2i& mousePos)
+void Game::handle_round_event(const sf::Vector2i &mousePos)
 {
     if (current_phase == 0) // draw phase
     {
         handle_draw_phase(mousePos);
-    }
-    else // e playing phase
+    } else // e playing phase
     {
         handle_sacrifice(mousePos);
 
@@ -82,9 +82,8 @@ void Game::handle_round_event(const sf::Vector2i& mousePos)
             else
                 select_card(mousePos, 2);
             if (selected_card != nullptr) { card_selected = true; }
-        }
-        else if (selected_card) { handle_place_card(mousePos); }
-        if(ring_bell(mousePos))
+        } else if (selected_card) { handle_place_card(mousePos); }
+        if (ring_bell(mousePos))
         {
             current_phase = 0; // inapoi la drawing phase
             current_player = (current_player == 1) ? 2 : 1; // schimba jucatorul
@@ -257,7 +256,8 @@ bool Game::sacrifice(const sf::Vector2i mousePos, const int row) const
             static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)))
         {
             //std::cout << "sacrifice was clicked\n";
-            if (!board.get_slot(row, j)->is_empty() && board.get_slot(row,j)->get_card()->sacrificabil()) // daca slotul are carte in el
+            if (!board.get_slot(row, j)->is_empty() && board.get_slot(row, j)->get_card()->sacrificabil())
+            // daca slotul are carte in el
             {
                 //std::cout << "sacrifice done\n";
                 board.get_slot(row, j)->remove_card(); // sterg cartea din slot definitiv ;) i.e. delete

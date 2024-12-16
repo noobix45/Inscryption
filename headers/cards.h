@@ -22,7 +22,6 @@ private:
     bool can_sacrifice = true;
     sf::Texture card_texture;
     sf::Sprite card_sprite;
-    sf::Font font;
     sf::Text hp_text;
     sf::Text damage_text;
     bool clicked = false;
@@ -54,7 +53,6 @@ public:
     void draw(sf::RenderWindow &window, const float &, const float &);
 
     sf::Sprite& get_sprite();
-    sf::Font &get_font();
 
     int get_blood() const;
     int get_bone() const;

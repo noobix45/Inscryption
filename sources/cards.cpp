@@ -9,7 +9,7 @@
 Card::Card(const std::string &file_name, std::string name_, const int hp_, int const damage_, const int cost_in_blood_,const Effect e_,
            const sf::Font &font_, const bool can_sacrifice_): name{std::move(name_)}, hp{hp_}, damage{damage_},
                                                               cost_in_blood{cost_in_blood_}, cost_in_bones{0}, e{e_},
-                                                              can_sacrifice(can_sacrifice_), font(font_)
+                                                              can_sacrifice(can_sacrifice_)
 {
     init_texture(file_name,font_);
     std::cout<<name<<" created from abstract"<<std::endl;
@@ -19,7 +19,7 @@ Card::Card(const std::string &file_name, std::string name_, const int hp_, int c
 Card::Card(const std::string &file_name, std::string name_, const int hp_, const int damage_, const int cost_in_bones_,
            const Effect e_, [[maybe_unused]] bool bone, const sf::Font &font_,
            const bool can_sacrifice_): name{std::move(name_)}, hp{hp_}, damage{damage_}, cost_in_blood{0},cost_in_bones{cost_in_bones_}, e{e_},
-                                       can_sacrifice(can_sacrifice_),font(font_)
+                                       can_sacrifice(can_sacrifice_)
 { init_texture(file_name,font_); }
 
 Card::~Card()// = default;
@@ -91,7 +91,6 @@ sf::Sprite& Card::get_sprite()
     return card_sprite;
 }
 
-sf::Font &Card::get_font() { return font; }
 
 int Card::get_blood() const { return cost_in_blood; }
 int Card::get_bone() const { return cost_in_bones; }

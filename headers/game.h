@@ -14,9 +14,7 @@ public:
     Game();
 
 
-
     void play_game();
-
 
 private:
     sf::RenderWindow window;
@@ -42,7 +40,7 @@ private:
     int current_player;
 
 
-    void first_round(bool &first_round1,bool &first_round2);
+    void first_round(bool &first_round1, bool &first_round2);
 
     void handle_round_event(const sf::Vector2i &mousePos);
 
@@ -56,6 +54,7 @@ private:
     void initEverything();
 
     void check_winner();
+
     int pile_clicked(sf::Vector2i mousePos);
     bool ring_bell(sf::Vector2i mousePos);
 
