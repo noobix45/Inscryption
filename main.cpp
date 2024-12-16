@@ -37,10 +37,13 @@ std::cout << "after p3=p2\n";
  *cartile cu tip efect 2 si poate 3 vor da damage in action si for face downcast ca sa isi faca efectul
  */
 
-///to do!!!! op= copy pentru slot!!! tine pointeri deci e pentru tema2
-// to do: add beaver and option for can_sacrifice;
-// to do: divide the card class into action on attack and action on place - > slot will have buffs and nerfs
-// to do: tema2 - downcast si exceptii
+// to do: no draw phase on round 1
+// to do: option for can sacrifice
+// to do: tema2 - exceptii
+
+//fara nume parametri
+//sau maybe unsued
+// sua (void) board
 
 int main() {
     Game game;

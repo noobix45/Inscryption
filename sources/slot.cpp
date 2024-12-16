@@ -75,6 +75,22 @@ void Slot::setPos(const float &x, const float &y)
 
 sf::Sprite &Slot::get_sprite() { return slot_sprite; }
 
+Slot::Slot(const Slot &other)
+{
+    std::cout << "Slot copy constructor\n";
+    card = other.card->clone();
+    slot_texture = other.slot_texture;
+    slot_sprite.setTexture(slot_texture);
+    damage_effect = other.damage_effect;
+    hp_effect = other.hp_effect;
+}
+
+Slot & Slot::operator=(Slot other) noexcept
+{
+    swap(*this,other);
+    return *this;
+}
+
 std::ostream &operator<<(std::ostream &os, const Slot &slot)
 {
     if (!slot.is_empty())
@@ -82,4 +98,13 @@ std::ostream &operator<<(std::ostream &os, const Slot &slot)
     else
         os << "Slot is empty\n";
     return os;
+}
+
+void swap(Slot &a, Slot &b) noexcept
+{
+    using std::swap;
+    swap(a.card, b.card);
+    swap(a.slot_texture, b.slot_texture);
+    swap(a.damage_effect, b.damage_effect);
+    swap(a.hp_effect, b.hp_effect);
 }

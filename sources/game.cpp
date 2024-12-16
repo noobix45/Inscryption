@@ -19,7 +19,6 @@ Game::Game() : window(sf::VideoMode::getDesktopMode(), "My Window", sf::Style::F
 
 void Game::play_game()
 {
-    //bool first_round=true;
     initEverything();
 
     while (window.isOpen())
@@ -33,7 +32,7 @@ void Game::play_game()
             if (squirrel_pile.get_size() == 0 && normal_pile.get_size() == 0) // daca s-au terminat cartile
             {current_phase = 1;}
 
-            if(scales.winner())
+            if (scales.winner())
             {
                 current_player = (current_player == 1) ? 2 : 1;
                 std::cout << "Player " << current_player << " wins" << std::endl;
@@ -48,7 +47,6 @@ void Game::play_game()
                 {
                     handle_draw_phase(mousePos);
                 }
-
                 else // e playing phase
                 {
                     handle_sacrifice(mousePos);
@@ -212,11 +210,11 @@ bool Game::ring_bell(const sf::Vector2i mousePos)
 
 void Game::handle_round(const int id)
 {
-    const int row_index = (id==1)?1:0;
+    const int row_index = (id == 1) ? 1 : 0;
     for (int j = 0; j < COL; ++j)
     {
-        if (!board.get_slot(row_index,j)->is_empty())
-            board.get_slot(row_index,j)->get_card()->effect_action(board, row_index, j,scales);
+        if (!board.get_slot(row_index, j)->is_empty())
+            board.get_slot(row_index, j)->get_card()->effect_action(board, row_index, j, scales);
     }
 }
 bool Game::sacrifice(const sf::Vector2i mousePos, const int row) const
@@ -281,7 +279,7 @@ bool Game::place_in_board(const sf::Vector2i mousePos, const int row)
                     //std::cout<<"card will be placed\n";
                     selected_card->on_click_unselect(); // trece la animatia de unclicked
                     board.place_card(selected_card, row, j);
-                    if (auto* beaverCard = dynamic_cast<Beaver*>(selected_card))
+                    if (auto *beaverCard = dynamic_cast<Beaver *>(selected_card))
                     {
                         beaverCard->on_place_action(board, row, j,font_manager_.getFont());
                     }
