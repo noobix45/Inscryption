@@ -37,6 +37,10 @@ public:
     sf::Sprite& get_sprite();
 
     friend std::ostream &operator<<(std::ostream &os, const Slot &slot);
+
+    Slot(const Slot &); //constructor de copiere
+    Slot &operator=(Slot other) noexcept; //op egal de mutare
+    friend void swap(Slot &a, Slot &b) noexcept; // functei custom de swap
 };
 
 #endif //SLOT_H

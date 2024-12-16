@@ -13,7 +13,7 @@ void Squirrel::action(const Board&, int, int, Scales&)
     std::cout << "I'm just a squirrel!" << std::endl;
 }
 
-Dam::Dam(const sf::Font &font) : Card("pictures/dam.png", "Dam", 2, 0, 0, Effect::none, font)
+Dam::Dam(const sf::Font &font) : Card("pictures/dam.png", "Dam", 2, 0, 0, Effect::none, font,false)
 {
     std::cout << "Dam created" << std::endl;
 }

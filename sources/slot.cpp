@@ -85,9 +85,9 @@ Slot::Slot(const Slot &other)
     hp_effect = other.hp_effect;
 }
 
-Slot & Slot::operator=(Slot other) noexcept
+Slot &Slot::operator=(Slot other) noexcept
 {
-    swap(*this,other);
+    swap(*this, other);
     return *this;
 }
 

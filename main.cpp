@@ -1,9 +1,4 @@
-//#include <iostream>
-
 #include "headers/game.h"
-
-//#include "cards_factory.h"
-//#include <iostream>
 
 /* copy swap pentru deck si pile, se schimba clasa pentru test de pile
 sf::Font font;
@@ -17,38 +12,30 @@ p3 = p2;
 std::cout << "after p3=p2\n";
 */
 
-
-
-/*
- *tip1 - efecte care se produc odata cu deal damage: posion, bifurcated, air
- *tip2 - efecte care se plaseaza pe slot la plasarea cartii in board
- *          si care se termina la stergerea derivatei respective in destructor
- *      pentru astea in update board slotul va avea o proprietate de add/remove damage/hp
- *alte efecte to be continued
- *
- *
- *Player isi joaca cartile apoi suna suna clopotelul, cartile lui actioneaza
- *Atunci cand un player plaseaza o carte, efectul cartii respective se produce daca are efect de tip2
+/* slot op= copy test
+sf::Font font;
+font.loadFromFile("heaviwei.ttf");
+std::cout << "creating card in main\n";
+Card* a = new Adder(font);
+std::cout<<"creating first slot\n";
+Slot s1;
+std::cout<<"placing a in s1\n";
+s1.place_card(a);
+std::cout << "after p1 construct\n";
+Slot s2(s1);
+std::cout << "after p2 copy\n";
+Slot s3;
+s3 = s2;
+std::cout << s3;
+std::cout << "after p3=p2\n";
 */
-//whenever a card dies it give 1 bone to the player it belongs to
-/*
- *SAU
- *cartile cu tip efect 1 for avea doar functia action pentru damage si posibil effect
- *cartile cu tip efect 2 si poate 3 vor da damage in action si for face downcast ca sa isi faca efectul
- */
 
-// to do: no draw phase on round 1
 // to do: option for can sacrifice
 // to do: tema2 - exceptii
-
-//fara nume parametri
-//sau maybe unsued
-// sua (void) board
 
 int main() {
     Game game;
     game.play_game();
-
     return 0;
 }
 

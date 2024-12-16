@@ -20,6 +20,8 @@ Game::Game() : window(sf::VideoMode::getDesktopMode(), "My Window", sf::Style::F
 void Game::play_game()
 {
     initEverything();
+    bool first_round1=true;
+    bool first_round2=true;
 
     while (window.isOpen())
     {
@@ -32,43 +34,61 @@ void Game::play_game()
             if (squirrel_pile.get_size() == 0 && normal_pile.get_size() == 0) // daca s-au terminat cartile
             {current_phase = 1;}
 
-            if (scales.winner())
-            {
-                current_player = (current_player == 1) ? 2 : 1;
-                std::cout << "Player " << current_player << " wins" << std::endl;
-                window.close();
-            }
+            check_winner();
+
+            first_round(first_round1, first_round2);
 
             if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
             {
                 const sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-
-                if (current_phase == 0) // draw phase
-                {
-                    handle_draw_phase(mousePos);
-                }
-                else // e playing phase
-                {
-                    handle_sacrifice(mousePos);
-
-                    if (!card_selected)
-                    {
-                        if (current_player == 1)
-                            select_card(mousePos, 1); //selecteaza o carte din deck sau nu
-                        else
-                            select_card(mousePos, 2);
-                        if (selected_card != nullptr) { card_selected = true; }
-                    }
-                    else if (selected_card) { handle_place_card(mousePos); }
-                    if(ring_bell(mousePos))
-                    {
-                        current_phase = 0; // inapoi la drawing phase
-                        current_player = (current_player == 1) ? 2 : 1; // schimba jucatorul
-                    }
-                }
+                handle_round_event(mousePos);
             }
         }
         drawEverything();
+    }
+}
+
+//la prima runda playerii nu trag carte deci se sare la play phase si se se marcheaza ca a trecut prima runda
+void Game::first_round(bool &first_round1,bool &first_round2)
+{
+    if (current_phase == 0)
+    {
+        if ((current_player == 1 && first_round1) || (current_player == 2 && first_round2))
+        {
+            current_phase = 1;
+            if (current_player == 1)
+                first_round1 = false;
+            else if (current_player == 2)
+                first_round2 = false;
+        }
+    }
+}
+
+
+void Game::handle_round_event(const sf::Vector2i& mousePos)
+{
+    if (current_phase == 0) // draw phase
+    {
+        handle_draw_phase(mousePos);
+    }
+    else // e playing phase
+    {
+        handle_sacrifice(mousePos);
+
+        if (!card_selected)
+        {
+            if (current_player == 1)
+                select_card(mousePos, 1); //selecteaza o carte din deck sau nu
+            else
+                select_card(mousePos, 2);
+            if (selected_card != nullptr) { card_selected = true; }
+        }
+        else if (selected_card) { handle_place_card(mousePos); }
+        if(ring_bell(mousePos))
+        {
+            current_phase = 0; // inapoi la drawing phase
+            current_player = (current_player == 1) ? 2 : 1; // schimba jucatorul
+        }
     }
 }
 
@@ -189,6 +209,16 @@ void Game::initEverything()
     normal_pile.setPos(x2 + 2 * ONE_SLOT_WIDTH, y2 + 5);
 }
 
+void Game::check_winner()
+{
+    if (scales.winner())
+    {
+        current_player = (current_player == 1) ? 2 : 1;
+        std::cout << "Player " << current_player << " wins" << std::endl;
+        window.close();
+    }
+}
+
 int Game::pile_clicked(const sf::Vector2i mousePos)
 {
     if (squirrel_pile.get_sprite().getGlobalBounds().contains(static_cast<float>(mousePos.x),
@@ -202,13 +232,14 @@ bool Game::ring_bell(const sf::Vector2i mousePos)
 {
     if (bell_sprite.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)))
     {
-        handle_round(current_player);
+        perform_row_action(current_player);
         return true;
     }
     return false;
 }
 
-void Game::handle_round(const int id)
+//apeleaza action pentru toate cartile din radnul unui player
+void Game::perform_row_action(const int id)
 {
     const int row_index = (id == 1) ? 1 : 0;
     for (int j = 0; j < COL; ++j)
@@ -217,6 +248,7 @@ void Game::handle_round(const int id)
             board.get_slot(row_index, j)->get_card()->effect_action(board, row_index, j, scales);
     }
 }
+
 bool Game::sacrifice(const sf::Vector2i mousePos, const int row) const
 {
     for (int j = 0; j < 4; j++)
@@ -225,7 +257,7 @@ bool Game::sacrifice(const sf::Vector2i mousePos, const int row) const
             static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)))
         {
             //std::cout << "sacrifice was clicked\n";
-            if (!(board.get_slot(row, j)->is_empty())) // daca slotul are carte in el
+            if (!board.get_slot(row, j)->is_empty() && board.get_slot(row,j)->get_card()->sacrificabil()) // daca slotul are carte in el
             {
                 //std::cout << "sacrifice done\n";
                 board.get_slot(row, j)->remove_card(); // sterg cartea din slot definitiv ;) i.e. delete

@@ -13,7 +13,10 @@ class Game
 public:
     Game();
 
+
+
     void play_game();
+
 
 private:
     sf::RenderWindow window;
@@ -38,15 +41,21 @@ private:
     int current_phase; // 0 means draw phase // 1 means playing phase - jucatorii pot sacrifica sau juca carti
     int current_player;
 
+
+    void first_round(bool &first_round1,bool &first_round2);
+
+    void handle_round_event(const sf::Vector2i &mousePos);
+
     void handle_draw_phase(sf::Vector2i mousePos);
     void handle_sacrifice(sf::Vector2i mousePos);
     void handle_place_card(sf::Vector2i mousePos);
 
-    void handle_round(int);
+    void perform_row_action(int);
 
     void drawEverything();
     void initEverything();
 
+    void check_winner();
     int pile_clicked(sf::Vector2i mousePos);
     bool ring_bell(sf::Vector2i mousePos);
 

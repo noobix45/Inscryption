@@ -18,8 +18,8 @@ private:
     int damage = 0; // how much damage a card deals (if any)
     int cost_in_blood = 0; // how much blood it takes to deploy card (if any)
     int cost_in_bones = 0; // how many bones it takes to deploy card (if any)
-    bool can_sacrifice = true;
     Effect e = Effect::none;
+    bool can_sacrifice = true;
     sf::Texture card_texture;
     sf::Sprite card_sprite;
     sf::Font font;
@@ -30,11 +30,12 @@ private:
 public:
     Card()=delete; // pentru caz default in card_factoy
     //constructor for cards that take blood
-    Card(const std::string& file_name, std::string name_, int hp_, int damage_, int cost_in_blood_, Effect e_,const sf::Font& font_);
+    Card(const std::string &file_name, std::string name_, int hp_, int damage_, int cost_in_blood_,
+         Effect e_, const sf::Font &font_, bool can_sacrifice_ = true);
 
     //constructor for cards that take bones
-    Card(const std::string& file_name, std::string name_, int hp_, int damage_, int cost_in_bones_, Effect e_,
-        [[maybe_unused]] bool bone,const sf::Font& font_);
+    Card(const std::string &file_name, std::string name_, int hp_, int damage_, int cost_in_bones_,
+         Effect e_, [[maybe_unused]] bool bone, const sf::Font &font_, bool can_sacrifice_ = true);
 
     //destructor
     virtual ~Card();
@@ -53,13 +54,13 @@ public:
     void draw(sf::RenderWindow &window, const float &, const float &);
 
     sf::Sprite& get_sprite();
-
     sf::Font &get_font();
 
     int get_blood() const;
     int get_bone() const;
-
     int get_damage() const;
+
+    bool sacrificabil() const;
 
     bool is_dead() const;
 
