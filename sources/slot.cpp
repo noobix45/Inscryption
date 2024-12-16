@@ -26,7 +26,7 @@ bool Slot::is_empty() const
     return card == nullptr; // daca card e nullptr return true else return false,
 }
 
-Card *Slot::get_card() const { return card; }
+Card *Slot::get_card() const{ return card; }
 
 void Slot::place_card(Card *new_card)
 {

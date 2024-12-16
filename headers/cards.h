@@ -1,10 +1,14 @@
 #ifndef CARDS_H
 #define CARDS_H
+#include <board.h>
+
 #include "effects.h"
-#include "board.h"
 #include <SFML/Graphics.hpp>
 
-enum class CardType { Squirrel, Adder, Wolf, Beaver, Mantis, Bullfrog };
+#include "scales.h"
+
+// card type {0,1,2,3,4,...} // cartile non action la inceput
+enum class CardType { Squirrel, Dam, Adder, Wolf, Beaver, Mantis, Bullfrog };
 
 class Card
 {
@@ -14,9 +18,11 @@ private:
     int damage = 0; // how much damage a card deals (if any)
     int cost_in_blood = 0; // how much blood it takes to deploy card (if any)
     int cost_in_bones = 0; // how many bones it takes to deploy card (if any)
+    bool can_sacrifice = true;
     Effect e = Effect::none;
     sf::Texture card_texture;
     sf::Sprite card_sprite;
+    sf::Font font;
     sf::Text hp_text;
     sf::Text damage_text;
     bool clicked = false;
@@ -48,8 +54,13 @@ public:
 
     sf::Sprite& get_sprite();
 
+    sf::Font &get_font();
+
     int get_blood() const;
     int get_bone() const;
+
+    int get_damage() const;
+
     bool is_dead() const;
 
     void on_click_select();
@@ -64,11 +75,18 @@ public:
 
     void update_number(sf::RenderWindow &window);
 
-    virtual void action(const Board&, const int i,const int j) = 0; // specifica temei //i j sunt indicii din slot la care se aflta cartea
-    virtual Card* clone() const = 0;
+    static void deal_damage(int d, const Board &board, int i, int j);
 
-    static void deal_damage(int d, const Board&, int,int); // d damage
+    void effect_action(const Board &board, const int i, const int j, Scales &scales) { action(board, i, j, scales); }
+
+    virtual Card *clone() const = 0;
+
     void take_damage(int d);
+
+private:
+    virtual void action(const Board &board, int i, int j, Scales &scales) = 0;
+
+    //virtual void on_place_action(const Board&, int i, int j, Scales&) = 0;
 };
 
 #endif

@@ -42,7 +42,28 @@ void Scales::make_scales()
         numbers[i].setOrigin(numbers[i].getGlobalBounds().width / 2, numbers[i].getGlobalBounds().height / 2);
         numbers[i].setPosition(start_x, start_y - SPACING*static_cast<float>(i));
     }
-    counter_sprite.setPosition(numbers[5].getPosition().x, numbers[5].getPosition().y);
+    counter_sprite.setPosition(numbers[counter_pos].getPosition().x, numbers[counter_pos].getPosition().y);
+}
+
+void Scales::update(const int m,const int direction)
+{
+    if(direction==0)
+        counter_pos+=m;
+    else if(direction==1)
+        counter_pos-=m;
+    if(counter_pos > 10)
+        counter_sprite.setPosition(numbers[10].getPosition().x, numbers[10].getPosition().y);
+    else if(counter_pos < 0)
+        counter_sprite.setPosition(numbers[0].getPosition().x, numbers[0].getPosition().y);
+    else
+        counter_sprite.setPosition(numbers[counter_pos].getPosition().x, numbers[counter_pos].getPosition().y);
+}
+
+bool Scales::winner() const
+{
+    if(counter_pos == 10 || counter_pos == 0)
+        return true;
+    return false;
 }
 
 void Scales::draw_scales(sf::RenderWindow &window) const

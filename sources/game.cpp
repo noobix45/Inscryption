@@ -1,6 +1,8 @@
 #include "game.h"
 #include "font_manager.h"
 #include <iostream>
+
+#include "derivate.h"
 #include "scales.h"
 
 Game::Game() : window(sf::VideoMode::getDesktopMode(), "My Window", sf::Style::Fullscreen),
@@ -17,6 +19,7 @@ Game::Game() : window(sf::VideoMode::getDesktopMode(), "My Window", sf::Style::F
 
 void Game::play_game()
 {
+    //bool first_round=true;
     initEverything();
 
     while (window.isOpen())
@@ -29,6 +32,13 @@ void Game::play_game()
 
             if (squirrel_pile.get_size() == 0 && normal_pile.get_size() == 0) // daca s-au terminat cartile
             {current_phase = 1;}
+
+            if(scales.winner())
+            {
+                current_player = (current_player == 1) ? 2 : 1;
+                std::cout << "Player " << current_player << " wins" << std::endl;
+                window.close();
+            }
 
             if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
             {
@@ -118,7 +128,7 @@ void Game::drawEverything()
     window.clear();
     window.draw(background_sprite);
 
-    window.draw(scales.getSprite());
+    window.draw(scales.getSprite()); // poate fi bagat in functia draw scales
     scales.draw_scales(window);
 
     window.draw(bell_sprite);
@@ -132,13 +142,9 @@ void Game::drawEverything()
     board.draw(window);
 
     auto &player = current_player == 1 ? player1 : player2;
+
     board.update(window, player);
-    /*
-    for (int i = 0; i < 2; i++) // updateaza cartile din board (pentru cand damage va fi implementat)
-        for (int j = 0; j < 4; j++)
-            if (!board.get_slot(i, j)->is_empty())
-                board.get_slot(i, j)->update(window);
-*/
+
     player1.deck_draw(window);
     player2.deck_draw(window);
 
@@ -194,7 +200,7 @@ int Game::pile_clicked(const sf::Vector2i mousePos)
     return 0; // nu s a dat click pe niciun pile
 }
 
-bool Game::ring_bell(const sf::Vector2i mousePos) const
+bool Game::ring_bell(const sf::Vector2i mousePos)
 {
     if (bell_sprite.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)))
     {
@@ -204,14 +210,13 @@ bool Game::ring_bell(const sf::Vector2i mousePos) const
     return false;
 }
 
-void Game::handle_round(const int id) const
+void Game::handle_round(const int id)
 {
-    if (id == 1)
+    const int row_index = (id==1)?1:0;
+    for (int j = 0; j < COL; ++j)
     {
-        board.perform_actions(1); // player 1 are row index 0
-    } else if (id == 2)
-    {
-        board.perform_actions(0); // player 2 are row index 1
+        if (!board.get_slot(row_index,j)->is_empty())
+            board.get_slot(row_index,j)->get_card()->effect_action(board, row_index, j,scales);
     }
 }
 bool Game::sacrifice(const sf::Vector2i mousePos, const int row) const
@@ -276,6 +281,10 @@ bool Game::place_in_board(const sf::Vector2i mousePos, const int row)
                     //std::cout<<"card will be placed\n";
                     selected_card->on_click_unselect(); // trece la animatia de unclicked
                     board.place_card(selected_card, row, j);
+                    if (auto* beaverCard = dynamic_cast<Beaver*>(selected_card))
+                    {
+                        beaverCard->on_place_action(board, row, j,font_manager_.getFont());
+                    }
                     if (selected_card->get_blood() != 0)
                     {
                         player.modify_blood(-selected_card->get_blood());

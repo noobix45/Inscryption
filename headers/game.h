@@ -42,13 +42,13 @@ private:
     void handle_sacrifice(sf::Vector2i mousePos);
     void handle_place_card(sf::Vector2i mousePos);
 
-    void handle_round(int) const;
+    void handle_round(int);
 
     void drawEverything();
     void initEverything();
 
     int pile_clicked(sf::Vector2i mousePos);
-    bool ring_bell(sf::Vector2i mousePos) const;
+    bool ring_bell(sf::Vector2i mousePos);
 
     bool sacrifice(sf::Vector2i mousePos, int) const;
 

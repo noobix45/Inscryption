@@ -38,8 +38,9 @@ std::cout << "after p3=p2\n";
  */
 
 ///to do!!!! op= copy pentru slot!!! tine pointeri deci e pentru tema2
-// to do: tema2 - exceptii si derivate pentru efect fiecare carte devine o derivata
-// to do: extra in board o functie static care sa memoreze numarul de runde jucate. Stats for nerds. ;)
+// to do: add beaver and option for can_sacrifice;
+// to do: divide the card class into action on attack and action on place - > slot will have buffs and nerfs
+// to do: tema2 - downcast si exceptii
 
 int main() {
     Game game;

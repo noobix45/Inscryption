@@ -72,6 +72,10 @@ add_executable(${PROJECT_NAME}
         headers/deck.h
         headers/pile.h
         headers/game.h
+        #headers/onAttackCard.h
+        #sources/onAttackCard.cpp
+        #headers/onPlaceCard.h
+        #sources/onPlaceCard.cpp
         #include/sources/cards_factory.cpp
 )
 

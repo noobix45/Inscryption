@@ -10,6 +10,8 @@ public:
     void setStartPos(const float &,const float &);
     void draw_scales(sf::RenderWindow&) const;
     void make_scales();
+    void update(int,int);
+    bool winner() const;
 
 private:
     sf::Texture counter_texture; // textura si sprite pentru counter
@@ -18,6 +20,7 @@ private:
     std::vector<sf::Text> numbers; // vector cu numere
     float start_x=0;
     float start_y=0;
+    int counter_pos=5;
 
     void init_textures();
 };

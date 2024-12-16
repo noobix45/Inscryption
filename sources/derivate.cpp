@@ -1,38 +1,42 @@
 #include "derivate.h"
 #include <iostream>
+#include "cards_factory.h"
+
 
 Squirrel::Squirrel(const sf::Font &font) : Card("pictures/squirrel.png", "Squirrel", 1, 0, 0, Effect::none, font)
 {
     std::cout << "Squirrel created" << std::endl;
 }
 
-void Squirrel::action(const Board &board, const int i, const int j)
+void Squirrel::action([[maybe_unused]] const Board &board, int i, int j, Scales &scales)
 {
     std::cout << "I'm just a squirrel!" << std::endl;
-    std::cout << board.get_offset().first << " " << i << " " << j << std::endl;
 }
 
+Dam::Dam(const sf::Font &font) : Card("pictures/dam.png","Dam",2,0,0,Effect::none, font)
+{
+    std::cout << "Dam created" << std::endl;
+}
+
+void Dam::action(const Board &board, int i, int j, Scales &scales)
+{
+    std::cout << "Dam\n";
+}
 
 Adder::Adder(const sf::Font &font) : Card("pictures/adder.png", "Adder", 1, 1, 2, Effect::poison, font)
 {
     std::cout << "Adder created\n";
 }
 
-void Adder::action(const Board &board, const int i, const int j)
+void Adder::action(const Board &board, const int i, const int j, Scales &scales)
 {
     std::cout << "Adder attack!\n";
-    if (i == 0) // cartea aparinte playerului1
+    if(const int opus = (i==0)? 1 :0; board.get_slot(opus,j)->is_empty()) // verifica daca exista carte, daca nu updateaza scales
     {
-        deal_damage(100, board, 1, j);
-    } else if (i == 1) //cartea apartine playerului 2
-    {
-        deal_damage(100, board, 0, j);
-    } else // indexul de rand e invalid
-    {
-        std::cout << "adder error code\n";
+        scales.update(get_damage(),opus);
     }
-    // trebuie sa stiu dinainte pe ce pozitie e cartea ca sa stiu care ii este opusa
-    // fiecare ccartea va avea permanent updatat pozitiile i si j la care se afla in board
+    else
+        deal_damage(100, board, opus, j);
 }
 
 Wolf::Wolf(const sf::Font &font) : Card("pictures/wolf.png", "Wolf", 2, 3, 2, Effect::none, font)
@@ -40,21 +44,17 @@ Wolf::Wolf(const sf::Font &font) : Card("pictures/wolf.png", "Wolf", 2, 3, 2, Ef
     std::cout << "Wolf created\n";
 }
 
-void Wolf::action(const Board &board, const int i, const int j)
+void Wolf::action(const Board &board, const int i, const int j,Scales& scales)
 {
-    std::cout << "Normal attack\n";
-    std::cout << board.get_offset().first << " " << i << " " << j << std::endl;
-}
-
-Beaver::Beaver(const sf::Font &font) : Card("pictures/beaver.png", "Beaver", 2, 1, 2, Effect::dam, font)
-{
-    std::cout << "Beaver created\n";
-}
-
-void Beaver::action(const Board &board, const int i, const int j)
-{
-    std::cout << "Beaver attack\n";
-    std::cout << board.get_offset().first << " " << i << " " << j << std::endl;
+    std::cout << "Wolf attack\n";
+    if(const int opus = (i==0)? 1 :0; board.get_slot(opus,j)->is_empty())
+    {
+        scales.update(get_damage(),opus);
+    }
+    else
+    {
+        deal_damage(get_damage(), board, opus, j);
+    }
 }
 
 Mantis::Mantis(const sf::Font &font) : Card("pictures/mantis.png", "Mantis", 1, 1, 1, Effect::bifurcated, font)
@@ -62,21 +62,79 @@ Mantis::Mantis(const sf::Font &font) : Card("pictures/mantis.png", "Mantis", 1, 
     std::cout << "Mantis created\n";
 }
 
-void Mantis::action(const Board &board, const int i, const int j)
+void Mantis::action(const Board &board, const int i, const int j,Scales& scales)
 {
     std::cout << "Bifurcated attack\n";
-    std::cout << board.get_offset().first << " " << i << " " << j << std::endl;
+    const int opus = (i==0) ? 1 : 0;
+
+    if(j+1<=3) // daca slotul e valid
+    {
+        if(board.get_slot(opus,j+1)->is_empty()) // daca e gol update
+            scales.update(get_damage(),opus);
+        else
+            deal_damage(get_damage(),board,opus,j+1); // daca nu deal damage
+    }
+    if(j-1>=0)
+    {
+        if(board.get_slot(opus,j-1)->is_empty())
+            scales.update(get_damage(),opus);
+        else
+            deal_damage(get_damage(),board,opus,j-1);
+    }
 }
+
 
 Bullfrog::Bullfrog(const sf::Font &font): Card("pictures/bullfrog.png", "Bullfrog", 2, 1, 1, Effect::air_defence, font)
 {
     std::cout << "Bullfrog created\n";
 }
 
-void Bullfrog::action(const Board &board, const int i, const int j)
+void Bullfrog::action(const Board &board, const int i, const int j,Scales& scales)
 {
     std::cout << "Bullfrog attack\n";
-    std::cout << board.get_offset().first << " " << i << " " << j << std::endl;
+    if(const int opus = (i==0)? 1 :0; board.get_slot(opus,j)->is_empty()) // verifica daca exista carte, daca nu updateaza scales
+    {
+        scales.update(get_damage(),opus);
+    }
+    else
+        deal_damage(get_damage(),board,opus,j);
+}
+
+Beaver::Beaver(const sf::Font &font) : Card("pictures/beaver.png","Beaver",3,1,2,Effect::dam,font)
+{
+    std::cout<< "Beaver created\n";
+}
+void Beaver::action(const Board &board,const int i,const int j, Scales &scales)
+{
+    std::cout << "Beaver attack\n";
+    if(const int opus = (i==0)? 1 :0; board.get_slot(opus,j)->is_empty())
+    {
+        scales.update(get_damage(),opus);
+    }
+    else
+    {
+        deal_damage(get_damage(), board, opus, j);
+    }
+}
+
+void Beaver::on_place_action(const Board &board,const int i,const int j,const sf::Font& font_)
+{
+    std::cout << "Building dams\n";
+    /*sf::Font temp_font;
+    if(!temp_font.loadFromFile("heaviwei.ttf"))
+    {
+        std::cout << " cannot load font\n";
+    }*/
+
+
+    if(j-1 >=0 && board.get_slot(i,j-1)->is_empty())
+    {
+        board.get_slot(i,j-1)->place_card(card_factory(CardType::Dam,font_)); // de aici in colo slot e responsabil sa stearga
+    }
+    if(j+1 <=3 && board.get_slot(i,j+1)->is_empty())
+    {
+        board.get_slot(i,j+1)->place_card(card_factory(CardType::Dam,font_));
+    }
 }
 
 

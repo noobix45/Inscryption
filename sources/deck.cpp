@@ -27,7 +27,7 @@ void Deck::make_deck()
     std::cout<<"Adding cards in deck "<< player_id << "...\n";
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::uniform_int_distribution<int> dis(1, NUM_OF_TYPES);
+    std::uniform_int_distribution<int> dis(EXCLUDED_TYPES, NUM_OF_TYPES);
 
     deck.push_back(card_factory(CardType::Squirrel, font_));
     for (int i = 0; i < 3; i++) //deckul are 3 carti plus veverita initial

@@ -34,7 +34,7 @@ void Pile::make_pile()
 {
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::uniform_int_distribution<int> dis(1, NUM_OF_TYPES);
+    std::uniform_int_distribution<int> dis(EXCLUDED_TYPES, NUM_OF_TYPES);
     if (this->pile_id == 1)
         for (int i = 0; i < PILE_SIZE; i++) { pile.push(card_factory(CardType::Squirrel,font_)); }
     else

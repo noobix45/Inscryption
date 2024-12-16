@@ -51,7 +51,6 @@ void Player::modify_bone(const int num) { bones += num; }
 
 int Player::get_bones() const { return bones; }
 
-
 void Player::deck_draw(sf::RenderWindow &window) const { deck.deck_draw(window); }
 
 void Player::setDeckPos(const float &x, const float &y)

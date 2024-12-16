@@ -1,5 +1,4 @@
 #include "board.h"
-#include <cards.h>
 #include <iostream>
 #include "player.h"
 
@@ -72,6 +71,7 @@ void Board::setUp() const
     }
 }
 
+/*
 void Board::perform_actions(const int row_index) const
 {
     for (int j = 0; j < COL; ++j)
@@ -80,6 +80,7 @@ void Board::perform_actions(const int row_index) const
             board[row_index][j]->get_card()->action(*this, row_index, j);
     }
 }
+*/
 
 void Board::place_card(Card *card, const int l, const int c) const
 {

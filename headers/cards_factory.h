@@ -1,9 +1,9 @@
 #ifndef CARDS_FACTORY_H
 #define CARDS_FACTORY_H
 #include "derivate.h"
+//#include "onAttackCard.h"
+//#include "onPlaceCard.h"
 #include <SFML/Graphics.hpp>
-
-
 
     inline Card* card_factory(const CardType type, const sf::Font& font)
     {
@@ -11,6 +11,8 @@
         {
             case CardType::Squirrel:
                 return new Squirrel(font);
+            case CardType::Dam:
+                return new Dam(font);
             case CardType::Adder:
                 return new Adder(font);
             case CardType::Wolf:

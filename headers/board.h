@@ -24,8 +24,6 @@ public:
     void make_offset(const sf::RenderWindow &window);
     void setUp() const;
 
-    void perform_actions(int row_index) const;
-
     void place_card(Card *, int, int) const;
     void remove_card(int, int) const;
 
