@@ -128,12 +128,12 @@ void Beaver::on_place_action(const Board &board, const int i, const int j,const 
     }
 }
 
-Rattler::Rattler(const sf::Font &font) : Card("pictures/rattler.png", "Rattler", 1,3,6,Effect::none,true,font)
+Rattler::Rattler(const sf::Font &font) : Card("pictures/rattler.png", "Rattler", 1, 3, 6, Effect::none, true, font)
 {
     std::cout << "Rattler created\n";
 }
 
-void Rattler::action(const Board &board,const int i,const int j, Scales &scales)
+void Rattler::action(const Board &board, const int i, const int j, Scales &scales)
 {
     std::cout << "Rattler attack\n";
     if (const int opus = (i == 0) ? 1 : 0; board.get_slot(opus, j)->is_empty())
@@ -142,23 +142,19 @@ void Rattler::action(const Board &board,const int i,const int j, Scales &scales)
     } else { deal_damage(get_damage(), board, opus, j); }
 }
 
-Bat::Bat(const sf::Font &font) : Card("pictures/bat.png","Bat",1,2,4,Effect::air,true,font)
+Bat::Bat(const sf::Font &font) : Card("pictures/bat.png", "Bat", 1, 2, 4, Effect::air, true, font)
 {
     std::cout << "Bat created\n";
 }
 
-void Bat::action(const Board &board,const int i,const int j, Scales &scales)
+void Bat::action(const Board &board, const int i, const int j, Scales &scales)
 {
-    std::cout<<"Bat attack\n";
+    std::cout << "Bat attack\n";
     const int opus = (i == 0) ? 1 : 0;
-    if(board.get_slot(opus,j)->is_empty() || board.get_slot(opus,j)->get_card()->get_name() != "Bullfrog")
+    if (board.get_slot(opus, j)->is_empty() || board.get_slot(opus, j)->get_card()->get_name() != "Bullfrog")
     {
         scales.update(get_damage(), opus);
-    }
-    else
-    {
-        deal_damage(get_damage(), board, opus, j);
-    }
+    } else { deal_damage(get_damage(), board, opus, j); }
 }
 
 
