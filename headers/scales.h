@@ -5,6 +5,7 @@
 class Scales
 {
 public:
+    Scales() = default;
     explicit Scales(const sf::Font&);
     sf::Sprite& getSprite();
     void setStartPos(const float &,const float &);

@@ -1,3 +1,6 @@
+#include <iostream>
+
+#include "exceptii.h"
 #include "headers/game.h"
 
 /* copy swap pentru deck si pile, se schimba clasa pentru test de pile
@@ -30,12 +33,23 @@ std::cout << s3;
 std::cout << "after p3=p2\n";
 */
 
-// to do: option for can sacrifice
-// to do: tema2 - exceptii
+// to do: fix win logic
+// to do: dupa comit separat cu inca o derivata
 
 int main() {
-    Game game;
-    game.play_game();
+    try
+    {
+        Game game;
+        game.play_game();
+    }
+    catch (const Font_error& err)
+    {
+        std::cout << err.what() << std::endl;
+    }
+    catch (const Texture_error& err)
+    {
+        std::cout << err.what() << std::endl;
+    }
     return 0;
 }
 

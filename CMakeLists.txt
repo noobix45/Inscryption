@@ -72,6 +72,8 @@ add_executable(${PROJECT_NAME}
         headers/deck.h
         headers/pile.h
         headers/game.h
+        headers/exceptii.h
+        sources/exceptii.cpp
 )
 
 include(cmake/CompilerFlags.cmake)

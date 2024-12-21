@@ -14,10 +14,10 @@ class Card
 {
 private:
     std::string name; // how is the card called
-    int hp = 0; // how much hp the card has
-    int damage = 0; // how much damage a card deals (if any)
-    int cost_in_blood = 0; // how much blood it takes to deploy card (if any)
-    int cost_in_bones = 0; // how many bones it takes to deploy card (if any)
+    int hp; // how much hp the card has
+    int damage; // how much damage a card deals (if any)
+    int cost_in_blood; // how much blood it takes to deploy card (if any)
+    int cost_in_bones; // how many bones it takes to deploy card (if any)
     Effect e = Effect::none;
     bool can_sacrifice = true;
     sf::Texture card_texture;

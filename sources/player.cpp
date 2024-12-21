@@ -2,6 +2,8 @@
 #include "constante.h"
 #include <iostream>
 
+#include "exceptii.h"
+
 Player::Player(std::string name_, const int id_, const sf::Font &font_) : name{std::move(name_)}, id{id_}, blood{0},
                                                                           bones{0},
                                                                           deck{id_, font_}, font(font_)
@@ -60,8 +62,10 @@ void Player::setDeckPos(const float &x, const float &y)
 
 void Player::init_textures()
 {
-    if (!blood_texture.loadFromFile("pictures/blood.png")) { std::cout << "Unable to load blood.png\n"; }
-    if (!bone_texture.loadFromFile("pictures/bone.png")) { std::cout << "Unable to load bone.png\n"; }
+    if (!blood_texture.loadFromFile("pictures/blood.png"))
+        { throw Texture_error("Player"+id,"pictures/blood.png"); }
+    if (!bone_texture.loadFromFile("pictures/bone.png"))
+        { throw Texture_error("Player"+id,"pictures/bone.png"); }
     blood_sprite.setTexture(blood_texture);
     bone_sprite.setTexture(bone_texture);
 
@@ -118,4 +122,21 @@ std::ostream &operator<<(std::ostream &out, const Player &player)
     out << "\nDeck:\n";
     out << player.deck;
     return out;
+}
+
+Player &Player::operator=(const Player &other)
+{
+    deck = other.deck;
+    name = other.name;
+    id = other.id;
+    blood = other.blood;
+    bones = other.bones;
+    font = other.font;
+    bone_sprite = other.bone_sprite;
+    bone_texture = other.bone_texture;
+    bone_text = other.bone_text;
+    blood_sprite = other.blood_sprite;
+    blood_texture = other.blood_texture;
+    blood_text = other.blood_text;
+    return *this;
 }

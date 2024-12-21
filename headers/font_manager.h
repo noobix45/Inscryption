@@ -8,6 +8,9 @@ class FontManager
 public:
     explicit FontManager(const std::string &filePath);
     sf::Font& getFont();
+
+    FontManager &operator=(const FontManager &other);
+
     friend std::ostream& operator<<(std::ostream& os, const FontManager& fontManager);
 };
 

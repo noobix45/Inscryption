@@ -1,6 +1,8 @@
 #include "scales.h"
 #include "constante.h"
-#include <iostream>
+//#include <iostream>
+
+#include "exceptii.h"
 
 Scales::Scales(const sf::Font& font_) : font(font_)
 {
@@ -22,7 +24,7 @@ void Scales::init_textures()
 {
     if(!counter_texture.loadFromFile("pictures/counter.png"))
     {
-        std::cout<< " unable to load counter.png\n";
+        throw Texture_error("Scales","pictures/counter.png");
     }
     counter_sprite.setTexture(counter_texture);
     counter_sprite.setOrigin(static_cast<float>(counter_texture.getSize().x),
@@ -47,6 +49,7 @@ void Scales::make_scales()
 
 void Scales::update(const int m,const int direction)
 {
+    //std::cout << "\n\n\nCurrent counter pos: "<<counter_pos<<"\n";
     if(direction==0)
         counter_pos+=m;
     else if(direction==1)
@@ -57,11 +60,12 @@ void Scales::update(const int m,const int direction)
         counter_sprite.setPosition(numbers[0].getPosition().x, numbers[0].getPosition().y);
     else
         counter_sprite.setPosition(numbers[counter_pos].getPosition().x, numbers[counter_pos].getPosition().y);
+    //std::cout<<"Counter pos after update: "<<counter_pos<<"\n\n\n";
 }
 
 bool Scales::winner() const
 {
-    if(counter_pos == 10 || counter_pos == 0)
+    if(counter_pos >= 10 || counter_pos <= 0)
         return true;
     return false;
 }

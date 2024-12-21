@@ -4,6 +4,7 @@
 #include <player.h>
 
 #include "cards.h"
+#include "exceptii.h"
 
 Slot::Slot() : card(nullptr), damage_effect(0), hp_effect(0)
 {
@@ -61,8 +62,7 @@ void Slot::textures_init()
     if (!slot_texture.loadFromFile("pictures/slot.png"))
     {
         // incarca textura
-        std::cout << "Error in loading picture slots\n";
-        // maybe throw exception and stop launch of program??
+        throw Texture_error("Slot","pictures/slot.png");
     }
     slot_sprite.setTexture(slot_texture);
     slot_sprite.setOrigin(static_cast<float>(ONE_SLOT_WIDTH) / 2, static_cast<float>(ONE_SLOT_HEIGHT) / 2);

@@ -1,6 +1,7 @@
 #ifndef CARDS_FACTORY_H
 #define CARDS_FACTORY_H
 #include "derivate.h"
+#include "exceptii.h"
 #include <SFML/Graphics.hpp>
 
     inline Card* card_factory(const CardType type, const sf::Font& font)

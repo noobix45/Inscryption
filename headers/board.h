@@ -20,7 +20,6 @@ public:
 
     ~Board();
 
-     // work in progress void handle_round();
     void make_offset(const sf::RenderWindow &window);
     void setUp() const;
 

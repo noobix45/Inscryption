@@ -19,7 +19,7 @@
 #endif
 
 #ifndef PILE_SIZE
-#define PILE_SIZE 5
+#define PILE_SIZE 15
 #endif
 
 #ifndef ONE_SLOT_WIDTH

@@ -36,7 +36,10 @@ void Pile::make_pile()
     std::mt19937 gen(rd());
     std::uniform_int_distribution<int> dis(EXCLUDED_TYPES, NUM_OF_TYPES);
     if (this->pile_id == 1)
-        for (int i = 0; i < PILE_SIZE; i++) { pile.push(card_factory(CardType::Squirrel,font_)); }
+        for (int i = 0; i < PILE_SIZE; i++)
+        {
+            pile.push(card_factory(CardType::Squirrel,font_));
+        }
     else
     {
         for (int i = 0; i < PILE_SIZE; i++)
@@ -98,8 +101,7 @@ void Pile::init_texture()
         if (!pile_texture.loadFromFile("pictures/squirrel_back.png"))
         {
             // incarca textura
-            std::cout << "Error in loading card back texture\n";
-            // maybe throw exception and stop launch of program??
+            throw Texture_error("Pile(squirrel)","pictures/squirrel_back.png");
         }
         pile_sprite.setPosition(1191 + 2*ONE_SLOT_WIDTH,420); // intial 427
     }
@@ -107,7 +109,7 @@ void Pile::init_texture()
     {
         if(!pile_texture.loadFromFile("pictures/common_back.png"))
         {
-            std::cout << "Error in loading card back texture\n";
+            throw Texture_error("Pile(action cards)","pictures/common_back.png");
         }
         pile_sprite.setPosition(1191 + 2*ONE_SLOT_WIDTH,660); //initial 653
     }
@@ -136,20 +138,7 @@ sf::Sprite& Pile::get_sprite()
     return pile_sprite;
 }
 
-// nu sunt folosite in joc, doar pentru tema 2
-// constructor de copiere foloseste op egal
 
-/*
-const std::stack<Card *> Pile::getPile() const
-{
-    return pile;
-}
-
-void Pile::customPop()
-{
-    pile.pop();
-}
-*/
 Pile::Pile(const Pile &other)
 {
     std::cout << "Pile copy constructor start\n";

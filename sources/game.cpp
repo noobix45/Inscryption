@@ -1,16 +1,15 @@
 #include "game.h"
 #include "font_manager.h"
-#include <iostream>
-
 #include "derivate.h"
 #include "scales.h"
+#include <iostream>
 
 Game::Game() : window(sf::VideoMode::getDesktopMode(), "My Window", sf::Style::Fullscreen),
                font_manager_("heaviwei.ttf"),
                squirrel_pile(1, font_manager_.getFont()),
                normal_pile(2, font_manager_.getFont()),
-               player1{"Player1", 1, font_manager_.getFont()},
-               player2{"Player2", 2, font_manager_.getFont()},
+               player1("Player1", 1, font_manager_.getFont()),
+               player2("Player2", 2, font_manager_.getFont()),
                scales(font_manager_.getFont()),
                selected_card(nullptr), card_selected(false), sacrifice_on(false), current_phase(0), current_player(1)
 {
@@ -32,7 +31,8 @@ void Game::play_game()
                 if (event.key.code == sf::Keyboard::Escape) { window.close(); }
 
             if (squirrel_pile.get_size() == 0 && normal_pile.get_size() == 0) // daca s-au terminat cartile
-            {current_phase = 1;
+            {
+                current_phase = 1;
             }
 
             check_winner();
@@ -213,7 +213,7 @@ void Game::check_winner()
     if (scales.winner())
     {
         current_player = (current_player == 1) ? 2 : 1;
-        std::cout << "Player " << current_player << " wins" << std::endl;
+        std::cout << "\n\nPlayer " << current_player << " wins\n\n";
         window.close();
     }
 }
@@ -334,7 +334,11 @@ bool Game::place_in_board(const sf::Vector2i mousePos, const int row)
 
 void Game::init_background()
 {
-    background_texture.loadFromFile("pictures/woodPlanks_albedo.png");
+    if (!background_texture.loadFromFile("pictures/woodPlanks_albedo.png"))
+    {
+        std::cout <<"Unable to load Background_texture from \"pictures/woodPlanks_albedo.png\"";
+        exit(1);
+    }
     background_sprite.setTexture(background_texture);
 
     const sf::Vector2u window_size = window.getSize();
@@ -348,7 +352,11 @@ void Game::init_background()
 
 void Game::init_bell()
 {
-    if(!bell_texture.loadFromFile("pictures/bell.png")) { std::cout<< " Unable to load bell\n"; }
+    if (!bell_texture.loadFromFile("pictures/bell.png"))
+    {
+        std::cout<<"Unable to load Bell_texture from \"pictures/bell.png\"";
+        exit(1);
+    }
     bell_sprite.setTexture(bell_texture);
     bell_sprite.setScale(5.5f, 5.5f);
     bell_sprite.setOrigin(static_cast<float>(bell_texture.getSize().x) / 2,
@@ -360,7 +368,11 @@ void Game::init_bell()
 
 void Game::init_sacrifice()
 {
-    if (!sacrifice_texture.loadFromFile("pictures/sacrifice_mark.png")) { std::cout << " Unable to load sacrifice\n"; }
+    if (!sacrifice_texture.loadFromFile("pictures/sacrifice_mark.png"))
+    {
+        std::cout<<"Unable to load Sacrifice_texture from \"pictures/sacrifice_mark.png\"";
+        exit(1);
+    }
     sacrifice_sprite.setTexture(sacrifice_texture);
     const float x = board.get_slot(0, 3)->get_sprite().getPosition().x;
     const float y = board.get_slot(0, 3)->get_sprite().getPosition().y;

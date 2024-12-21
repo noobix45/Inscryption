@@ -20,6 +20,7 @@ private:
     sf::Sprite bone_sprite;
 
 public:
+    Player()=default;
     Player(std::string name_, int id_, const sf::Font &);
 
     ~Player();
@@ -50,6 +51,8 @@ public:
     void setSpritesPos(const std::pair<float, float> &, const std::pair<float, float> &);
 
     void count_draw(sf::RenderWindow &window);
+
+    Player &operator=(const Player &other);
 
     friend std::ostream &operator<<(std::ostream &out, const Player &player);
 };

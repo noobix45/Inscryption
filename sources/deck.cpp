@@ -29,6 +29,7 @@ void Deck::make_deck()
     std::mt19937 gen(rd());
     std::uniform_int_distribution<int> dis(EXCLUDED_TYPES, NUM_OF_TYPES);
 
+
     deck.push_back(card_factory(CardType::Squirrel, font_));
     for (int i = 0; i < 3; i++) //deckul are 3 carti plus veverita initial
     {
