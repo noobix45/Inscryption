@@ -24,7 +24,7 @@ void Scales::init_textures()
 {
     if(!counter_texture.loadFromFile("pictures/counter.png"))
     {
-        throw Texture_error("Scales","pictures/counter.png");
+        throw Texture_error("Scales", "pictures/counter.png");
     }
     counter_sprite.setTexture(counter_texture);
     counter_sprite.setOrigin(static_cast<float>(counter_texture.getSize().x),
@@ -65,7 +65,7 @@ void Scales::update(const int m,const int direction)
 
 bool Scales::winner() const
 {
-    if(counter_pos >= 10 || counter_pos <= 0)
+    if (counter_pos >= 10 || counter_pos <= 0)
         return true;
     return false;
 }

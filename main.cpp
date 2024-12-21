@@ -41,15 +41,8 @@ int main() {
     {
         Game game;
         game.play_game();
-    }
-    catch (const Font_error& err)
-    {
-        std::cout << err.what() << std::endl;
-    }
-    catch (const Texture_error& err)
-    {
-        std::cout << err.what() << std::endl;
-    }
+    } catch (const Font_error &err) { std::cout << err.what() << std::endl; }
+    catch (const Texture_error &err) { std::cout << err.what() << std::endl; }
     return 0;
 }
 

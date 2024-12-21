@@ -63,9 +63,12 @@ void Player::setDeckPos(const float &x, const float &y)
 void Player::init_textures()
 {
     if (!blood_texture.loadFromFile("pictures/blood.png"))
-        { throw Texture_error("Player"+id,"pictures/blood.png"); }
+    {
+        throw Texture_error("Player" + std::to_string(id), "pictures/blood.png");
+    }
     if (!bone_texture.loadFromFile("pictures/bone.png"))
-        { throw Texture_error("Player"+id,"pictures/bone.png"); }
+    {
+        throw Texture_error("Player" + std::to_string(id), "pictures/bone.png"); }
     blood_sprite.setTexture(blood_texture);
     bone_sprite.setTexture(bone_texture);
 
