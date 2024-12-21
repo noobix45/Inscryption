@@ -7,8 +7,6 @@
 
 #include "scales.h"
 
-// card type {0,1,2,3,4,...} // cartile non action la inceput
-enum class CardType { Squirrel, Dam, Adder, Wolf, Beaver, Mantis, Bullfrog };
 
 class Card
 {

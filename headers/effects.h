@@ -2,7 +2,7 @@
 #define EFFECTS_H
 #include <ostream>
 
-enum class Effect { none, poison, dam, air_defence, bifurcated };
+enum class Effect { none, poison, dam, air_defence, bifurcated, air };
 
 inline std::ostream& operator<<(std::ostream& os, const Effect& effect)
 {
@@ -19,6 +19,9 @@ inline std::ostream& operator<<(std::ostream& os, const Effect& effect)
             break;
         case Effect::bifurcated:
             os << "bifurcated";
+            break;
+        case Effect::air:
+            os << "air";
             break;
         default:
             os << "none";

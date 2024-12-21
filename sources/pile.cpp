@@ -4,6 +4,8 @@
 #include <random>
 #include <iostream>
 
+#include "exceptii.h"
+
 
 Pile::Pile(const int id, const sf::Font &font) : pile_id{id}, font_(font)
 {

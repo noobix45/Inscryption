@@ -86,4 +86,22 @@ public:
     Card *clone() const override { return new Beaver(*this); }
 };
 
+class Rattler : public Card
+{
+public:
+    explicit Rattler(const sf::Font& font);
+
+    void action(const Board &board, int i, int j, Scales &) override;
+
+    Card* clone() const override { return new Rattler(*this); }
+};
+
+class Bat : public Card
+{
+    public:
+    explicit Bat(const sf::Font& font);
+    void action(const Board &board, int i, int j, Scales &) override;
+    Card* clone() const override { return new Bat(*this); }
+};
+
 #endif //DERIVATE_H

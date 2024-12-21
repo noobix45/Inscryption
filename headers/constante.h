@@ -11,7 +11,7 @@
 // increment num of types si excluded types de fiecare data cand se adaug un tip
 // daca tipul de carte nu are actiune pune l in lista de types la inceput, dupa prima poz 0
 #ifndef NUM_OF_TYPES // ultima pozitie din enum class types
-#define NUM_OF_TYPES 6
+#define NUM_OF_TYPES 8
 #endif
 
 #ifndef EXCLUDED_TYPES // prima pozitie care are carti valide din enum class types
