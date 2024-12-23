@@ -6,6 +6,8 @@
 #include "font_manager.h"
 #include "scales.h"
 #include <SFML/Graphics.hpp>
+#include "SFML/Audio/Sound.hpp"
+#include "SFML/Audio/SoundBuffer.hpp"
 
 
 class Game
@@ -28,8 +30,14 @@ private:
     sf::Sprite background_sprite;
     sf::Texture bell_texture;
     sf::Sprite bell_sprite;
+    sf::SoundBuffer bell_buffer;
+    sf::Sound bell_sound;
     sf::Texture sacrifice_texture;
     sf::Sprite sacrifice_sprite;
+    sf::Texture cursor_marker_texture;
+    sf::Sprite cursor_marker_sprite;
+    sf::Cursor custom_cursor;
+    sf::Image cursor_image;
     Board board;
 
     Card *selected_card; // la momentul inceperii nicio carte nu este selectata

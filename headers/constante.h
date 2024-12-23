@@ -1,6 +1,8 @@
 #ifndef CONSTANTE_H
 #define CONSTANTE_H
 
+enum class CardType;
+
 #ifndef LIN
 #define LIN 2
 #endif
@@ -11,7 +13,7 @@
 // increment num of types si excluded types de fiecare data cand se adaug un tip
 // daca tipul de carte nu are actiune pune l in lista de types la inceput, dupa prima poz 0
 #ifndef NUM_OF_TYPES // ultima pozitie din enum class types
-#define NUM_OF_TYPES 8
+#define NUM_OF_TYPES (static_cast<int>(CardType::Last)-1)
 #endif
 
 #ifndef EXCLUDED_TYPES // prima pozitie care are carti valide din enum class types

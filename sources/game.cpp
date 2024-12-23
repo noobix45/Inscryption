@@ -4,6 +4,8 @@
 #include "scales.h"
 #include <iostream>
 
+#include "exceptii.h"
+
 Game::Game() : window(sf::VideoMode::getDesktopMode(), "My Window", sf::Style::Fullscreen),
                font_manager_("heaviwei.ttf"),
                squirrel_pile(1, font_manager_.getFont()),
@@ -14,6 +16,10 @@ Game::Game() : window(sf::VideoMode::getDesktopMode(), "My Window", sf::Style::F
                selected_card(nullptr), card_selected(false), sacrifice_on(false), current_phase(0), current_player(1)
 {
     window.setFramerateLimit(60);
+    board.make_offset(window);
+    init_background();
+    init_bell();
+    init_sacrifice();
 }
 
 void Game::play_game()
@@ -109,6 +115,7 @@ void Game::handle_sacrifice(const sf::Vector2i mousePos)
             static_cast<float>(mousePos.x), static_cast<float>(mousePos.y))) // daca se da click pe sacrifice
     {
         sacrifice_on = true;
+        window.setMouseCursor(custom_cursor);
     }
     if (sacrifice_on)
     {
@@ -120,7 +127,7 @@ void Game::handle_sacrifice(const sf::Vector2i mousePos)
             player.modify_blood(1); // daca cartea are effect worthy sacrifice va fi 3 (in viitor)
             player.modify_bone(1);
             //std::cout << player;
-            sacrifice_on = false;
+            //sacrifice_on = false;
         }
     }
 }
@@ -179,12 +186,6 @@ void Game::initEverything()
     //player1.make_deck(); // apel catre deck sa se umple cu carti
     //player2.make_deck();
 
-    board.make_offset(window);
-
-    init_background();
-    init_bell();
-    init_sacrifice();
-
     auto [deck_fst1, deck_snd1] = Deck::get_start_positions(window, 1); // pozitii calc relativ la window
     auto [deck_fst2, deck_snd2] = Deck::get_start_positions(window, 2);
 
@@ -232,6 +233,11 @@ bool Game::ring_bell(const sf::Vector2i mousePos)
     if (bell_sprite.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)))
     {
         perform_row_action(current_player);
+        bell_sound.play();
+        sacrifice_on=false;
+        sf::Cursor default_cursor;
+        default_cursor.loadFromSystem(sf::Cursor::Arrow);
+        window.setMouseCursor(default_cursor);
         return true;
     }
     return false;
@@ -277,11 +283,18 @@ void Game::select_card(const sf::Vector2i mousePos, const int id) // vreau sa se
     {
         selected_card = go_through_deck(mousePos, player2.get_deck());
     }
+    if(selected_card)
+    {
+        sacrifice_on=false;
+        sf::Cursor default_cursor;
+        default_cursor.loadFromSystem(sf::Cursor::Arrow);
+        window.setMouseCursor(default_cursor);
+    }
 }
 
 Card *Game::go_through_deck(const sf::Vector2i mousePos, std::vector<Card *> &deck)
 {
-    for (Card *c: deck) // parcurge deckul si verifica daca click-il a fost in spatiul unei carti
+    for (Card *c: deck) // parcurge deckul si verifica daca click-ul a fost in spatiul unei carti
     {
         if(!c->is_clicked())
         if(c->get_sprite().getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)))
@@ -304,7 +317,7 @@ bool Game::place_in_board(const sf::Vector2i mousePos, const int row)
             {
                 if (auto &player = (row == 1) ? player1 : player2;
                     (selected_card->get_blood() != 0 && player.get_blood() >= selected_card->get_blood())
-                    || (selected_card->get_bone() != 0 && player1.get_bones() >= selected_card->get_bone())
+                    || (selected_card->get_bone() != 0 && player.get_bones() >= selected_card->get_bone())
                     || (selected_card->get_blood() == 0 && selected_card->get_bone() == 0))
                 // daca playerul are suficient blood sa joace cartea
                 {
@@ -336,8 +349,7 @@ void Game::init_background()
 {
     if (!background_texture.loadFromFile("pictures/woodPlanks_albedo.png"))
     {
-        std::cout <<"Unable to load Background_texture from \"pictures/woodPlanks_albedo.png\"";
-        exit(1);
+        throw Texture_error("Game (background)","pictures/woodPlanks_albedo.png");
     }
     background_sprite.setTexture(background_texture);
 
@@ -354,9 +366,13 @@ void Game::init_bell()
 {
     if (!bell_texture.loadFromFile("pictures/bell.png"))
     {
-        std::cout<<"Unable to load Bell_texture from \"pictures/bell.png\"";
-        exit(1);
+        throw Texture_error("Game (bell)","pictures/bell.png");
     }
+    if(!bell_buffer.loadFromFile("bell_ring.wav"))
+    {
+        throw Sound_error("bell_sound.wav");
+    }
+    bell_sound.setBuffer(bell_buffer);
     bell_sprite.setTexture(bell_texture);
     bell_sprite.setScale(5.5f, 5.5f);
     bell_sprite.setOrigin(static_cast<float>(bell_texture.getSize().x) / 2,
@@ -370,8 +386,7 @@ void Game::init_sacrifice()
 {
     if (!sacrifice_texture.loadFromFile("pictures/sacrifice_mark.png"))
     {
-        std::cout<<"Unable to load Sacrifice_texture from \"pictures/sacrifice_mark.png\"";
-        exit(1);
+        throw Texture_error("Game (sacrifice)","pictures/sacrifice_mark.png");
     }
     sacrifice_sprite.setTexture(sacrifice_texture);
     const float x = board.get_slot(0, 3)->get_sprite().getPosition().x;
@@ -379,4 +394,13 @@ void Game::init_sacrifice()
     sacrifice_sprite.setOrigin(static_cast<float>(sacrifice_texture.getSize().x) / 2,
                                static_cast<float>(sacrifice_texture.getSize().y) / 2);
     sacrifice_sprite.setPosition(x+ONE_SLOT_WIDTH*3.5f, y + ONE_SLOT_HEIGHT/2);
+
+    if(!cursor_marker_texture.loadFromFile("pictures/custom_cursor.png"))
+    {
+        throw Texture_error("Game (cursor_marker)","pictures/custom_cursor.png");
+    }
+    cursor_image = cursor_marker_texture.copyToImage();
+    if (!custom_cursor.loadFromPixels(cursor_image.getPixelsPtr(), cursor_image.getSize(), sf::Vector2u(cursor_image.getSize().x/2, cursor_image.getSize().y-1))) {
+        exit(1);
+    }
 }

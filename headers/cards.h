@@ -13,7 +13,6 @@ class Card
 private:
     std::string name; // how is the card called
     int hp; // how much hp the card has
-    int damage; // how much damage a card deals (if any)
     int cost_in_blood; // how much blood it takes to deploy card (if any)
     int cost_in_bones; // how many bones it takes to deploy card (if any)
     Effect e = Effect::none;
@@ -23,6 +22,9 @@ private:
     sf::Text hp_text;
     sf::Text damage_text;
     bool clicked = false;
+
+protected:
+    int damage; // how much damage a card deals (if any)
 
 public:
     Card()=delete; // pentru caz default in card_factoy
@@ -54,7 +56,7 @@ public:
 
     int get_blood() const;
     int get_bone() const;
-    int get_damage() const;
+    //int get_damage() const;
 
     bool sacrificabil() const;
 

@@ -43,6 +43,7 @@ int main() {
         game.play_game();
     } catch (const Font_error &err) { std::cout << err.what() << std::endl; }
     catch (const Texture_error &err) { std::cout << err.what() << std::endl; }
+    catch(const Sound_error &err) {std::cout << err.what() << std::endl; }
     return 0;
 }
 

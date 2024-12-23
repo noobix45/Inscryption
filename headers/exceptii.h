@@ -20,4 +20,10 @@ public:
     Texture_error(const std::string& class_name, const std::string& path);
 };
 
+class Sound_error : public Exceptie
+{
+    public:
+    explicit Sound_error(const std::string& path);
+};
+
 #endif //EXCEPTII_H

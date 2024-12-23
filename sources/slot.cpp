@@ -51,7 +51,8 @@ void Slot::update(sf::RenderWindow &window, Player &p)
         } else
         {
             //card is dead give 1 bone to the player delete the card mark slot as empty
-            p.modify_bone(1);
+            if(card->sacrificabil())
+                p.modify_bone(1);
             remove_card();
         }
     }

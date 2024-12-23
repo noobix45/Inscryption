@@ -34,7 +34,7 @@ void Adder::action(const Board &board, const int i, const int j, Scales &scales)
     if (const int opus = (i == 0) ? 1 : 0; board.get_slot(opus, j)->is_empty())
     // verifica daca exista carte, daca nu updateaza scales
     {
-        scales.update(get_damage(), opus);
+        scales.update(damage, opus);
     } else
         deal_damage(100, board, opus, j);
 }
@@ -49,10 +49,10 @@ void Wolf::action(const Board &board, const int i, const int j, Scales &scales)
     std::cout << "Wolf attack\n";
     if (const int opus = (i == 0) ? 1 : 0; board.get_slot(opus, j)->is_empty())
     {
-        scales.update(get_damage(), opus);
+        scales.update(damage, opus);
     } else
     {
-        deal_damage(get_damage(), board, opus, j);
+        deal_damage(damage, board, opus, j);
     }
 }
 
@@ -69,16 +69,16 @@ void Mantis::action(const Board &board, const int i, const int j,Scales& scales)
     if (j + 1 <= 3) // daca slotul e valid
     {
         if (board.get_slot(opus, j + 1)->is_empty()) // daca e gol update
-            scales.update(get_damage(), opus);
+            scales.update(damage, opus);
         else
-            deal_damage(get_damage(), board, opus, j + 1); // daca nu deal damage
+            deal_damage(damage, board, opus, j + 1); // daca nu deal damage
     }
     if (j - 1 >= 0)
     {
         if (board.get_slot(opus, j - 1)->is_empty())
-            scales.update(get_damage(), opus);
+            scales.update(damage, opus);
         else
-            deal_damage(get_damage(), board, opus,j-1);
+            deal_damage(damage, board, opus,j-1);
     }
 }
 
@@ -94,9 +94,9 @@ void Bullfrog::action(const Board &board, const int i, const int j,Scales& scale
     if (const int opus = (i == 0) ? 1 : 0; board.get_slot(opus, j)->is_empty())
     // verifica daca exista carte, daca nu updateaza scales
     {
-        scales.update(get_damage(), opus);
+        scales.update(damage, opus);
     } else
-        deal_damage(get_damage(), board, opus, j);
+        deal_damage(damage, board, opus, j);
 }
 
 Beaver::Beaver(const sf::Font &font) : Card("pictures/beaver.png", "Beaver", 3, 1, 2, Effect::dam, font)
@@ -109,8 +109,8 @@ void Beaver::action(const Board &board, const int i, const int j, Scales &scales
     std::cout << "Beaver attack\n";
     if (const int opus = (i == 0) ? 1 : 0; board.get_slot(opus, j)->is_empty())
     {
-        scales.update(get_damage(), opus);
-    } else { deal_damage(get_damage(), board, opus, j); }
+        scales.update(damage, opus);
+    } else { deal_damage(damage, board, opus, j); }
 }
 
 void Beaver::on_place_action(const Board &board, const int i, const int j,const sf::Font &font_)
@@ -138,8 +138,8 @@ void Rattler::action(const Board &board, const int i, const int j, Scales &scale
     std::cout << "Rattler attack\n";
     if (const int opus = (i == 0) ? 1 : 0; board.get_slot(opus, j)->is_empty())
     {
-        scales.update(get_damage(), opus);
-    } else { deal_damage(get_damage(), board, opus, j); }
+        scales.update(damage, opus);
+    } else { deal_damage(damage, board, opus, j); }
 }
 
 Bat::Bat(const sf::Font &font) : Card("pictures/bat.png", "Bat", 1, 2, 4, Effect::air, true, font)
@@ -150,11 +150,10 @@ Bat::Bat(const sf::Font &font) : Card("pictures/bat.png", "Bat", 1, 2, 4, Effect
 void Bat::action(const Board &board, const int i, const int j, Scales &scales)
 {
     std::cout << "Bat attack\n";
-    const int opus = (i == 0) ? 1 : 0;
-    if (board.get_slot(opus, j)->is_empty() || board.get_slot(opus, j)->get_card()->get_name() != "Bullfrog")
+    if (const int opus = (i == 0) ? 1 : 0; board.get_slot(opus, j)->is_empty() || board.get_slot(opus, j)->get_card()->get_name() != "Bullfrog")
     {
-        scales.update(get_damage(), opus);
-    } else { deal_damage(get_damage(), board, opus, j); }
+        scales.update(damage, opus);
+    } else { deal_damage(damage, board, opus, j); }
 }
 
 

@@ -6,9 +6,9 @@
 
 // Constructor for cards that take blood
 Card::Card(const std::string &file_name, std::string name_, const int hp_, int const damage_, const int cost_in_blood_,const Effect e_,
-           const sf::Font &font_, const bool can_sacrifice_): name{std::move(name_)}, hp{hp_}, damage{damage_},
-                                                              cost_in_blood{cost_in_blood_}, cost_in_bones{0}, e{e_},
-                                                              can_sacrifice(can_sacrifice_)
+           const sf::Font &font_, const bool can_sacrifice_): name{std::move(name_)}, hp{hp_}, cost_in_blood{cost_in_blood_},
+                                                              cost_in_bones{0}, e{e_}, can_sacrifice(can_sacrifice_),
+                                                              damage{damage_}
 {
     init_texture(file_name,font_);
     std::cout<<name<<" created from abstract"<<std::endl;
@@ -17,8 +17,8 @@ Card::Card(const std::string &file_name, std::string name_, const int hp_, int c
 // Constructor for cards that take bones
 Card::Card(const std::string &file_name, std::string name_, const int hp_, const int damage_, const int cost_in_bones_,
            const Effect e_, [[maybe_unused]] bool bone, const sf::Font &font_,
-           const bool can_sacrifice_): name{std::move(name_)}, hp{hp_}, damage{damage_}, cost_in_blood{0},cost_in_bones{cost_in_bones_}, e{e_},
-                                       can_sacrifice(can_sacrifice_) { init_texture(file_name,font_); }
+           const bool can_sacrifice_): name{std::move(name_)}, hp{hp_}, cost_in_blood{0}, cost_in_bones{cost_in_bones_},e{e_}, can_sacrifice(can_sacrifice_),
+                                       damage{damage_} { init_texture(file_name,font_); }
 
 Card::~Card()// = default;
 {
@@ -31,9 +31,9 @@ Card::~Card()// = default;
     std::cout << name<< " destroyed" << std::endl;
 }
 
-Card::Card(const Card &other_card) : name(other_card.name), hp(other_card.hp), damage(other_card.damage),
-                                     cost_in_blood(other_card.cost_in_blood), cost_in_bones(other_card.cost_in_bones),
-                                     e(other_card.e) { std::cout << "carte copiata\n"; }
+Card::Card(const Card &other_card) : name(other_card.name), hp(other_card.hp), cost_in_blood(other_card.cost_in_blood),
+                                     cost_in_bones(other_card.cost_in_bones), e(other_card.e),
+                                     damage(other_card.damage) { std::cout << "carte copiata\n"; }
 
 Card &Card::operator=(const Card &other_card)
 {
@@ -93,7 +93,7 @@ sf::Sprite& Card::get_sprite()
 
 int Card::get_blood() const { return cost_in_blood; }
 int Card::get_bone() const { return cost_in_bones; }
-int Card::get_damage() const {return damage;}
+//int Card::get_damage() const {return damage;}
 bool Card::sacrificabil() const {return can_sacrifice;}
 
 bool Card::is_dead() const {return hp<=0;}

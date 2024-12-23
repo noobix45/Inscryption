@@ -4,7 +4,7 @@
 #include <SFML/Graphics.hpp>
 
 // card type {0,1,2,3,4,...} // cartile non action la inceput
-enum class CardType { Squirrel, Dam, Adder, Wolf, Beaver, Mantis, Bullfrog, Bat, Rattler };
+enum class CardType { Squirrel, Dam, Adder, Wolf, Beaver, Mantis, Bullfrog, Bat, Rattler, Last};
 
 inline Card* card_factory(const CardType type, const sf::Font& font)
     {
