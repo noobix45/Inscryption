@@ -4,10 +4,9 @@
 
 class Squirrel : public Card
 {
+    void action(const Board &, int i, int j, Scales &) override;
 public:
     explicit Squirrel(const sf::Font& font);
-
-    void action(const Board &, int i, int j, Scales &) override;
 
     Card *clone() const override
     {
@@ -17,19 +16,18 @@ public:
 
 class Dam : public Card
 {
+    void action(const Board &, int i, int j, Scales &) override;
 public:
     explicit Dam(const sf::Font &font);
-
-    void action(const Board &, int i, int j, Scales &) override;
 
     Card *clone() const override { return new Dam(*this); }
 };
 
 class Adder : public Card
 {
+    void action(const Board &, int i, int j, Scales &) override;
 public:
     explicit Adder(const sf::Font& font);
-    void action(const Board &, int i, int j, Scales &) override;
 
     Card *clone() const override
     {
@@ -39,9 +37,9 @@ public:
 
 class Wolf : public Card
 {
+    void action(const Board &board, int i, int j, Scales &) override;
 public:
     explicit Wolf(const sf::Font& font);
-    void action(const Board &board, int i, int j, Scales &) override;
 
     Card *clone() const override
     {
@@ -51,9 +49,9 @@ public:
 
 class Mantis : public Card
 {
+    void action(const Board &board, int i, int j, Scales &) override;
 public:
     explicit Mantis(const sf::Font& font);
-    void action(const Board &board, int i, int j, Scales &) override;
 
     Card *clone() const override
     {
@@ -63,10 +61,9 @@ public:
 
 class Bullfrog : public Card
 {
+    void action(const Board &board, int i, int j, Scales &) override;
 public:
     explicit Bullfrog(const sf::Font& font);
-
-    void action(const Board &board, int i, int j, Scales &) override;
 
     Card* clone() const override
     {
@@ -76,11 +73,11 @@ public:
 
 class Beaver : public Card
 {
+    void action(const Board &, int i, int j, Scales &) override;
 public:
     explicit Beaver(const sf::Font &font);
 
-    void action(const Board &, int i, int j, Scales &) override;
-
+    //functie specifica beaver pentru downcast
     void on_place_action(const Board &board, int i, int j,const sf::Font&);
 
     Card *clone() const override { return new Beaver(*this); }
@@ -88,20 +85,18 @@ public:
 
 class Rattler : public Card
 {
+    void action(const Board &board, int i, int j, Scales &) override;
 public:
     explicit Rattler(const sf::Font &font);
-
-    void action(const Board &board, int i, int j, Scales &) override;
 
     Card *clone() const override { return new Rattler(*this); }
 };
 
 class Bat : public Card
 {
+    void action(const Board &board, int i, int j, Scales &) override;
 public:
     explicit Bat(const sf::Font &font);
-
-    void action(const Board &board, int i, int j, Scales &) override;
 
     Card *clone() const override { return new Bat(*this); }
 };

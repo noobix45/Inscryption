@@ -19,8 +19,6 @@ Player::~Player()
     std::cout << "Finished destruction of Player " << id << "\n";
 }
 
-void Player::make_deck() { deck.make_deck(); }
-
 void Player::draw_card(Pile &pile)
 {
     if(pile.get_size() > 0)
@@ -35,7 +33,23 @@ void Player::delete_from_deck(const Card *selected_card)
     deck.remove_card(selected_card);
 }
 
-std::vector<Card *> &Player::get_deck() { return deck.get_all(); }
+Card * Player::selects(const sf::Vector2i &mousePos)
+{
+    return deck.go_through_deck(mousePos);
+}
+
+bool Player::can_play(const Card *selected_card) const
+{
+    const int bl = selected_card->get_blood();
+    const int bo = selected_card->get_bone();
+    if( (bl != 0 && blood>=bl) // daca cartea costa blood si player are suficient blood
+        || (bo != 0 && bones>=bo) // daca cartea costa bone si player are suficient bone
+        || (bl==0 && bo==0)) // daca cartea nu costa nimic
+    {
+        return true;
+    }
+    return false;
+}
 
 void Player::modify_blood(const int sacrificed_blood)
 {
@@ -44,31 +58,19 @@ void Player::modify_blood(const int sacrificed_blood)
     //std::cout << "blood after add: "<<blood<<std::endl;
 }
 
-//void Player::take_blood(const int played_blood) { blood-=played_blood; }
-
-int Player::get_blood() const { return blood; }
-
 void Player::modify_bone(const int num) { bones += num; }
 
-
-int Player::get_bones() const { return bones; }
-
 void Player::deck_draw(sf::RenderWindow &window) const { deck.deck_draw(window); }
-
-void Player::setDeckPos(const float &x, const float &y)
-{
-    deck.setStartPos(x,y);
-}
 
 void Player::init_textures()
 {
     if (!blood_texture.loadFromFile("pictures/blood.png"))
     {
-        throw Texture_error("Player" + std::to_string(id), "pictures/blood.png");
+        throw TextureError("Player" + std::to_string(id), "pictures/blood.png");
     }
     if (!bone_texture.loadFromFile("pictures/bone.png"))
     {
-        throw Texture_error("Player" + std::to_string(id), "pictures/bone.png"); }
+        throw TextureError("Player" + std::to_string(id), "pictures/bone.png"); }
     blood_sprite.setTexture(blood_texture);
     bone_sprite.setTexture(bone_texture);
 
@@ -96,13 +98,26 @@ void Player::init_textures()
     //std::cout << "Sprite for bone set\n";
 }
 
-void Player::setSpritesPos(const std::pair<float, float> &blood_pos, const std::pair<float, float> &bone_pos)
+//pozitiile de start ale deckului si sprite-urile de text si blode, bone
+void Player::setDeckPos(const float &x, const float &y)
 {
-    blood_sprite.setPosition(blood_pos.first, blood_pos.second);
-    blood_text.setPosition(blood_sprite.getPosition().x , blood_sprite.getPosition().y - ONE_SLOT_HEIGHT * 0.15f);
+    deck.setStartPos(x,y);
+    if(id==1)
+    {
+        blood_sprite.setPosition(x - ONE_SLOT_WIDTH * 1.2f,y);
+        blood_text.setPosition(blood_sprite.getPosition().x,blood_sprite.getPosition().y - ONE_SLOT_HEIGHT * 0.15f);
 
-    bone_sprite.setPosition(bone_pos.first, bone_pos.second);
-    bone_text.setPosition(bone_sprite.getPosition().x, bone_sprite.getPosition().y - ONE_SLOT_HEIGHT *0.15f);
+        bone_sprite.setPosition(x - ONE_SLOT_WIDTH * 1.8f,y);
+        bone_text.setPosition(bone_sprite.getPosition().x, bone_sprite.getPosition().y - ONE_SLOT_HEIGHT *0.15f);
+    }
+    else if(id==2)
+    {
+        blood_sprite.setPosition(x + ONE_SLOT_WIDTH * 1.0f,y);
+        blood_text.setPosition(blood_sprite.getPosition().x , blood_sprite.getPosition().y - ONE_SLOT_HEIGHT * 0.15f);
+
+        bone_sprite.setPosition(x + ONE_SLOT_WIDTH * 1.8f,y);
+        bone_text.setPosition(bone_sprite.getPosition().x, bone_sprite.getPosition().y - ONE_SLOT_HEIGHT *0.15f);
+    }
 }
 
 void Player::count_draw(sf::RenderWindow &window)

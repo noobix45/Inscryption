@@ -1,5 +1,5 @@
 #include "pile.h"
-#include "cards_factory.h"
+#include "create_card.h"
 #include "constante.h"
 #include <random>
 #include <iostream>
@@ -40,33 +40,24 @@ void Pile::make_pile()
     if (this->pile_id == 1)
         for (int i = 0; i < PILE_SIZE; i++)
         {
-            pile.push(card_factory(CardType::Squirrel,font_));
+            pile.push(create_card(CardType::Squirrel,font_));
         }
     else
     {
         for (int i = 0; i < PILE_SIZE; i++)
         {
             int r = dis(gen); // 1 2 3... possible outcomes
-            pile.push(card_factory(static_cast<CardType>(r),font_));
+            pile.push(create_card(static_cast<CardType>(r),font_));
         }
     }
 }
 
 //get top card, remove top
-Card *Pile::get_top()
-{
-    Card *card = pile.top();
-    return card;
-}
 Card *Pile::get_card()
 {
     Card *card = pile.top();
     pile.pop();
     return card;
-}
-
-bool Pile::is_clicked(const sf::Vector2i mousePos) const {
-    return pile_sprite.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePos));
 }
 
 int Pile::get_size() const
@@ -79,7 +70,7 @@ std::ostream &operator<<(std::ostream &out, Pile &pile)
     if (pile.pile_id == 1)
     {
         // squirell
-        out << "There are " << pile.pile.size() << " cards of type " << pile.get_top()->get_name() << "\n";
+        out << "There are " << pile.pile.size() << " cards of type " << pile.pile.top()->get_name() << "\n";
         return out;
     } else // other cards
     {
@@ -103,7 +94,7 @@ void Pile::init_texture()
         if (!pile_texture.loadFromFile("pictures/squirrel_back.png"))
         {
             // incarca textura
-            throw Texture_error("Pile(squirrel)","pictures/squirrel_back.png");
+            throw TextureError("Pile(squirrel)","pictures/squirrel_back.png");
         }
         pile_sprite.setPosition(1191 + 2*ONE_SLOT_WIDTH,420); // intial 427
     }
@@ -111,7 +102,7 @@ void Pile::init_texture()
     {
         if(!pile_texture.loadFromFile("pictures/common_back.png"))
         {
-            throw Texture_error("Pile(action cards)","pictures/common_back.png");
+            throw TextureError("Pile(action cards)","pictures/common_back.png");
         }
         pile_sprite.setPosition(1191 + 2*ONE_SLOT_WIDTH,660); //initial 653
     }

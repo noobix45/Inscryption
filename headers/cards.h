@@ -25,6 +25,7 @@ private:
 
 protected:
     int damage; // how much damage a card deals (if any)
+    static void deal_damage(int d, const Board &board, int i, int j);
 
 public:
     Card()=delete; // pentru caz default in card_factoy
@@ -48,8 +49,6 @@ public:
 
     [[nodiscard]] std::string get_name() const;
 
-    void init_texture(const std::string& file_name,const sf::Font& font);
-
     void draw(sf::RenderWindow &window, const float &, const float &);
 
     sf::Sprite& get_sprite();
@@ -68,13 +67,7 @@ public:
 
     bool is_clicked() const;
 
-    void scale_small();
-
-    void scale_big();
-
     void update_number(sf::RenderWindow &window);
-
-    static void deal_damage(int d, const Board &board, int i, int j);
 
     void effect_action(const Board &board, const int i, const int j, Scales &scales) { action(board, i, j, scales); }
 
@@ -84,8 +77,9 @@ public:
 
 private:
     virtual void action(const Board &board, int i, int j, Scales &scales) = 0;
-
-    //virtual void on_place_action(const Board&, int i, int j, Scales&) = 0;
+    void init_texture(const std::string& file_name,const sf::Font& font);
+    void scale_small();
+    void scale_big();
 };
 
 #endif

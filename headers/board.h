@@ -16,18 +16,14 @@ class Board
     float offset_y = 0;
 
 public:
-    Board();
+    explicit Board(const sf::RenderWindow &window);
 
     ~Board();
-
-    void make_offset(const sf::RenderWindow &window);
-    void setUp() const;
 
     void place_card(Card *, int, int) const;
     void remove_card(int, int) const;
 
     [[nodiscard]] Slot *get_slot(const unsigned int &, const unsigned int &) const;
-    std::pair<float,float> get_offset() const;
 
     void update(sf::RenderWindow &window, Player &) const;
 

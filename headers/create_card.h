@@ -1,12 +1,12 @@
-#ifndef CARDS_FACTORY_H
-#define CARDS_FACTORY_H
+#ifndef CREATE_CARD_H_H
+#define CREATE_CARD_H
 #include "derivate.h"
 #include <SFML/Graphics.hpp>
 
 // card type {0,1,2,3,4,...} // cartile non action la inceput
 enum class CardType { Squirrel, Dam, Adder, Wolf, Beaver, Mantis, Bullfrog, Bat, Rattler, Last};
 
-inline Card* card_factory(const CardType type, const sf::Font& font)
+inline Card* create_card(const CardType type, const sf::Font& font)
     {
         switch (type)
         {

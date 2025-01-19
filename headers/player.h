@@ -18,6 +18,7 @@ private:
     sf::Sprite blood_sprite;
     sf::Texture bone_texture;
     sf::Sprite bone_sprite;
+    void init_textures();
 
 public:
     Player()=default;
@@ -25,30 +26,18 @@ public:
 
     ~Player();
 
-    void make_deck();
-
     void draw_card(Pile &pile);
     void delete_from_deck(const Card *selected_card);
-
-    std::vector<Card*>& get_deck();
+    Card* selects(const sf::Vector2i &mousePos);
+    bool can_play(const Card *selected_card) const;
 
     void modify_blood(int);
 
-    //void take_blood(int);
-    int get_blood() const;
-
     void modify_bone(int);
-
-    //void take_bone(int);
-    int get_bones() const;
 
     void deck_draw(sf::RenderWindow &window) const;
 
     void setDeckPos(const float &x, const float &y);
-
-    void init_textures();
-
-    void setSpritesPos(const std::pair<float, float> &, const std::pair<float, float> &);
 
     void count_draw(sf::RenderWindow &window);
 

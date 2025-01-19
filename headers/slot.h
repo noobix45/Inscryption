@@ -14,6 +14,7 @@ class Slot
     int hp_effect;
     sf::Texture slot_texture;
     sf::Sprite slot_sprite;
+    void textures_init();
 
 public:
     Slot();
@@ -29,8 +30,6 @@ public:
     void remove_card();
 
     void update(sf::RenderWindow &window, Player &);
-
-    void textures_init();
 
     void setPos(const float&,const float&);
 

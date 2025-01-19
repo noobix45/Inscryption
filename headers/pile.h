@@ -10,6 +10,9 @@ class Pile
     std::stack<Card *> pile; // always draw from top, decrease number of cards by one when drawn.
     sf::Texture pile_texture;
     sf::Sprite pile_sprite;
+    void make_pile();
+    void init_texture();
+    void scale();
 
 public:
     explicit Pile(int id, const sf::Font &); // pile 1  = squirrels // pile 2 = normal cards
@@ -17,32 +20,17 @@ public:
     Pile()=default;
     ~Pile();
 
-    void make_pile();
-
-    [[nodiscard]] Card *get_top();
-
     Card *get_card();
-
-    bool is_clicked(sf::Vector2i) const;
 
     int get_size() const;
 
     friend std::ostream &operator<<(std::ostream &out, Pile &pile);
 
-    void init_texture();
-
-    void scale();
-
     void setPos(const float &,const float &);
 
     sf::Sprite& get_sprite();
 
-
     //nu sunt folosite in joc, doar pentru tema2
-    //const std::stack<Card *> getPile() const;
-
-    //void customPop();
-
     Pile(const Pile &other);
     Pile &operator=(Pile other);
     friend void swap(Pile &first, Pile &second) noexcept;

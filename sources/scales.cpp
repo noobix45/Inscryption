@@ -24,7 +24,7 @@ void Scales::init_textures()
 {
     if(!counter_texture.loadFromFile("pictures/counter.png"))
     {
-        throw Texture_error("Scales", "pictures/counter.png");
+        throw TextureError("Scales", "pictures/counter.png");
     }
     counter_sprite.setTexture(counter_texture);
     counter_sprite.setOrigin(static_cast<float>(counter_texture.getSize().x),

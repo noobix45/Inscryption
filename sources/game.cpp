@@ -13,10 +13,10 @@ Game::Game() : window(sf::VideoMode::getDesktopMode(), "My Window", sf::Style::F
                player1("Player1", 1, font_manager_.getFont()),
                player2("Player2", 2, font_manager_.getFont()),
                scales(font_manager_.getFont()),
+               board(window),
                selected_card(nullptr), card_selected(false), sacrifice_on(false), current_phase(0), current_player(1)
 {
     window.setFramerateLimit(60);
-    board.make_offset(window);
     init_background();
     init_bell();
     init_sacrifice();
@@ -70,7 +70,6 @@ void Game::first_round(bool &first_round1, bool &first_round2)
         }
     }
 }
-
 
 void Game::handle_round_event(const sf::Vector2i &mousePos)
 {
@@ -192,11 +191,6 @@ void Game::initEverything()
     player1.setDeckPos(deck_fst1, deck_snd1);
     player2.setDeckPos(deck_fst2, deck_snd2);
 
-    player1.setSpritesPos(std::make_pair(deck_fst1 - ONE_SLOT_WIDTH * 1.2f, deck_snd1),
-                          std::make_pair(deck_fst1 - ONE_SLOT_WIDTH * 1.8f, deck_snd1));
-    player2.setSpritesPos(std::make_pair(deck_fst2 + ONE_SLOT_WIDTH * 1.0f, deck_snd2),
-                          std::make_pair(deck_fst2 + ONE_SLOT_WIDTH * 1.8f, deck_snd2));
-
     scales.setStartPos(deck_fst1 - ONE_SLOT_WIDTH, deck_snd1 - ONE_SLOT_HEIGHT * 0.5f);
     scales.make_scales();
 
@@ -266,7 +260,7 @@ bool Game::sacrifice(const sf::Vector2i mousePos, const int row) const
             // daca slotul are carte in el
             {
                 //std::cout << "sacrifice done\n";
-                board.get_slot(row, j)->remove_card(); // sterg cartea din slot definitiv ;) i.e. delete
+                board.get_slot(row, j)->remove_card(); // sterg cartea din slot definitiv ;)  i.e. delete
                 return true;
             }
         }
@@ -278,10 +272,10 @@ void Game::select_card(const sf::Vector2i mousePos, const int id) // vreau sa se
 {
     if (id == 1)
     {
-        selected_card = go_through_deck(mousePos, player1.get_deck());
+        selected_card = player1.selects(mousePos);
     } else if (id == 2)
     {
-        selected_card = go_through_deck(mousePos, player2.get_deck());
+        selected_card = player2.selects(mousePos);
     }
     if(selected_card)
     {
@@ -292,6 +286,8 @@ void Game::select_card(const sf::Vector2i mousePos, const int id) // vreau sa se
     }
 }
 
+
+/////////se poate muta in deck, parcurge deck-ul si retunreaza o carte selectata sau nullptr
 Card *Game::go_through_deck(const sf::Vector2i mousePos, std::vector<Card *> &deck)
 {
     for (Card *c: deck) // parcurge deckul si verifica daca click-ul a fost in spatiul unei carti
@@ -315,11 +311,7 @@ bool Game::place_in_board(const sf::Vector2i mousePos, const int row)
         {
             if (board.get_slot(row, j)->is_empty())
             {
-                if (auto &player = (row == 1) ? player1 : player2;
-                    (selected_card->get_blood() != 0 && player.get_blood() >= selected_card->get_blood())
-                    || (selected_card->get_bone() != 0 && player.get_bones() >= selected_card->get_bone())
-                    || (selected_card->get_blood() == 0 && selected_card->get_bone() == 0))
-                // daca playerul are suficient blood sa joace cartea
+                if (auto &player = (row == 1) ? player1 : player2;player.can_play(selected_card))
                 {
                     //std::cout<<"card will be placed\n";
                     selected_card->on_click_unselect(); // trece la animatia de unclicked
@@ -349,7 +341,7 @@ void Game::init_background()
 {
     if (!background_texture.loadFromFile("pictures/woodPlanks_albedo.png"))
     {
-        throw Texture_error("Game (background)","pictures/woodPlanks_albedo.png");
+        throw TextureError("Game (background)","pictures/woodPlanks_albedo.png");
     }
     background_sprite.setTexture(background_texture);
 
@@ -366,11 +358,11 @@ void Game::init_bell()
 {
     if (!bell_texture.loadFromFile("pictures/bell.png"))
     {
-        throw Texture_error("Game (bell)","pictures/bell.png");
+        throw TextureError("Game (bell)","pictures/bell.png");
     }
     if(!bell_buffer.loadFromFile("bell_ring.wav"))
     {
-        throw Sound_error("bell_sound.wav");
+        throw SoundError("bell_sound.wav");
     }
     bell_sound.setBuffer(bell_buffer);
     bell_sprite.setTexture(bell_texture);
@@ -386,7 +378,7 @@ void Game::init_sacrifice()
 {
     if (!sacrifice_texture.loadFromFile("pictures/sacrifice_mark.png"))
     {
-        throw Texture_error("Game (sacrifice)","pictures/sacrifice_mark.png");
+        throw TextureError("Game (sacrifice)","pictures/sacrifice_mark.png");
     }
     sacrifice_sprite.setTexture(sacrifice_texture);
     const float x = board.get_slot(0, 3)->get_sprite().getPosition().x;
@@ -397,7 +389,7 @@ void Game::init_sacrifice()
 
     if(!cursor_marker_texture.loadFromFile("pictures/custom_cursor.png"))
     {
-        throw Texture_error("Game (cursor_marker)","pictures/custom_cursor.png");
+        throw TextureError("Game (cursor_marker)","pictures/custom_cursor.png");
     }
     cursor_image = cursor_marker_texture.copyToImage();
     if (!custom_cursor.loadFromPixels(cursor_image.getPixelsPtr(), cursor_image.getSize(), sf::Vector2u(cursor_image.getSize().x/2, cursor_image.getSize().y-1))) {

@@ -5,7 +5,7 @@
 FontManager::FontManager(const std::string &filePath)
 {
     std::cout << "loading font...\n";
-    if (!font.loadFromFile(filePath)) { throw Font_error(filePath); }
+    if (!font.loadFromFile(filePath)) { throw FontError(filePath); }
     std::cout << "font loaded\n";
 }
 
@@ -16,6 +16,3 @@ std::ostream & operator<<(std::ostream &os, const FontManager &fontManager)
     os<<"Font Name: "<<fontManager.font.getInfo().family<<std::endl;
     return os;
 }
-
-FontManager& FontManager::operator=(const FontManager &other)
-= default;

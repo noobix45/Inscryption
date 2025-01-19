@@ -3,27 +3,27 @@
 
 #include<stdexcept>
 
-class Exceptie : public std::runtime_error
+class GameError : public std::runtime_error
 {
     using std::runtime_error::runtime_error;
 };
 
-class Font_error : public Exceptie
+class FontError : public GameError
 {
 public:
-    explicit Font_error(const std::string& path);
+    explicit FontError(const std::string& path);
 };
 
-class Texture_error : public Exceptie
+class TextureError : public GameError
 {
 public:
-    Texture_error(const std::string& class_name, const std::string& path);
+    TextureError(const std::string& class_name, const std::string& path);
 };
 
-class Sound_error : public Exceptie
+class SoundError : public GameError
 {
     public:
-    explicit Sound_error(const std::string& path);
+    explicit SoundError(const std::string& path);
 };
 
 #endif //EXCEPTII_H

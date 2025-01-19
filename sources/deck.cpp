@@ -1,5 +1,5 @@
 #include "deck.h"
-#include "cards_factory.h"
+#include "create_card.h"
 #include "constante.h"
 #include <random>
 #include <iostream>
@@ -30,11 +30,11 @@ void Deck::make_deck()
     std::uniform_int_distribution<int> dis(EXCLUDED_TYPES, NUM_OF_TYPES);
 
 
-    deck.push_back(card_factory(CardType::Squirrel, font_));
+    deck.push_back(create_card(CardType::Squirrel, font_));
     for (int i = 0; i < 3; i++) //deckul are 3 carti plus veverita initial
     {
         int r = dis(gen);
-        deck.push_back(card_factory(static_cast<CardType>(r), font_));
+        deck.push_back(create_card(static_cast<CardType>(r), font_));
     }
     std::cout<<"Cards added in deck " << player_id << ".\n";
 }
@@ -55,11 +55,21 @@ void Deck::remove_card(const Card *selected_card)
     }
 }
 
-int Deck::get_num_of_cards() const { return static_cast<int>(deck.size()); } //how many cards are in the deck
+Card * Deck::go_through_deck(const sf::Vector2i &mousePos)
+{
+    for (Card *c: deck) // parcurge deckul si verifica daca click-ul a fost in spatiul unei carti
+    {
+        if(!c->is_clicked())
+            if(c->get_sprite().getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)))
+            {
+                c->on_click_select();
+                return c; // returneaza cartea selectata(pe care s-a dat click)
+            }
+    }
+    return nullptr; //sau null daca nu s-a selectat nimic
+}
 
 Card* Deck::get_card(const int i) const { return deck[i]; } // gets info about a card
-
-std::vector<Card*>& Deck::get_all() {return deck;}
 
 std::pair<float, float> Deck::get_start_positions(const sf::RenderWindow &window, const int player_id) // generated
 {
@@ -118,7 +128,7 @@ void Deck::deck_draw(sf::RenderWindow &window) const
 
 std::ostream &operator<<(std::ostream &out, const Deck &deck)
 {
-    for (int i = 0; i < deck.get_num_of_cards(); i++) { out << *deck.get_card(i) << "\n"; }
+    for (int i = 0; i < static_cast<int>(deck.deck.size()); i++) { out << *deck.get_card(i) << "\n"; }
     return out;
 }
 
@@ -136,7 +146,7 @@ Deck::Deck(const Deck &other)
     start_y = other.start_y;
 }
 
-Deck& Deck::operator=(Deck other) noexcept
+Deck& Deck::operator=(Deck other)// noexcept
 {
     swap(*this,other);
     return *this;

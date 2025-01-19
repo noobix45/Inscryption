@@ -1,8 +1,7 @@
 #include "board.h"
 #include <iostream>
-#include "player.h"
 
-Board::Board()  : board()
+Board::Board(const sf::RenderWindow &window)  : board()
 {
     for (int i = 0; i < LIN; i++)
     {
@@ -12,6 +11,25 @@ Board::Board()  : board()
         }
     }
     std::cout << "board created" << std::endl;
+    board_width = ONE_SLOT_WIDTH * COL;
+    board_height = ONE_SLOT_HEIGHT * LIN;
+
+    const sf::Vector2u size = window.getSize();
+    const auto window_x = static_cast<float>(size.x);
+    const auto window_y = static_cast<float>(size.y);
+
+    offset_x = (window_x - static_cast<float>(board_width)) / 2;
+    offset_y = (window_y - static_cast<float>(board_height)) / 2;
+
+    for (int i = 0; i < LIN; ++i)
+    {
+        for (int j = 0; j < COL; ++j)
+        {
+            auto x = offset_x + static_cast<float>(j * ONE_SLOT_WIDTH) + ONE_SLOT_WIDTH/2;
+            auto y = offset_y + static_cast<float>(i * ONE_SLOT_HEIGHT) + ONE_SLOT_HEIGHT/2;
+            board[i][j]->setPos(x, y);
+        }
+    }
 }
 
 Board::~Board()
@@ -26,61 +44,6 @@ Board::~Board()
     std::cout << "Board Destroyed" << std::endl;
     std::cout.flush();
 }
-
-/* work in progress
-void Board::handle_round()
-{
-    for (int i = 0; i < LIN; ++i)     // de la stg la dreapta, de sus in jos
-    {
-        for (int j = 0; j < COL; ++j)
-        {
-            if(!board[i][j]->is_empty())
-            {
-                board[i][j]->get_card().action();
-            }
-        }
-    }
-}
-*/
-
-void Board::make_offset(const sf::RenderWindow &window)
-{
-    board_width = ONE_SLOT_WIDTH * COL;
-    board_height = ONE_SLOT_HEIGHT * LIN;
-
-    const sf::Vector2u size = window.getSize();
-    const auto window_x = static_cast<float>(size.x);
-    const auto window_y = static_cast<float>(size.y);
-
-    offset_x = (window_x - static_cast<float>(board_width)) / 2;
-    offset_y = (window_y - static_cast<float>(board_height)) / 2;
-
-    setUp();
-}
-
-void Board::setUp() const
-{
-    for (int i = 0; i < LIN; ++i)
-    {
-        for (int j = 0; j < COL; ++j)
-        {
-            auto x = offset_x + static_cast<float>(j * ONE_SLOT_WIDTH) + ONE_SLOT_WIDTH/2;
-            auto y = offset_y + static_cast<float>(i * ONE_SLOT_HEIGHT) + ONE_SLOT_HEIGHT/2;
-            board[i][j]->setPos(x, y);
-        }
-    }
-}
-
-/*
-void Board::perform_actions(const int row_index) const
-{
-    for (int j = 0; j < COL; ++j)
-    {
-        if (!board[row_index][j]->is_empty())
-            board[row_index][j]->get_card()->action(*this, row_index, j);
-    }
-}
-*/
 
 void Board::place_card(Card *card, const int l, const int c) const
 {
@@ -102,14 +65,9 @@ void Board::remove_card(const int l, const int c) const
 
 Slot *Board::get_slot(const unsigned int &i, const unsigned int &j) const { return board[i][j]; }
 
-std::pair<float, float> Board::get_offset() const
-{
-    return {offset_x, offset_y};
-}
-
 void Board::update(sf::RenderWindow &window, Player &p) const
 {
-    for (int i = 0; i < 2; i++) // updateaza cartile din board (pentru cand damage va fi implementat)
+    for (int i = 0; i < 2; i++) // updateaza cartile din board
         for (int j = 0; j < 4; j++)
             if (!get_slot(i, j)->is_empty())
                 get_slot(i, j)->update(window, p);

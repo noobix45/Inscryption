@@ -63,7 +63,7 @@ void Slot::textures_init()
     if (!slot_texture.loadFromFile("pictures/slot.png"))
     {
         // incarca textura
-        throw Texture_error("Slot","pictures/slot.png");
+        throw TextureError("Slot","pictures/slot.png");
     }
     slot_sprite.setTexture(slot_texture);
     slot_sprite.setOrigin(static_cast<float>(ONE_SLOT_WIDTH) / 2, static_cast<float>(ONE_SLOT_HEIGHT) / 2);

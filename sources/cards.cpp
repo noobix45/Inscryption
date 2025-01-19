@@ -67,7 +67,7 @@ void Card::init_texture(const std::string &file_name,const sf::Font& font)
 {
     if (!card_texture.loadFromFile(file_name)) //test texture
     {
-        throw Texture_error("Card " + name,file_name);
+        throw TextureError("Card " + name,file_name);
         // pt ca e hardcoded inseamna ca EU am scris ceva gresit in constructori la file name
     }
     card_sprite.setTexture(card_texture);

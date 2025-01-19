@@ -1,6 +1,6 @@
 #include "derivate.h"
 #include <iostream>
-#include "cards_factory.h"
+#include "create_card.h"
 
 
 Squirrel::Squirrel(const sf::Font &font) : Card("pictures/squirrel.png", "Squirrel", 1, 0, 0, Effect::none, font)
@@ -119,12 +119,12 @@ void Beaver::on_place_action(const Board &board, const int i, const int j,const 
 
     if (j - 1 >= 0 && board.get_slot(i, j - 1)->is_empty())
     {
-        board.get_slot(i, j - 1)->place_card(card_factory(CardType::Dam, font_));
+        board.get_slot(i, j - 1)->place_card(create_card(CardType::Dam, font_));
         // de aici in colo slot e responsabil sa stearga
     }
     if (j + 1 <= 3 && board.get_slot(i, j + 1)->is_empty())
     {
-        board.get_slot(i, j + 1)->place_card(card_factory(CardType::Dam,font_));
+        board.get_slot(i, j + 1)->place_card(create_card(CardType::Dam,font_));
     }
 }
 
