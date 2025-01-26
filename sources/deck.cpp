@@ -1,12 +1,12 @@
 #include "deck.h"
-#include "create_card.h"
 #include "constante.h"
+#include "card_factory.h"
 #include <random>
 #include <iostream>
 
-Deck::Deck(const int player_id_, const sf::Font &font) : player_id{player_id_}, font_(font)
+Deck::Deck(const int player_id_, const CardFactory& card_factory) : player_id{player_id_}
 {
-    make_deck();
+    make_deck(card_factory);
     std::cout << "Deck " << player_id << " created\n";
 }
 
@@ -21,7 +21,7 @@ Deck::~Deck()
     std::cout << "called deck.clear Finished destruction of Deck " << player_id << "\n";
 }
 
-void Deck::make_deck()
+void Deck::make_deck(const CardFactory &card_factory)
 {
     // ii da jucatorului carti random la inceput de joc
     std::cout<<"Adding cards in deck "<< player_id << "...\n";
@@ -30,11 +30,11 @@ void Deck::make_deck()
     std::uniform_int_distribution<int> dis(EXCLUDED_TYPES, NUM_OF_TYPES);
 
 
-    deck.push_back(create_card(CardType::Squirrel, font_));
+    deck.push_back(card_factory.create_card(CardType::Squirrel));
     for (int i = 0; i < 3; i++) //deckul are 3 carti plus veverita initial
     {
         int r = dis(gen);
-        deck.push_back(create_card(static_cast<CardType>(r), font_));
+        deck.push_back(card_factory.create_card(static_cast<CardType>(r)));
     }
     std::cout<<"Cards added in deck " << player_id << ".\n";
 }
@@ -140,7 +140,6 @@ Deck::Deck(const Deck &other)
     {
         deck.emplace_back(card->clone());
     }
-    font_ = other.font_;
     player_id = other.player_id;
     start_x = other.start_x;
     start_y = other.start_y;
@@ -159,5 +158,4 @@ void swap(Deck &a, Deck &b) noexcept
     swap(a.player_id,b.player_id);
     swap(a.start_x,b.start_x);
     swap(a.start_y,b.start_y);
-    swap(a.font_,b.font_);
 }

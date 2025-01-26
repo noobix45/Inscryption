@@ -68,12 +68,15 @@ add_executable(${PROJECT_NAME}
         sources/scales.cpp
         headers/derivate.h
         sources/derivate.cpp
-        headers/create_card.h
+        headers/card_factory.h
         headers/deck.h
         headers/pile.h
         headers/game.h
         headers/exceptii.h
         sources/exceptii.cpp
+        headers/singleton.h
+        headers/end_screen.h
+        sources/end_screen.cpp
 )
 
 include(cmake/CompilerFlags.cmake)

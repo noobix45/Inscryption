@@ -1,15 +1,15 @@
 #include "pile.h"
-#include "create_card.h"
 #include "constante.h"
+#include "card_factory.h"
+#include "exceptii.h"
 #include <random>
 #include <iostream>
 
-#include "exceptii.h"
 
 
-Pile::Pile(const int id, const sf::Font &font) : pile_id{id}, font_(font)
+Pile::Pile(const int id, const CardFactory& card_factory) : pile_id{id}
 {
-    make_pile();
+    make_pile(card_factory);
     init_texture();
     std::cout << "Pile " << pile_id << " created" << std::endl;
 }
@@ -32,7 +32,7 @@ Pile::~Pile()
     std::cout.flush();
 }
 
-void Pile::make_pile()
+void Pile::make_pile(const CardFactory& card_factory)
 {
     std::random_device rd;
     std::mt19937 gen(rd());
@@ -40,14 +40,14 @@ void Pile::make_pile()
     if (this->pile_id == 1)
         for (int i = 0; i < PILE_SIZE; i++)
         {
-            pile.push(create_card(CardType::Squirrel,font_));
+            pile.push(card_factory.create_card(CardType::Squirrel));
         }
     else
     {
         for (int i = 0; i < PILE_SIZE; i++)
         {
             int r = dis(gen); // 1 2 3... possible outcomes
-            pile.push(create_card(static_cast<CardType>(r),font_));
+            pile.push(card_factory.create_card(static_cast<CardType>(r)));
         }
     }
 }
@@ -150,7 +150,6 @@ Pile::Pile(const Pile &other)
     }
 
     pile_id = other.pile_id;
-    font_ = other.font_;
     pile_texture = other.pile_texture;
     pile_sprite = other.pile_sprite;
     std::cout << "Pile copy constructor end\n";
@@ -169,7 +168,6 @@ void swap(Pile &first, Pile &second) noexcept
     using std::swap;
     swap(first.pile,second.pile);
     swap(first.pile_id,second.pile_id);
-    swap(first.font_,second.font_);
     swap(first.pile_texture,second.pile_texture);
     swap(first.pile_sprite,second.pile_sprite);
     std::cout<<"swap function end\n";

@@ -2,11 +2,14 @@
 #define FONT_MANAGER_H
 #include <SFML/Graphics.hpp>
 
-class FontManager
+#include "singleton.h"
+
+class FontManager : public Singleton<FontManager>
 {
     sf::Font font;
+protected:
+     FontManager();
 public:
-    explicit FontManager(const std::string &filePath);
     sf::Font& getFont();
     friend std::ostream& operator<<(std::ostream& os, const FontManager& fontManager);
 };

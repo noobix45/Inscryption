@@ -4,9 +4,9 @@
 
 #include "exceptii.h"
 
-Player::Player(std::string name_, const int id_, const sf::Font &font_) : name{std::move(name_)}, id{id_}, blood{0},
+Player::Player(std::string name_, const int id_, const sf::Font &font_, const CardFactory& card_factory) : name{std::move(name_)}, id{id_}, blood{0},
                                                                           bones{0},
-                                                                          deck{id_, font_}, font(font_)
+                                                                          deck{id_, card_factory}, font(font_)
 {
     std::cout<<"Initializing textures for the counts of a player...\n";
     init_textures();

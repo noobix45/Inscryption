@@ -2,6 +2,12 @@
 #define DERIVATE_H
 #include "cards.h"
 
+
+class CardFactory;
+
+// card type {0,1,2,3,4,...} // cartile non action la inceput
+enum class CardType { Squirrel, Dam, Adder, Wolf, Beaver, Mantis, Bullfrog, Bat, Rattler, Last};
+
 class Squirrel : public Card
 {
     void action(const Board &, int i, int j, Scales &) override;
@@ -78,7 +84,7 @@ public:
     explicit Beaver(const sf::Font &font);
 
     //functie specifica beaver pentru downcast
-    void on_place_action(const Board &board, int i, int j,const sf::Font&);
+    void on_place_action(const Board &board, int i, int j,const CardFactory&);
 
     Card *clone() const override { return new Beaver(*this); }
 };

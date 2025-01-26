@@ -2,16 +2,18 @@
 #include "font_manager.h"
 #include "derivate.h"
 #include "scales.h"
+#include "exceptii.h"
 #include <iostream>
 
-#include "exceptii.h"
+
 
 Game::Game() : window(sf::VideoMode::getDesktopMode(), "My Window", sf::Style::Fullscreen),
-               font_manager_("heaviwei.ttf"),
-               squirrel_pile(1, font_manager_.getFont()),
-               normal_pile(2, font_manager_.getFont()),
-               player1("Player1", 1, font_manager_.getFont()),
-               player2("Player2", 2, font_manager_.getFont()),
+               font_manager_(FontManager::getInstance()),
+               card_factory(font_manager_.getFont()),
+               squirrel_pile(1, card_factory),
+               normal_pile(2, card_factory),
+               player1("Player1", 1, font_manager_.getFont(),card_factory),
+               player2("Player2", 2, font_manager_.getFont(),card_factory),
                scales(font_manager_.getFont()),
                board(window),
                selected_card(nullptr), card_selected(false), sacrifice_on(false), current_phase(0), current_player(1)
@@ -108,19 +110,29 @@ void Game::handle_draw_phase(const sf::Vector2i mousePos)
     }
 }
 
+// cineva a jucat si a incercat sa opreasca sacrifice dand click iar pe el
+// asa ca am facut un toggle
 void Game::handle_sacrifice(const sf::Vector2i mousePos)
 {
-    if (selected_card == nullptr && sacrifice_sprite.getGlobalBounds().contains(
-            static_cast<float>(mousePos.x), static_cast<float>(mousePos.y))) // daca se da click pe sacrifice
+    if (sacrifice_on == false && selected_card == nullptr && sacrifice_sprite.getGlobalBounds().contains(
+            static_cast<float>(mousePos.x), static_cast<float>(mousePos.y))) // daca se da click pe sprite sacrifice
     {
         sacrifice_on = true;
-        window.setMouseCursor(custom_cursor);
+    }
+    else if (sacrifice_on == true && selected_card == nullptr && sacrifice_sprite.getGlobalBounds().contains(
+            static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)))
+    {
+        sacrifice_on=false;
+        sf::Cursor default_cursor;
+        default_cursor.loadFromSystem(sf::Cursor::Arrow);
+        window.setMouseCursor(default_cursor);
     }
     if (sacrifice_on)
     {
+        window.setMouseCursor(custom_cursor);
         const int board_index = (current_player == 1) ? 1 : 0;
         auto &player = (current_player == 1) ? player1 : player2;
-        if (sacrifice(mousePos, board_index)) // daca sacrificiul s-a facut
+        if (sacrifice(mousePos, board_index)) // daca sacrificiul s-a facut// daca click-ul de mai sus e pe spatiul unei carti
         {
             //std::cout << "Sacrifice detected giving blood to player\n";
             player.modify_blood(1); // daca cartea are effect worthy sacrifice va fi 3 (in viitor)
@@ -228,7 +240,7 @@ bool Game::ring_bell(const sf::Vector2i mousePos)
     {
         perform_row_action(current_player);
         bell_sound.play();
-        sacrifice_on=false;
+        sacrifice_on = false;
         sf::Cursor default_cursor;
         default_cursor.loadFromSystem(sf::Cursor::Arrow);
         window.setMouseCursor(default_cursor);
@@ -318,7 +330,7 @@ bool Game::place_in_board(const sf::Vector2i mousePos, const int row)
                     board.place_card(selected_card, row, j);
                     if (auto *beaverCard = dynamic_cast<Beaver *>(selected_card))
                     {
-                        beaverCard->on_place_action(board, row, j,font_manager_.getFont());
+                        beaverCard->on_place_action(board, row, j,card_factory);
                     }
                     if (selected_card->get_blood() != 0)
                     {

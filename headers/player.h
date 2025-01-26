@@ -22,7 +22,7 @@ private:
 
 public:
     Player()=default;
-    Player(std::string name_, int id_, const sf::Font &);
+    Player(std::string name_, int id_, const sf::Font &, const CardFactory&);
 
     ~Player();
 

@@ -3,17 +3,18 @@
 #include "cards.h"
 #include <vector>
 
+class CardFactory;
+
 class Deck
 {
     int player_id;
-    sf::Font font_;
     std::vector<Card*> deck; // cartile din deck-ul jucatorului
     float start_x=0, start_y=0;
-    void make_deck();
+    void make_deck(const CardFactory& card_factory);
 
 public:
     Deck()=default;
-    explicit Deck(int player_id_, const sf::Font &);
+    Deck(int player_id_, const CardFactory&);
 
     ~Deck();
 
