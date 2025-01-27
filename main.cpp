@@ -1,6 +1,6 @@
 #include <iostream>
 #include "end_screen.h"
-//#include "exceptii.h"
+#include "exceptii.h"
 #include "headers/game.h"
 
 /* copy swap pentru deck si pile, se schimba clasa pentru test de pile
@@ -40,17 +40,33 @@ std::cout << "after p3=p2\n";
 
 
 int main() {
-/*    try
+    /*
+     *merge dar daca apas escape sa inchid window spune
+
+    *AL lib: (EE) alc_cleanup: 1 device not closed
+
+    Process finished with exit code 0
+
+ si nici nu se apeleaza destructori, chestia cu Al lib apare imediat dupa ultimul constructor
+*/
+    try
     {
+
+        //sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "My Window", sf::Style::Fullscreen);
+        //Game::init(window);
+        Game::init(); // daca scot Game::init() - segmentation fault
         Game& game= Game::getInstance();
-        Game& game2 = Game::getInstance();
         game.play_game();
-        std::cout << "Address of game: " << &game << std::endl;
-        std::cout << "Address of game2: " << &game2 << std::endl;
+        //FontManager::init();
+        //const FontManager& fm = FontManager::getInstance();
+        //std::cout<<fm;
     } catch (const FontError &err) { std::cout << err.what() << std::endl; }
     catch (const TextureError &err) { std::cout << err.what() << std::endl; }
     catch (const SoundError &err) {std::cout << err.what() << std::endl; }
-*/
+
+
+/////////// merge cu exit code 0
+/*
     sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "Inscryption", sf::Style::Fullscreen);
     window.setFramerateLimit(60);
     sf::Font font;
@@ -58,7 +74,7 @@ int main() {
         std::cerr << "Error loading font!" << std::endl;
         return -1;
     }
-    EndScreen::initialize(window,font,1);
+    EndScreen::init(window,font,1);
     EndScreen& end_screen = EndScreen::getInstance();
     while (window.isOpen())
     {
@@ -75,7 +91,7 @@ int main() {
         window.clear();
         end_screen.render();
         window.display();
-    }
+    }*/
     return 0;
 }
 

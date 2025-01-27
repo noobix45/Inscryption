@@ -6,28 +6,45 @@ template <typename Derived>
 class Singleton
 {
 protected:
-    Singleton() =default;
+    Singleton() = default;
 public:
     Singleton(const Singleton&) = delete;
     Singleton& operator=(const Singleton&) = delete;
-    static Derived& getInstance()
-    {
-        static DerivedInstance instance;
-        return instance;
+    static Derived& getInstance() {
+        if constexpr (std::is_default_constructible_v<Derived>)
+            if(!instance)
+                instance = new DerivedInstance;
+        return *instance;
     }
-    static void initialize(sf::RenderWindow& window,const sf::Font& font,int player_id)
+    ~Singleton()
     {
-            static DerivedInstance instance(window,font,player_id);
+        if (instance)
+        {
+            delete instance;
+            instance = nullptr;
+        }
     }
-
+    template <typename... Args>
+    static void init(Args&&... args) {
+        if(!instance)
+            instance = new DerivedInstance(std::forward<Args>(args)...);
+    }
+    static void destroyInstance() {
+        if (instance) {
+            delete instance;
+            instance = nullptr;
+        }
+    }
 private:
     class DerivedInstance : public Derived
     {
     public:
-        DerivedInstance() = default; //pentru fontmanager
-        DerivedInstance(sf::RenderWindow& window,const sf::Font& font,int player_id) // pentru end screen
-            : Derived{window,font,player_id} {}
+        template <typename... Args>
+        explicit DerivedInstance(Args&&... args) : Derived(std::forward<Args>(args)...) {}
     };
+    static Derived* instance;
 };
+template<typename Derived>
+Derived* Singleton<Derived>::instance = nullptr;
 
 #endif //SINGLETON_H

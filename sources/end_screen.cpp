@@ -4,10 +4,10 @@
 
 EndScreen::EndScreen(sf::RenderWindow &window, const sf::Font &font, int player_id) : window(window), font(font)
 {
-    init(player_id);
+    init_text(player_id);
 }
 
-void EndScreen::init(int player_id)
+void EndScreen::init_text(const int player_id)
 {
     winner_text.setFont(font);
     winner_text.setCharacterSize(100);

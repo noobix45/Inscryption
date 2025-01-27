@@ -8,7 +8,7 @@ class FontManager : public Singleton<FontManager>
 {
     sf::Font font;
 protected:
-     FontManager();
+    FontManager();
 public:
     sf::Font& getFont();
     friend std::ostream& operator<<(std::ostream& os, const FontManager& fontManager);

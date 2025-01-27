@@ -14,7 +14,7 @@ class EndScreen : public Singleton<EndScreen>
     sf::Text yes_button; // buton pentru restart
     sf::Color text_color=sf::Color::Red;
     bool restart=false;
-    void init(int);
+    void init_text(int);
 protected:
     // acelasi window, font din fontmanager si player_id-ul castigatorului
     EndScreen(sf::RenderWindow& window, const sf::Font& font, int player_id);

@@ -8,7 +8,7 @@
 
 
 Game::Game() : window(sf::VideoMode::getDesktopMode(), "My Window", sf::Style::Fullscreen),
-               font_manager_(FontManager::getInstance()),
+               font_manager_(initialize_font()),
                card_factory(font_manager_.getFont()),
                squirrel_pile(1, card_factory),
                normal_pile(2, card_factory),
@@ -196,7 +196,6 @@ void Game::initEverything()
 {
     //player1.make_deck(); // apel catre deck sa se umple cu carti
     //player2.make_deck();
-
     auto [deck_fst1, deck_snd1] = Deck::get_start_positions(window, 1); // pozitii calc relativ la window
     auto [deck_fst2, deck_snd2] = Deck::get_start_positions(window, 2);
 

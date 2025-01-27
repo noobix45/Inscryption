@@ -20,6 +20,11 @@ public:
 protected:
     Game();
 private:
+    FontManager& initialize_font()
+    {
+        FontManager::init();
+        return FontManager::getInstance();
+    }
     sf::RenderWindow window;
     FontManager& font_manager_;
     CardFactory card_factory;
