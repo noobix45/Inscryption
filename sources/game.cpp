@@ -41,7 +41,7 @@ void Game::play_game(const sf::Event& event)
 
     //check_winner();
 
-    first_round(first_round1, first_round2);
+    first_round();
 
     if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
     {
@@ -52,7 +52,7 @@ void Game::play_game(const sf::Event& event)
 }
 
 //la prima runda playerii nu trag carte deci se sare la play phase si se se marcheaza ca a trecut prima runda
-void Game::first_round(bool &first_round1, bool &first_round2)
+void Game::first_round()
 {
     if (current_phase == 0)
     {

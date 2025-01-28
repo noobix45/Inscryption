@@ -55,7 +55,7 @@ private:
     bool first_round2 = true;
 
 
-    void first_round(bool &first_round1, bool &first_round2);
+    void first_round();
 
     void handle_round_event(const sf::Vector2i &mousePos);
 
