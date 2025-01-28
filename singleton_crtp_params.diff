@@ -1,0 +1,116 @@
+diff --git a/headers/end_screen.h b/headers/end_screen.h
+index 4403e2b..e69d8ee 100644
+--- a/headers/end_screen.h
++++ b/headers/end_screen.h
+@@ -4,7 +4,7 @@
+ #include "SFML/Graphics/Text.hpp"
+ #include "singleton.h"
+ 
+-class EndScreen : public Singleton<EndScreen>
++class EndScreen : public Singleton<EndScreen, false>
+ {
+     sf::RenderWindow& window;
+     const sf::Font& font;
+diff --git a/headers/singleton.h b/headers/singleton.h
+index ec2bc61..efa5fcf 100644
+--- a/headers/singleton.h
++++ b/headers/singleton.h
+@@ -2,7 +2,7 @@
+ #define SINGLETON_H
+ //  singleton crtp
+ 
+-template <typename Derived>
++template <typename Derived, bool has_default_constructor=true>
+ class Singleton
+ {
+ protected:
+@@ -10,20 +10,10 @@ protected:
+ public:
+     Singleton(const Singleton&) = delete;
+     Singleton& operator=(const Singleton&) = delete;
+-    static Derived& getInstance() {
+-        if constexpr (std::is_default_constructible_v<Derived>)
+-            if(!instance)
+-                instance = new DerivedInstance;
+-        return *instance;
+-    }
+-    ~Singleton()
+-    {
+-        if (instance)
+-        {
+-            delete instance;
+-            instance = nullptr;
+-        }
+-    }
++
++    static Derived& getInstance() { return getInstance_(std::bool_constant<has_default_constructor>{}); }
++    ~Singleton() {}
++
+     template <typename... Args>
+     static void init(Args&&... args) {
+         if(!instance)
+@@ -36,6 +26,15 @@ public:
+         }
+     }
+ private:
++    static Derived& getInstance_(std::true_type) {
++        if(!instance) {
++                instance = new DerivedInstance;
++            }
++        return *instance;
++    }
++    static Derived& getInstance_(std::false_type) {
++        return *instance;
++    }
+     class DerivedInstance : public Derived
+     {
+     public:
+@@ -44,7 +43,7 @@ private:
+     };
+     static Derived* instance;
+ };
+-template<typename Derived>
+-Derived* Singleton<Derived>::instance = nullptr;
++template<typename Derived, bool has_default_constructor>
++Derived* Singleton<Derived, has_default_constructor>::instance = nullptr;
+ 
+ #endif //SINGLETON_H
+diff --git a/main.cpp b/main.cpp
+index dffacf9..1bdb784 100644
+--- a/main.cpp
++++ b/main.cpp
+@@ -38,7 +38,6 @@ std::cout << "after p3=p2\n";
+ // to do: fisier.txt numar de coloane in scales condigurabil
+ //scalare in functie de numar ca sa incapa in acelasi spatiu
+ 
+-
+ int main() {
+     /*
+      *merge dar daca apas escape sa inchid window spune
+@@ -54,7 +53,7 @@ int main() {
+ 
+         //sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "My Window", sf::Style::Fullscreen);
+         //Game::init(window);
+-        Game::init(); // daca scot Game::init() - segmentation fault
++        //Game::init(); // daca scot Game::init() - segmentation fault
+         Game& game= Game::getInstance();
+         game.play_game();
+         //FontManager::init();
+@@ -66,7 +65,7 @@ int main() {
+ 
+ 
+ /////////// merge cu exit code 0
+-/*
++
+     sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "Inscryption", sf::Style::Fullscreen);
+     window.setFramerateLimit(60);
+     sf::Font font;
+@@ -91,7 +90,7 @@ int main() {
+         window.clear();
+         end_screen.render();
+         window.display();
+-    }*/
++    }
+     return 0;
+ }
+ 
