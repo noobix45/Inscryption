@@ -2,7 +2,7 @@
 #define SINGLETON_H
 //  singleton crtp
 
-template <typename Derived>
+template <typename Derived, bool has_default_constructor=true>
 class Singleton
 {
 protected:
@@ -10,20 +10,9 @@ protected:
 public:
     Singleton(const Singleton&) = delete;
     Singleton& operator=(const Singleton&) = delete;
-    static Derived& getInstance() {
-        if constexpr (std::is_default_constructible_v<Derived>)
-            if(!instance)
-                instance = new DerivedInstance;
-        return *instance;
-    }
-    // ~Singleton()
-    // {
-    //     if (instance)
-    //     {
-    //         delete instance;
-    //         instance = nullptr;
-    //     }
-    // }
+    static Derived& getInstance() { return getInstance_(std::bool_constant<has_default_constructor>{}); }
+    ~Singleton() {}
+
     template <typename... Args>
     static void init(Args&&... args) {
         if(!instance)
@@ -36,6 +25,15 @@ public:
         }
     }
 private:
+    static Derived& getInstance_(std::true_type) {
+        if(!instance) {
+            instance = new DerivedInstance;
+        }
+        return *instance;
+    }
+    static Derived& getInstance_(std::false_type) {
+        return *instance;
+    }
     class DerivedInstance : public Derived
     {
     public:
@@ -44,7 +42,7 @@ private:
     };
     static Derived* instance;
 };
-template<typename Derived>
-Derived* Singleton<Derived>::instance = nullptr;
+template<typename Derived, bool has_default_constructor>
+Derived* Singleton<Derived, has_default_constructor>::instance = nullptr;
 
 #endif //SINGLETON_H

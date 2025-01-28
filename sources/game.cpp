@@ -22,6 +22,7 @@ Game::Game(sf::RenderWindow& window_) : window(window_),
     init_background();
     init_bell();
     init_sacrifice();
+    initEverything(); // mutat din play game pentru manage extern
 }
 
 FontManager & Game::initialize_font()
@@ -31,37 +32,23 @@ FontManager & Game::initialize_font()
 }
 
 
-void Game::play_game()
+void Game::play_game(const sf::Event& event)
 {
-    initEverything();
-    bool first_round1 = true;
-    bool first_round2 = true;
-
-    while (window.isOpen())
+    if (squirrel_pile.get_size() == 0 && normal_pile.get_size() == 0) // daca s-au terminat cartile
     {
-        sf::Event event{};
-        while (window.pollEvent(event))
-        {
-            if (event.type == sf::Event::KeyPressed)
-                if (event.key.code == sf::Keyboard::Escape) { window.close(); }
-
-            if (squirrel_pile.get_size() == 0 && normal_pile.get_size() == 0) // daca s-au terminat cartile
-            {
-                current_phase = 1;
-            }
-
-            check_winner();
-
-            first_round(first_round1, first_round2);
-
-            if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
-            {
-                const sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-                handle_round_event(mousePos);
-            }
-        }
-        drawEverything();
+        current_phase = 1;
     }
+
+    //check_winner();
+
+    first_round(first_round1, first_round2);
+
+    if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
+    {
+        const sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+        handle_round_event(mousePos);
+    }
+    drawEverything();
 }
 
 //la prima runda playerii nu trag carte deci se sare la play phase si se se marcheaza ca a trecut prima runda
@@ -221,14 +208,16 @@ void Game::initEverything()
     normal_pile.setPos(x2 + 2 * ONE_SLOT_WIDTH, y2 + 5);
 }
 
-void Game::check_winner()
+int Game::check_winner()
 {
     if (scales.winner())
     {
         current_player = (current_player == 1) ? 2 : 1;
         std::cout << "\n\nPlayer " << current_player << " wins\n\n";
-        window.close();
+        //window.close();
+        return current_player;
     }
+    return -1;
 }
 
 int Game::pile_clicked(const sf::Vector2i mousePos)

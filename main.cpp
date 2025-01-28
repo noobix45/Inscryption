@@ -1,8 +1,6 @@
 #include <iostream>
-#include "end_screen.h"
 #include "exceptii.h"
 #include "GameManager.h"
-#include "headers/game.h"
 
 /* copy swap pentru deck si pile, se schimba clasa pentru test de pile
 sf::Font font;
@@ -34,20 +32,20 @@ std::cout << s3;
 std::cout << "after p3=p2\n";
 */
 
-// to do: optiune de restart
 // to do: fisier.txt numar de coloane in scales condigurabil
 //scalare in functie de numar ca sa incapa in acelasi spatiu
 
 
 int main() {
 
-try{
-    GameManager g;
-    g.run();
-    }
-    catch (const FontError &err) { std::cout << err.what() << std::endl; }
-    catch (const TextureError &err) { std::cout << err.what() << std::endl; }
-    catch (const SoundError &err) {std::cout << err.what() << std::endl; }
+    try{
+        GameManager& game_manager = GameManager::getInstance();
+        game_manager.run();
+        }
+        catch (const FontError &err) { std::cout << err.what() << std::endl; }
+        catch (const TextureError &err) { std::cout << err.what() << std::endl; }
+        catch (const SoundError &err) {std::cout << err.what() << std::endl; }
+
     return 0;
 }
 

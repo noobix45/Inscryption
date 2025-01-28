@@ -13,10 +13,11 @@
 #include "card_factory.h"
 
 
-class Game : public Singleton<Game>
+class Game : public Singleton<Game,false>
 {
 public:
-    void play_game();
+    void play_game(const sf::Event& event);
+    int check_winner();
 protected:
     Game(sf::RenderWindow& window_);
 private:
@@ -50,6 +51,9 @@ private:
     int current_phase; // 0 means draw phase // 1 means playing phase - jucatorii pot sacrifica sau juca carti
     int current_player;
 
+    bool first_round1 = true; // mutat din play game pentru amange extern
+    bool first_round2 = true;
+
 
     void first_round(bool &first_round1, bool &first_round2);
 
@@ -63,8 +67,6 @@ private:
 
     void drawEverything();
     void initEverything();
-
-    void check_winner();
 
     int pile_clicked(sf::Vector2i mousePos);
     bool ring_bell(sf::Vector2i mousePos);
