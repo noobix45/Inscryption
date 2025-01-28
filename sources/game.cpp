@@ -7,8 +7,8 @@
 
 
 
-Game::Game() : window(sf::VideoMode::getDesktopMode(), "My Window", sf::Style::Fullscreen),
-               font_manager_(initialize_font()),
+Game::Game(sf::RenderWindow& window_) : window(window_),
+               font_manager_(FontManager::getInstance()),
                card_factory(font_manager_.getFont()),
                squirrel_pile(1, card_factory),
                normal_pile(2, card_factory),
@@ -23,6 +23,13 @@ Game::Game() : window(sf::VideoMode::getDesktopMode(), "My Window", sf::Style::F
     init_bell();
     init_sacrifice();
 }
+
+FontManager & Game::initialize_font()
+{
+    FontManager::init();
+    return FontManager::getInstance();
+}
+
 
 void Game::play_game()
 {

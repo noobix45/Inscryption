@@ -2,12 +2,12 @@
 
 #include "SFML/Window/Mouse.hpp"
 
-EndScreen::EndScreen(sf::RenderWindow &window, const sf::Font &font, int player_id) : window(window), font(font)
+EndScreen::EndScreen(sf::RenderWindow &window, const sf::Font &font) : window(window), font(font)
 {
-    init_text(player_id);
+    init_text();
 }
 
-void EndScreen::init_text(const int player_id)
+void EndScreen::init_text()
 {
     winner_text.setFont(font);
     winner_text.setCharacterSize(100);
@@ -60,4 +60,9 @@ void EndScreen::handleClick(const sf::RenderWindow &window)
 bool EndScreen::gameStatus() const
 {
     return restart;
+}
+
+void EndScreen::set_player_id(const int id)
+{
+    player_id=id;
 }

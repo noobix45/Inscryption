@@ -16,14 +16,14 @@ public:
                 instance = new DerivedInstance;
         return *instance;
     }
-    ~Singleton()
-    {
-        if (instance)
-        {
-            delete instance;
-            instance = nullptr;
-        }
-    }
+    // ~Singleton()
+    // {
+    //     if (instance)
+    //     {
+    //         delete instance;
+    //         instance = nullptr;
+    //     }
+    // }
     template <typename... Args>
     static void init(Args&&... args) {
         if(!instance)

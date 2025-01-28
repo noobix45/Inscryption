@@ -18,14 +18,10 @@ class Game : public Singleton<Game>
 public:
     void play_game();
 protected:
-    Game();
+    Game(sf::RenderWindow& window_);
 private:
-    FontManager& initialize_font()
-    {
-        FontManager::init();
-        return FontManager::getInstance();
-    }
-    sf::RenderWindow window;
+    static FontManager& initialize_font();
+    sf::RenderWindow& window;
     FontManager& font_manager_;
     CardFactory card_factory;
     Pile squirrel_pile;

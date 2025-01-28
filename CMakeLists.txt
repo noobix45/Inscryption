@@ -77,6 +77,8 @@ add_executable(${PROJECT_NAME}
         headers/singleton.h
         headers/end_screen.h
         sources/end_screen.cpp
+        headers/GameManager.h
+        sources/GameManager.cpp
 )
 
 include(cmake/CompilerFlags.cmake)
